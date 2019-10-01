@@ -13,10 +13,4 @@ describe("quick_sort", () => {
     quick_sort(array)
     expect(array).toEqual(result);
   });
-  test("all elements is equal", () => {
-    let array = [13, 13, 13, 13];
-    let result = [13, 13, 13, 13];
-    quick_sort(array)
-    expect(array).toEqual(result);
-  });
 });
