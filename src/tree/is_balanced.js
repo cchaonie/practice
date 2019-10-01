@@ -2,7 +2,9 @@ function is_balanced(root) {
   if (!root) return true;
   let left_height = height(root.left);
   let right_height = height(root.right);
-  return Math.abs(left_height - right_height) < 2;
+  return is_balanced(root.left) && 
+  is_balanced(root.right) &&
+  Math.abs(left_height - right_height) < 2;
 }
 
 function height(root) {
