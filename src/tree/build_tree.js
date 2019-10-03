@@ -41,7 +41,7 @@ function buildTreeFromInOrderAndPostOrder(inorder, postorder) {
   return rootNode;
 };
 
-module.exports = { 
+module.exports = {
   buildTreeFromPreOrderAndInOrder,
   buildTreeFromInOrderAndPostOrder
 }

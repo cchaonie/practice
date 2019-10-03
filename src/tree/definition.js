@@ -1,6 +1,6 @@
 function TreeNode(val) {
   this.val = val;
-  this.left = this.right = null;
+  this.left = this.right = this.next =  null;
 }
 
 TreeNode.prototype.addLeft = function (treeNode) {
@@ -14,7 +14,7 @@ TreeNode.prototype.addRight = function (treeNode) {
 }
 
 TreeNode.prototype.insertFromArray = function (val, index) {
-  if (val) {
+  if (val != null) {
     let depth = index / 2 | 0,
       nodeArray = layerTraversal(this);
     if (depth * 2 == index) {
