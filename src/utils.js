@@ -1,16 +1,27 @@
-function TreeNode(val) {
-  this.val = val;
-  this.left = this.right = this.next =  null;
+const { TreeNode } = require("./tree/definition");
+
+function rmTailNull(array) {
+  let len = array.length;
+    if (len > 0 && array[len - 1] == null){
+      array.splice(len - 1, 1);
+    } else {
+      return array;
+    }
+    return rmTailNull(array);
 }
 
-TreeNode.prototype.addLeft = function (treeNode) {
-  this.left = treeNode;
-  return this;
+function toStringWithNull(array) {
+  let tmp = rmTailNull(array).reduce((s, a) => s + a + ',', '[');
+  return tmp.substring(0, tmp.length - 1) + ']';
 }
 
-TreeNode.prototype.addRight = function (treeNode) {
-  this.right = treeNode;
-  return this;
+function toArray(str) {
+  let len = str.length;
+  if (str == "[]") return [];
+  return str.substring(1, len - 1).split(',').map(a => {
+    if (a === "null") return null;
+    else return Number(a);
+  });
 }
 
 function insertFromArray(root, val, index) {
@@ -41,17 +52,9 @@ function layerTraversal(root) {
   return result;
 }
 
-function binaryTreeLayerGenerator(array) {
-  if (!array.length) return null;
-  let root = new TreeNode(array[0]),
-    i = 1;
-  while (i < array.length) {
-    insertFromArray(root, array[i], ++i);
-  }
-  return root;
-}
-
 module.exports = {
-  TreeNode,
-  binaryTreeLayerGenerator
+  toStringWithNull,
+  toArray,
+  insertFromArray,
+  layerTraversal
 }
