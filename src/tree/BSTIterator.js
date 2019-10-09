@@ -1,6 +1,5 @@
 function BSTIterator(root) {
   this.data = in_order_traversal(root);
-  console.log(this.data);
 };
 
 function in_order_traversal(root) {
