@@ -1,4 +1,4 @@
-const { TreeNode } = require("./definition");
+const { BinaryTreeNode } = require("./definition");
 const { 
   toStringWithNull,
   toArray,
@@ -34,7 +34,7 @@ function serialize(root) {
 function deserialize(str) {
   let array = toArray(str);
   if (!array.length) return null;
-  let root = new TreeNode(array[0]),
+  let root = new BinaryTreeNode(array[0]),
     i = 1;
   while (i < array.length) {
     insertFromArray(root, array[i], ++i);

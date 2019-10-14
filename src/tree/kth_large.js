@@ -1,4 +1,4 @@
-function BSTreeNode(val) {
+function BSBinaryTreeNode(val) {
   this.val = val;
   this.left = null;
   this.right = null;
@@ -14,20 +14,20 @@ function bstGenerator(array) {
 }
 
 function insertIntoBST(root, val) {
-  if (!root) return new BSTreeNode(val);
+  if (!root) return new BSBinaryTreeNode(val);
   let cur = root;
   if (cur.val >= val) {
     if (cur.left) {
       insertIntoBST(cur.left, val);
     } else {
-      cur.left = new BSTreeNode(val);
+      cur.left = new BSBinaryTreeNode(val);
     }
   }
   if (cur.val < val) {
     if (cur.right) {
       insertIntoBST(cur.right, val);
     } else {
-      cur.right = new BSTreeNode(val);
+      cur.right = new BSBinaryTreeNode(val);
     }
   }
   return root;
