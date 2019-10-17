@@ -1,16 +1,16 @@
 const {
-  TreeNode
+  BinaryTreeNode
 } = require("./definition");
 /**
  * @param {number[]} preorder
  * @param {number[]} inorder
- * @return {TreeNode}
+ * @return {BinaryTreeNode}
  */
 function buildTreeFromPreOrderAndInOrder(preorder, inorder) {
   if (preorder.length == 0) return null;
   let root = preorder[0];
   let rootNode = null;
-  rootNode = new TreeNode(root);
+  rootNode = new BinaryTreeNode(root);
   let rootIndex = inorder.indexOf(root);
   let leftInOrder = inorder.slice(0, rootIndex);
   let leftPreOrder = preorder.slice(1, leftInOrder.length + 1);
@@ -24,13 +24,13 @@ function buildTreeFromPreOrderAndInOrder(preorder, inorder) {
 /**
  * @param {number[]} inorder
  * @param {number[]} postorder
- * @return {TreeNode}
+ * @return {BinaryTreeNode}
  */
 function buildTreeFromInOrderAndPostOrder(inorder, postorder) {
   if (postorder.length == 0) return null;
   let root = postorder[postorder.length - 1];
   let rootNode = null;
-  rootNode = new TreeNode(root);
+  rootNode = new BinaryTreeNode(root);
   let rootIndex = inorder.indexOf(root);
   let leftInOrder = inorder.slice(0, rootIndex);
   let leftPostOrder = postorder.slice(0, leftInOrder.length);

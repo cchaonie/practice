@@ -40,14 +40,14 @@
 /**
  * Definition for a binary tree node.
  */
-function TreeNode(val) {
+function BinaryTreeNode(val) {
   this.val = val;
   this.left = this.right = null;
 }
 
 /**
  * @param {number} n
- * @return {TreeNode[]}
+ * @return {BinaryTreeNode[]}
  */
 var generateTrees = function (n) {
   function generate(start, end) {
@@ -60,7 +60,7 @@ var generateTrees = function (n) {
       let right = generate(i + 1, end);
       for (let l of left) {
         for (let r of right) {
-          let root = new TreeNode(i);
+          let root = new BinaryTreeNode(i);
           root.left = l;
           root.right = r;
           result.push(root);

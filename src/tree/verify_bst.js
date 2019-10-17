@@ -1,7 +1,7 @@
-const TreeNode = require('./definition').TreeNode;
+const BinaryTreeNode = require('./definition').BinaryTreeNode;
 
 /**
- * @param {TreeNode} root
+ * @param {BinaryTreeNode} root
  * @return {boolean}
  */
 var isValidBST = function (root) {
@@ -20,8 +20,8 @@ var isValidBST = function (root) {
   return true;
 };
 
-let testTree = new TreeNode(4)
-  .addLeft(new TreeNode(3))
-  .addRight(new TreeNode(5).addRight(new TreeNode(6)))
+let testTree = new BinaryTreeNode(4)
+  .addLeft(new BinaryTreeNode(3))
+  .addRight(new BinaryTreeNode(5).addRight(new BinaryTreeNode(6)))
 
 console.log(isValidBST(testTree))

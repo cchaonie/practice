@@ -1,4 +1,4 @@
-const TreeNode = require('./tree/definition').TreeNode;
+const BinaryTreeNode = require('./tree/definition').BinaryTreeNode;
 
 var recoverTree = function (root) {
   const stack = [];
@@ -29,9 +29,9 @@ var recoverTree = function (root) {
   }
 };
 
-let testTree = new TreeNode(3)
-  .addLeft(new TreeNode(4))
-  // .addRight(new TreeNode(4).addLeft(new TreeNode(2)))
+let testTree = new BinaryTreeNode(3)
+  .addLeft(new BinaryTreeNode(4))
+  // .addRight(new BinaryTreeNode(4).addLeft(new BinaryTreeNode(2)))
 
 recoverTree(testTree);
 console.log(testTree);

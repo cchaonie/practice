@@ -1,4 +1,4 @@
-const TreeNode = require("./definition").TreeNode;
+const BinaryTreeNode = require("./definition").BinaryTreeNode;
 const {
   pre_order_recursive,
   in_order_recursive,
@@ -11,21 +11,21 @@ const {
   post_order_morris
 } = require("./morris_traversal");
 
-let testTree = new TreeNode(7)
-  .addLeft(new TreeNode(5)
-    .addLeft(new TreeNode(3)
-      .addLeft(new TreeNode(1)
-        .addRight(new TreeNode(2))
+let testTree = new BinaryTreeNode(7)
+  .addLeft(new BinaryTreeNode(5)
+    .addLeft(new BinaryTreeNode(3)
+      .addLeft(new BinaryTreeNode(1)
+        .addRight(new BinaryTreeNode(2))
       )
-      .addRight(new TreeNode(4))
+      .addRight(new BinaryTreeNode(4))
     )
-    .addRight(new TreeNode(6))
+    .addRight(new BinaryTreeNode(6))
   )
-  .addRight(new TreeNode(10)
-    .addLeft(new TreeNode(8)
-      .addRight(new TreeNode(9))
+  .addRight(new BinaryTreeNode(10)
+    .addLeft(new BinaryTreeNode(8)
+      .addRight(new BinaryTreeNode(9))
     )
-    .addRight(new TreeNode(11))
+    .addRight(new BinaryTreeNode(11))
   );
 
 describe("递归版本 VS 栈迭代版本", () => {

@@ -1,7 +1,7 @@
 /**
- * @param {TreeNode} root
+ * @param {BinaryTreeNode} root
  * @param {number} key
- * @return {TreeNode}
+ * @return {BinaryTreeNode}
  */
 var deleteNode = function (root, key) {
   if (!root) return null;

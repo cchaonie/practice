@@ -1,15 +1,15 @@
-function TreeNode(val) {
+function BinaryTreeNode(val) {
   this.val = val;
   this.left = this.right = this.next =  null;
 }
 
-TreeNode.prototype.addLeft = function (treeNode) {
-  this.left = treeNode;
+BinaryTreeNode.prototype.addLeft = function (BinaryTreeNode) {
+  this.left = BinaryTreeNode;
   return this;
 }
 
-TreeNode.prototype.addRight = function (treeNode) {
-  this.right = treeNode;
+BinaryTreeNode.prototype.addRight = function (BinaryTreeNode) {
+  this.right = BinaryTreeNode;
   return this;
 }
 
@@ -18,10 +18,10 @@ function insertFromArray(root, val, index) {
     let depth = index / 2 | 0,
       nodeArray = layerTraversal(root);
     if (depth * 2 == index) {
-      nodeArray[depth].left = new TreeNode(val);
+      nodeArray[depth].left = new BinaryTreeNode(val);
     }
     if (depth * 2 + 1 == index) {
-      nodeArray[depth].right = new TreeNode(val);
+      nodeArray[depth].right = new BinaryTreeNode(val);
     }
   }
   return root;
@@ -43,7 +43,7 @@ function layerTraversal(root) {
 
 function binaryTreeLayerGenerator(array) {
   if (!array.length) return null;
-  let root = new TreeNode(array[0]),
+  let root = new BinaryTreeNode(array[0]),
     i = 1;
   while (i < array.length) {
     insertFromArray(root, array[i], ++i);
@@ -51,7 +51,17 @@ function binaryTreeLayerGenerator(array) {
   return root;
 }
 
+/**
+ * 使用儿子兄弟表示法 表示一棵树
+ * @param {*} val 
+ */
+function TreeNode(val) {
+  this.val = val;
+  this.firstChild = null;
+  this.nextSibling = null;
+}
+
 module.exports = {
-  TreeNode,
+  BinaryTreeNode,
   binaryTreeLayerGenerator
 }

@@ -1,19 +1,19 @@
 const {
-  TreeNode,
+  BinaryTreeNode,
   binaryTreeLayerGenerator
 } = require("./definition");
 
 
-let testTree1 = new TreeNode(1)
-  .addLeft(new TreeNode(2))
-  .addRight(new TreeNode(3));
+let testTree1 = new BinaryTreeNode(1)
+  .addLeft(new BinaryTreeNode(2))
+  .addRight(new BinaryTreeNode(3));
 let array1 = [1, 2, 3];
 
-let testTree2 = new TreeNode(1)
-  .addLeft(new TreeNode(2)
-    .addRight(new TreeNode(3)))
-  .addRight(new TreeNode(2)
-    .addRight(new TreeNode(3))
+let testTree2 = new BinaryTreeNode(1)
+  .addLeft(new BinaryTreeNode(2)
+    .addRight(new BinaryTreeNode(3)))
+  .addRight(new BinaryTreeNode(2)
+    .addRight(new BinaryTreeNode(3))
   );
 let array2 = [1, 2, 2, null, 3, null, 3];
 

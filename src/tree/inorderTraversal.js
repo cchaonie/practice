@@ -1,6 +1,6 @@
 /**
  * 递归
- * @param {TreeNode} root
+ * @param {BinaryTreeNode} root
  * @return {number[]}
  */
 var inorderTraversal_recursive = function (root) {
@@ -30,9 +30,9 @@ var inorderTraversal_iterative = function (root) {
   return result;
 };
 
-let testTree = new TreeNode(3)
-  .addLeft(new TreeNode(5).addRight(new TreeNode(7).addLeft(new TreeNode(9))))
-  .addRight(new TreeNode(1).addRight(new TreeNode(6)))
+let testTree = new BinaryTreeNode(3)
+  .addLeft(new BinaryTreeNode(5).addRight(new BinaryTreeNode(7).addLeft(new BinaryTreeNode(9))))
+  .addRight(new BinaryTreeNode(1).addRight(new BinaryTreeNode(6)))
 
 let result = inorderTraversal_recursive(testTree);
 console.log(result);

@@ -17,7 +17,7 @@ function levelOrder(root) {
 }
 
 /**
- * @param {TreeNode} root
+ * @param {BinaryTreeNode} root
  * @return {number[][]}
  */
 function levelOrderBottom(root) {

@@ -7,7 +7,6 @@ function merge_sort(array) {
 }
 
 function merge(arr1, arr2) {
-  // console.log(arr1, arr2);
   let result = [];
   while (arr1.length > 0 && arr2.length > 0) {
     if (arr1[0] < arr2[0]) {
