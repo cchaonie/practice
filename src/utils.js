@@ -52,6 +52,53 @@ function layerTraversal(root) {
   return result;
 }
 
+/**
+ * 防抖，过一段时间后才会触发
+ * @param {*} fn 
+ */
+function debounce(fn, delay = 300) {
+  let timeout = null;
+  return function () {
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => fn.call(this, arguments), delay);
+  }
+}
+
+/**
+ * 节流 第一次触发就需要等待delay，触发一次后一段时间内不再触发，
+ * 最后一次触发后依旧会执行
+ * @param {*} fn 
+ */
+function throttle(fn, delay = 300) {
+  let canRun = true;
+  return function () {
+    if (!canRun) {
+      return;
+    }
+    canRun = false;
+    return setTimeout(() => {
+      fn.call(this, arguments);
+      canRun = true;
+    }, delay);
+  }
+}
+
+/**
+ * 节流 第一次立即触发，触发一次后一段时间内不再触发，
+ * 不触发后立即不执行
+ * @param {*} fn 
+ */
+function throttleByTimestamp(fn, delay = 300) {
+  let previous = 0;
+  return function() {
+    let now = + new Date();
+    if (now - previous < delay) {
+      fn.call(this, arguments);
+      previous = now;
+    }
+  }
+}
+
 module.exports = {
   toStringWithNull,
   toArray,
