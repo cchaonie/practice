@@ -1,4 +1,4 @@
-const { BinaryTreeNode } = require("./tree/definition");
+const { BinaryTreeNode } = require("./algorithm/tree/definition");
 
 function rmTailNull(array) {
   let len = array.length;

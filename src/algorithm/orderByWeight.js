@@ -1,5 +1,5 @@
 function orderByWeight(input) {
-  let array = input.split(" ");
+  let array = input.trim().split(/\s+/);
   let sumFn = a => a.split("").reduce((sum, c) => {
     sum = sum + parseInt(c, 10);
     return sum;
@@ -13,7 +13,8 @@ function orderByWeight(input) {
       return wa - wb;
     }
   };
-  return array.sort(sortFn).join(" ");
+  let sorted = array.sort(sortFn);
+  return sorted.join(" ");
 }
 
 module.exports = {
