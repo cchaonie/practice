@@ -20,7 +20,7 @@ var findMedianSortedArrays = function (nums1, nums2) {
     let mid = Math.floor(len / 2);
     return (result[mid] + result[mid - 1]) / 2;
   }
-};
+}
 
 module.exports = {
   findMedianSortedArrays
