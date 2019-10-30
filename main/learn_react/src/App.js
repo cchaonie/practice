@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from './Modal.js';
+import Store from './store';
 
 export default class App extends Component {
   render() {
@@ -11,3 +12,8 @@ export default class App extends Component {
     )
   }
 }
+
+Store.dispatch({
+  type: 'A',
+  payload: { count: 100 }
+})
