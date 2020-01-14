@@ -24,9 +24,9 @@ const initialState = {
 
 const loggerA = function ({ getState }) {
   return next => {
-    console.log("loggerA", next)
+    // console.log("loggerA", next)
     return action => {
-      console.log("loggerA", action)
+      // console.log("loggerA", action)
       // console.log("loggerA", getState())
       next(action)
     }
@@ -35,10 +35,10 @@ const loggerA = function ({ getState }) {
 
 const loggerB = function ({ getState }) {
   return next => {
-    console.log("loggerB", next)
+    // console.log("loggerB", next)
     return action => {
       // console.log("loggerB", getState())
-      console.log("loggerB", action)
+      // console.log("loggerB", action)
       next(action)
     }
   }
