@@ -2,8 +2,6 @@ import React, { useRef, FormEvent } from "react";
 
 const isAudio = (fileType: string) => fileType.indexOf("audio") === -1;
 
-const urlPrefix = "https://asr.tencentcloudapi.com"
-
 export default function Content() {
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -53,7 +51,7 @@ export default function Content() {
       );
     });
     Promise.all(reqs).then(responses => {
-        
+
     })
   };
   return (
