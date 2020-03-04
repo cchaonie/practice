@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      window.onerror = function(message, source, lineno, colno, error) {
+        console.error("捕获异常1:", { message, source, lineno, colno, error });
+      };
+      // window.addEventListener("error", function(e) {
+      //     console.error("捕获异常2:", e);
+      // })
+      window.addEventListener(
+        "error",
+        function(e) {
+          console.error("捕获异常3:", e);
+        },
+        true
+      );
+      chris;
+      setTimeout(() => {
+        // leon;
+      }, 1);
+      window.addEventListener("unhandledrejection", function(e) {
+        console.log("捕获异常4:", e);
+      });
+      new Promise((resolve, reject) => reject(111));
+    </script>
+    <img src="hhh.png" />
+  </body>
+</html>

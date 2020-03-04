@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
-import Modal from './Modal';
+import React, { Component } from "react";
+import { ErrorBoundary } from "./ErrorBoundary";
+import Content from "./Content";
 
+@ErrorBoundary
 export default class App extends Component {
   render() {
     return (
-      <div onClick={() => console.log('my descent is clicked')}>
-        <h1>Portal</h1>
-        <Modal></Modal>
+      <div>
+        <h1>upload record file</h1>
+        <Content />
       </div>
-    )
+    );
   }
 }

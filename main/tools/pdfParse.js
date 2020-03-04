@@ -7,14 +7,14 @@ console.log(filePath);
 let dataBuffer = fs.readFileSync(filePath);
 
 pdf(dataBuffer).then(function (data) {
-    console.log(Object.keys(data));
-    Object.keys(data).forEach(key => {
-        console.log(typeof data[key]);
-        if (typeof data[key] == "object") {
-            const value = data[key];
-            Object.keys(value).forEach(key => console.log(typeof value[key]))
-        }
-    })
+    // console.log(Object.keys(data));
+    // Object.keys(data).forEach(key => {
+    //     console.log(typeof data[key]);
+    //     if (typeof data[key] == "object") {
+    //         const value = data[key];
+    //         Object.keys(value).forEach(key => console.log(typeof value[key]))
+    //     }
+    // })
     // // number of pages
     // console.log(data.numpages);
     // // number of rendered pages
@@ -28,5 +28,4 @@ pdf(dataBuffer).then(function (data) {
     // console.log(data.version);
     // // PDF text
     // console.log(data.text);
-
 });

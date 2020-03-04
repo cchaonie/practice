@@ -25,7 +25,7 @@ export default class App extends Component {
   render() {
     const { visible, display } = this.state;
     return (
-      <div >
+      <div>
         <h1>Portal</h1>
         <Modal></Modal>
         <button onClick={() => this.setState({ visible: !this.state.visible })}>toggle</button>

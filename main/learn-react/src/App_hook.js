@@ -4,11 +4,12 @@ import store from './store';
 import Lazy from './Lazy';
 import Card from './component/card';
 import { Loading } from './component/loading';
+import f from './import-es6';
 
 export default function App() {
   const [visible, setVisible] = useState(false);
   const [display, setDisplay] = useState(false);
-
+  console.log(f.children);
   useEffect(() => {
     console.log('parent did mount');
   }, [])

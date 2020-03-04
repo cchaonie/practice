@@ -1,0 +1,24 @@
+{
+  "name": "personal_library",
+  "version": "1.0.0",
+  "description": "a typescript nodejs application",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc -w",
+    "dev": "nodemon ./dist/index.js",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@types/node": "^13.1.7",
+    "jest": "^24.9.0",
+    "nodemon": "^2.0.2",
+    "strip-ansi": "^5.2.0",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {}
+}
