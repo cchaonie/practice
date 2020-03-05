@@ -1,8 +1,8 @@
 import React, { useRef, FormEvent } from "react";
+import { createRecTask, describeTaskStatus, blobToDataUrl } from "./util";
 
-const isAudio = (fileType: string) => fileType.indexOf("audio") === -1;
-
-export default function Content() {
+export function Content() {
+  const isAudio = (fileType: string) => fileType.indexOf("audio") === -1;
   const fileInput = useRef<HTMLInputElement>(null);
 
   const onFileChange = () => {
@@ -14,26 +14,14 @@ export default function Content() {
 
   const submitFile = (e: FormEvent) => {
     e.preventDefault();
-    const fileInput = useRef<HTMLInputElement>(null);
+    debugger;
     const { files } = fileInput.current;
     if (isAudio(files[0].type)) {
       alert("请上传音频文件");
     }
     const file = files[0];
     const fileLength = file.size;
-    const chunkNumber = Math.ceil((fileLength / 5) * 1024 * 1024) + 1;
-    const params = {
-      Action: "CreateRecTask",
-      Version: "2019-06-14",
-      EngineModelType: "16k_zh",
-      ChannelNum: 1,
-      SourceType: 1
-    };
-
-    let url = `${urlPrefix}/?${Object.keys(params).map(
-      key => key + "=" + params[key] + "&"
-    )}`;
-    url = url.substring(0, url.length - 1);
+    const chunkNumber = Math.ceil(fileLength / (5 * 1024 * 1024)) + 1;
     let chunks = [];
     const chunkLength = Math.ceil(fileLength / chunkNumber);
     for (let i = 0; i < chunkNumber; i++) {
@@ -41,18 +29,14 @@ export default function Content() {
       const end = i == chunkNumber - 1 ? fileLength : (i + 1) * chunkLength;
       chunks[i] = file.slice(start, end);
     }
-    const reqs = [];
-    chunks.forEach(c => {
-      reqs.push(
-        fetch(url, {
-          body: c,
-          method: "POST"
-        })
-      );
-    });
-    Promise.all(reqs).then(responses => {
-
-    })
+    Promise.all(chunks.map(c => blobToDataUrl(c).then(createRecTask)))
+      .then(responses => {
+        console.log(responses);
+        Promise.all(
+          responses.map(res => describeTaskStatus(res.Data.TaskId))
+        ).then(console.log);
+      })
+      .catch(e => console.log(e));
   };
   return (
     <form>

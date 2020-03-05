@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ErrorBoundary } from "./ErrorBoundary";
-import Content from "./Content";
+import { Content } from "./Content";
 
 @ErrorBoundary
 export default class App extends Component {
