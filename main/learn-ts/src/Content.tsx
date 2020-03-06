@@ -4,7 +4,7 @@ import { upload } from "./util";
 export function Content() {
   const isAudio = (fileType: string) => fileType.indexOf("audio") === -1;
   const fileInput = useRef<HTMLInputElement>(null);
-  const [translateResult, setTranslateResult] = useState("");
+  const [translateResult, setTranslateResult] = useState([]);
   const onFileChange = () => {
     const { files } = fileInput.current;
     if (isAudio(files[0].type)) {
@@ -47,7 +47,9 @@ export function Content() {
       </button>
       <div>
         <h2>translateResult</h2>
-        <div>{translateResult}</div>
+        {translateResult.map((r, i) => (
+          <div key={i}>{r.Data.Result}</div>
+        ))}
       </div>
     </form>
   );

@@ -27,23 +27,9 @@ function handleUpload(req: IncomingMessage, res: ServerResponse) {
   });
   req.on("end", () => {
     let chunkBufs = chunkSlice(Buffer.concat(chunk), 0.5 * 1024 * 1024);
-    // createRecTask(chunkBufs[0].toString("base64"))
-    //   .then(result => {
-    //     console.log(result);
-    //     retryDescribeTaskStatus(result.Data.TaskId).then(result => {
-    //       console.log(result);
-    //       res.writeHead(200, { "content-type": "application/json" });
-    //       res.end(JSON.stringify(result));
-    //     });
-    //   })
-    //   .catch(e => {
-    //     res.writeHead(500, { "content-type": "text/html" });
-    //     res.end("<h1>500 Internal Server Error</h1>");
-    //     console.log(e)
-    //   });
     Promise.all(
       chunkBufs
-        .filter((c, i) => i < 5)
+        .filter((c, i) => i < 1)
         .map(buf => createRecTask(buf.toString("base64")))
     )
       .then(responses => {
@@ -51,7 +37,7 @@ function handleUpload(req: IncomingMessage, res: ServerResponse) {
         Promise.all(
           responses.map(res => retryDescribeTaskStatus(res.Data.TaskId))
         ).then(result => {
-          console.log(result);
+          console.log(`----------get translate result: ${result.toString()}-----------`);
           res.writeHead(200, {
             "content-type": "application/json",
             "Access-Control-Allow-Origin": "*"
@@ -59,7 +45,14 @@ function handleUpload(req: IncomingMessage, res: ServerResponse) {
           res.end(JSON.stringify(result));
         });
       })
-      .catch(e => console.log(e));
+      .catch(e => {
+        console.log(e);
+        res.writeHead(404, {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        });
+        res.end("<h1>404 Not FOUND</h1>");
+      });
   });
 }
 
