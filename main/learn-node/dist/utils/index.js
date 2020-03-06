@@ -55,3 +55,27 @@ function describeTaskStatus(TaskId) {
     });
 }
 exports.describeTaskStatus = describeTaskStatus;
+function retry(fn, test, delay) {
+    var self = this;
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        return new Promise(function (resolve, reject) {
+            var attempt = function () {
+                fn.apply(self, args).then(function (data) {
+                    console.log(data);
+                    if (test(data)) {
+                        resolve(data);
+                    }
+                    else {
+                        setTimeout(attempt, delay);
+                    }
+                }).catch(reject);
+            };
+            attempt();
+        });
+    };
+}
+exports.retry = retry;

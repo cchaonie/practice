@@ -18,7 +18,7 @@ let clientProfile = new ClientProfile();
 clientProfile.httpProfile = httpProfile;
 let client = new AsrClient(cred, "", clientProfile);
 
-export function createRecTask(file: string) {
+export function createRecTask(file: string): Promise<any> {
   console.log("---------------request: createRecTask---------------");
   let params = {
     Data: file,
@@ -42,7 +42,7 @@ export function createRecTask(file: string) {
   });
 }
 
-export function describeTaskStatus(TaskId) {
+export function describeTaskStatus(TaskId): Promise<any> {
   console.log("---------------request: describeTaskStatus---------------");
   const params = {
     TaskId
@@ -58,4 +58,27 @@ export function describeTaskStatus(TaskId) {
       resolve(JSON.parse(res.to_json_string()));
     });
   });
+}
+
+export function retry(
+  fn: (...args) => Promise<any>,
+  test: (condition: any) => boolean,
+  delay: number
+) {
+  const self = this;
+  return (...args) => {
+    return new Promise((resolve, reject) => {
+      const attempt = () => {
+        fn.apply(self, args).then(data => {
+          console.log(data);
+          if (test(data)) {
+            resolve(data);
+          } else {
+            setTimeout(attempt, delay);
+          }
+        }).catch(reject);
+      }
+      attempt();
+    })
+  }
 }

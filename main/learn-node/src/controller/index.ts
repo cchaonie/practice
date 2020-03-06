@@ -1,6 +1,9 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { parse } from "url";
-import { createRecTask, describeTaskStatus } from "../utils";
+import { createRecTask, describeTaskStatus, retry } from "../utils";
+
+const isRealResult = res => res.Data.Status === 2;
+const retryDescribeTaskStatus = retry(describeTaskStatus, isRealResult, 30000);
 
 export function controller(req: IncomingMessage, res: ServerResponse) {
   try {
@@ -24,28 +27,44 @@ function handleUpload(req: IncomingMessage, res: ServerResponse) {
   });
   req.on("end", () => {
     let chunkBufs = chunkSlice(Buffer.concat(chunk), 0.5 * 1024 * 1024);
-    createRecTask(chunkBufs[0].toString("base64"))
-      .then(res => {
-        console.log(res);
-        describeTaskStatus(res.Data.TaskId).then(res => console.log(res));
-      })
-      .catch(e => console.log(e));
-    // Promise.all(chunkBufs.map(buf => createRecTask(buf.toString("base64"))))
-    // .then(responses => {
-    //     console.log("**********get remote response************");
-    //     console.log(responses[0])
-    //     Promise.all(
-    //       responses.map(res => describeTaskStatus(res.Data.TaskId))
-    //     ).then(result => {
-    //         res.writeHead(200, { 'content-type': 'application/json' });
-    //         res.end(JSON.stringify(result));
+    // createRecTask(chunkBufs[0].toString("base64"))
+    //   .then(result => {
+    //     console.log(result);
+    //     retryDescribeTaskStatus(result.Data.TaskId).then(result => {
+    //       console.log(result);
+    //       res.writeHead(200, { "content-type": "application/json" });
+    //       res.end(JSON.stringify(result));
     //     });
     //   })
-    //   .catch(e => console.log(e));
+    //   .catch(e => {
+    //     res.writeHead(500, { "content-type": "text/html" });
+    //     res.end("<h1>500 Internal Server Error</h1>");
+    //     console.log(e)
+    //   });
+    Promise.all(
+      chunkBufs
+        .filter((c, i) => i < 5)
+        .map(buf => createRecTask(buf.toString("base64")))
+    )
+      .then(responses => {
+        console.log("**********get remote response************");
+        Promise.all(
+          responses.map(res => retryDescribeTaskStatus(res.Data.TaskId))
+        ).then(result => {
+          console.log(result);
+          res.writeHead(200, {
+            "content-type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          });
+          res.end(JSON.stringify(result));
+        });
+      })
+      .catch(e => console.log(e));
   });
 }
 
 function chunkSlice(buf: Buffer, size: number): Buffer[] {
+  console.log(buf.length);
   let chunks = [];
   const chunkNumber = Math.ceil(buf.length / size) + 1;
   const chunkLength = Math.ceil(buf.length / chunkNumber);
