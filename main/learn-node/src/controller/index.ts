@@ -26,7 +26,7 @@ function handleUpload(req: IncomingMessage, res: ServerResponse) {
     let chunkBufs = chunkSlice(Buffer.concat(chunk), 0.5 * 1024 * 1024);
     createRecTask(chunkBufs[0].toString("base64"))
       .then(res => {
-          console.log(res);
+        console.log(res);
         describeTaskStatus(res.Data.TaskId).then(res => console.log(res));
       })
       .catch(e => console.log(e));
