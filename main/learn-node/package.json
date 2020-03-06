@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc -w",
-    "dev": "nodemon ./dist/index.js",
+    "dev": "nodemon --inspect ./dist/index.js",
     "test": "jest"
   },
   "keywords": [],
@@ -20,5 +20,11 @@
     "strip-ansi": "^5.2.0",
     "typescript": "^3.6.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/crypto-js": "^3.1.43",
+    "crypto-js": "^4.0.0",
+    "moment": "^2.24.0",
+    "sha256": "^0.2.0",
+    "tencentcloud-sdk-nodejs": "^3.0.125"
+  }
 }
