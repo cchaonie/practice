@@ -18,7 +18,7 @@ let clientProfile = new ClientProfile();
 clientProfile.httpProfile = httpProfile;
 let client = new AsrClient(cred, "", clientProfile);
 
-export function createRecTask(file: string): Promise<any> {
+ function createRecTask(file) {
   console.log("---------------request: createRecTask---------------");
   let params = {
     Data: file,
@@ -42,7 +42,7 @@ export function createRecTask(file: string): Promise<any> {
   });
 }
 
-export function describeTaskStatus(TaskId): Promise<any> {
+ function describeTaskStatus(TaskId) {
   console.log("---------------request: describeTaskStatus---------------");
   const params = {
     TaskId
@@ -60,25 +60,45 @@ export function describeTaskStatus(TaskId): Promise<any> {
   });
 }
 
-export function retry(
-  fn: (...args) => Promise<any>,
-  test: (condition: any) => boolean,
-  delay: number
-) {
+ function retry(fn, test, delay) {
   const self = this;
   return (...args) => {
     return new Promise((resolve, reject) => {
       const attempt = () => {
-        fn.apply(self, args).then(data => {
-          console.log(data);
-          if (test(data)) {
-            resolve(data);
-          } else {
-            setTimeout(attempt, delay);
-          }
-        }).catch(reject);
-      }
+        fn.apply(self, args)
+          .then(data => {
+            console.log(data);
+            if (test(data)) {
+              resolve(data);
+            } else {
+              setTimeout(attempt, delay);
+            }
+          })
+          .catch(reject);
+      };
       attempt();
-    })
+    });
+  };
+}
+
+function chunkSlice(buf, size) {
+  console.log(buf.length);
+  let chunks = [];
+  const chunkNumber = Math.ceil(buf.length / size) + 1;
+  const chunkLength = Math.ceil(buf.length / chunkNumber);
+  let start = 0;
+  let end = chunkLength;
+  while (end <= buf.length) {
+    chunks.push(buf.slice(start, end));
+    start = end;
+    end += chunkLength;
   }
+  return chunks;
+}
+
+module.exports = {
+  createRecTask,
+  describeTaskStatus,
+  retry,
+  chunkSlice
 }

@@ -1,5 +1,5 @@
-import { createServer } from 'http';
-import { controller } from './controller';
+const { createServer } = require( 'http');
+const { controller } = require('./controller');
 
 const port = process.env.PORT || 8181;
 

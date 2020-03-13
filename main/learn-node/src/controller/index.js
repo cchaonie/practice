@@ -1,25 +1,46 @@
-import { IncomingMessage, ServerResponse } from "http";
-import { parse } from "url";
-import { createRecTask, describeTaskStatus, retry } from "../utils";
-
+const { parse } = require("url");
+const path = require('path');
+const {
+  createRecTask,
+  describeTaskStatus,
+  retry,
+  chunkSlice
+} = require("../utils");
+const { renderFile } = require("ejs");
 const isRealResult = res => res.Data.Status === 2;
 const retryDescribeTaskStatus = retry(describeTaskStatus, isRealResult, 30000);
 
-export function controller(req: IncomingMessage, res: ServerResponse) {
-  try {
-    const url = parse(req.url, true);
-    if (url.path === "/upload") {
-      handleUpload(req, res);
-    } else {
-      throw new Error("Page Not Found");
+module.exports = {
+  controller: function(req, res) {
+    try {
+      const url = parse(req.url, true);
+      if (url.path === "/upload") {
+        handleUpload(req, res);
+      } else if (url.path === "/") {
+        renderFile(
+          path.resolve(__dirname, "../view/index.ejs"),
+          {
+            title: "learn node",
+            data: "please select a record file"
+          },
+          (error, data) => {
+            if (error) {
+              console.log(error);
+            }
+            res.end(data);
+          }
+        );
+      } else {
+        throw new Error("Page Not Found");
+      }
+    } catch (error) {
+      res.writeHead(404, { "content-type": "text/html" });
+      res.end("<h1>404 Not FOUND</h1>");
     }
-  } catch (error) {
-    res.writeHead(404, { "content-type": "text/html" });
-    res.end("<h1>404 Not FOUND</h1>");
   }
-}
+};
 
-function handleUpload(req: IncomingMessage, res: ServerResponse) {
+function handleUpload(req, res) {
   const chunk = [];
   req.on("data", data => {
     // console.log(`Received ${chunk.length} bytes of data.`);
@@ -37,7 +58,9 @@ function handleUpload(req: IncomingMessage, res: ServerResponse) {
         Promise.all(
           responses.map(res => retryDescribeTaskStatus(res.Data.TaskId))
         ).then(result => {
-          console.log(`----------get translate result: ${result.toString()}-----------`);
+          console.log(
+            `----------get translate result: ${result.toString()}-----------`
+          );
           res.writeHead(200, {
             "content-type": "application/json",
             "Access-Control-Allow-Origin": "*"
@@ -54,19 +77,4 @@ function handleUpload(req: IncomingMessage, res: ServerResponse) {
         res.end("<h1>404 Not FOUND</h1>");
       });
   });
-}
-
-function chunkSlice(buf: Buffer, size: number): Buffer[] {
-  console.log(buf.length);
-  let chunks = [];
-  const chunkNumber = Math.ceil(buf.length / size) + 1;
-  const chunkLength = Math.ceil(buf.length / chunkNumber);
-  let start = 0;
-  let end = chunkLength;
-  while (end <= buf.length) {
-    chunks.push(buf.slice(start, end));
-    start = end;
-    end += chunkLength;
-  }
-  return chunks;
 }

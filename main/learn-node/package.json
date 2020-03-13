@@ -2,10 +2,10 @@
   "name": "personal_library",
   "version": "1.0.0",
   "description": "a typescript nodejs application",
-  "main": "./dist/index.js",
+  "main": "./src/index.js",
   "scripts": {
     "build": "tsc -w",
-    "dev": "nodemon --inspect ./dist/index.js",
+    "dev": "nodemon --inspect ./src/index.js",
     "test": "jest"
   },
   "keywords": [],
@@ -22,8 +22,12 @@
   },
   "dependencies": {
     "@types/crypto-js": "^3.1.43",
+    "@types/ejs": "^3.0.1",
     "crypto-js": "^4.0.0",
+    "ejs": "^3.0.1",
     "moment": "^2.24.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "sha256": "^0.2.0",
     "tencentcloud-sdk-nodejs": "^3.0.125"
   }
