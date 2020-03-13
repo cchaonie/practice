@@ -1,44 +1,51 @@
-const { parse } = require("url");
-const path = require('path');
-const {
-  createRecTask,
-  describeTaskStatus,
-  retry,
-  chunkSlice
-} = require("../utils");
-const { renderFile } = require("ejs");
+import { parse } from "url";
+import path from "path";
+import React from "react";
+import { renderToString } from "react-dom/server";
+import { renderFile } from "ejs";
+import { App } from "../view/react";
+import { createRecTask, describeTaskStatus, retry, chunkSlice } from "../utils";
+
 const isRealResult = res => res.Data.Status === 2;
 const retryDescribeTaskStatus = retry(describeTaskStatus, isRealResult, 30000);
 
-module.exports = {
-  controller: function(req, res) {
-    try {
-      const url = parse(req.url, true);
-      if (url.path === "/upload") {
-        handleUpload(req, res);
-      } else if (url.path === "/") {
-        renderFile(
-          path.resolve(__dirname, "../view/index.ejs"),
-          {
-            title: "learn node",
-            data: "please select a record file"
-          },
-          (error, data) => {
-            if (error) {
-              console.log(error);
-            }
-            res.end(data);
+export default function(req, res) {
+  try {
+    const url = parse(req.url, true);
+    if (url.path === "/upload") {
+      handleUpload(req, res);
+    } else if (url.path === "/ejs") {
+      renderFile(
+        path.resolve(__dirname, "../view/index.ejs"),
+        {
+          title: "learn node",
+          data: "please select a record file"
+        },
+        (error, data) => {
+          if (error) {
+            console.log(error);
           }
-        );
-      } else {
-        throw new Error("Page Not Found");
-      }
-    } catch (error) {
-      res.writeHead(404, { "content-type": "text/html" });
-      res.end("<h1>404 Not FOUND</h1>");
+          res.writeHead(200, {
+            "Content-Type": "text/html"
+          });
+          res.end(data);
+        }
+      );
+    } else if (url.path === "/react") {
+      res.writeHead(200, {
+        "Content-Type": "text/html"
+      });
+      const html = renderToString(<App data={"please select a record file"} />);
+      res.end(html);
+    } else {
+      throw new Error("Page Not Found");
     }
+  } catch (error) {
+    console.log(error);
+    res.writeHead(404, { "content-type": "text/html" });
+    res.end("<h1>404 Not FOUND</h1>");
   }
-};
+}
 
 function handleUpload(req, res) {
   const chunk = [];
