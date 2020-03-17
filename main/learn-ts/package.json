@@ -8,8 +8,10 @@
     "build": "webpack"
   },
   "dependencies": {
+    "@types/react-transition-group": "^4.2.4",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "react-transition-group": "^4.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",

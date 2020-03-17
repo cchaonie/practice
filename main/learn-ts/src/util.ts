@@ -15,5 +15,7 @@ export function upload(file) {
     url: "upload",
     method: "POST",
     body: file
-  })
+  });
 }
+
+
