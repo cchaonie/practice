@@ -7,8 +7,13 @@ exports.createRecTask = createRecTask;
 exports.describeTaskStatus = describeTaskStatus;
 exports.retry = retry;
 exports.chunkSlice = chunkSlice;
+exports.getManifest = void 0;
 
 var _tencentcloudSdkNodejs = _interopRequireDefault(require("tencentcloud-sdk-nodejs"));
+
+var _fs = _interopRequireDefault(require("fs"));
+
+var _path = _interopRequireDefault(require("path"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -106,3 +111,13 @@ function chunkSlice(buf, size) {
 
   return chunks;
 }
+
+const getManifest = () => {
+  console.log(__dirname);
+
+  const content = _fs.default.readFileSync(_path.default.resolve(__dirname, "../../dist/manifest.json"));
+
+  return JSON.parse(content);
+};
+
+exports.getManifest = getManifest;

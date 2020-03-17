@@ -1,4 +1,7 @@
 import tencentcloud from "tencentcloud-sdk-nodejs";
+import fs from "fs";
+import path from "path";
+
 const AsrClient = tencentcloud.asr.v20190614.Client;
 const models = tencentcloud.asr.v20190614.Models;
 
@@ -17,7 +20,7 @@ let clientProfile = new ClientProfile();
 clientProfile.httpProfile = httpProfile;
 let client = new AsrClient(cred, "", clientProfile);
 
-function createRecTask(file) {
+export function createRecTask(file) {
   console.log("---------------request: createRecTask---------------");
   let params = {
     Data: file,
@@ -41,7 +44,7 @@ function createRecTask(file) {
   });
 }
 
-function describeTaskStatus(TaskId) {
+export function describeTaskStatus(TaskId) {
   console.log("---------------request: describeTaskStatus---------------");
   const params = {
     TaskId
@@ -59,7 +62,7 @@ function describeTaskStatus(TaskId) {
   });
 }
 
-function retry(fn, test, delay) {
+export function retry(fn, test, delay) {
   const self = this;
   return (...args) => {
     return new Promise((resolve, reject) => {
@@ -80,7 +83,7 @@ function retry(fn, test, delay) {
   };
 }
 
-function chunkSlice(buf, size) {
+export function chunkSlice(buf, size) {
   console.log(buf.length);
   let chunks = [];
   const chunkNumber = Math.ceil(buf.length / size) + 1;
@@ -95,4 +98,8 @@ function chunkSlice(buf, size) {
   return chunks;
 }
 
-export { createRecTask, describeTaskStatus, retry, chunkSlice };
+export const getManifest = () => {
+  console.log(__dirname)
+  const content = fs.readFileSync(path.resolve(__dirname, "../../dist/manifest.json"));
+  return JSON.parse(content);
+};

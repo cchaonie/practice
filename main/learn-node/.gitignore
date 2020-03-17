@@ -17,3 +17,5 @@ package-lock.json
 /.vscode
 /next.config.js
 /coverage
+/dist
+/lib

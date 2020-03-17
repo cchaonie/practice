@@ -9,13 +9,9 @@ var _url = require("url");
 
 var _path = _interopRequireDefault(require("path"));
 
-var _react = _interopRequireDefault(require("react"));
-
-var _server = require("react-dom/server");
+var _fs = _interopRequireDefault(require("fs"));
 
 var _ejs = require("ejs");
-
-var _react2 = require("../view/react");
 
 var _utils = require("../utils");
 
@@ -49,12 +45,10 @@ function _default(req, res) {
       res.writeHead(200, {
         "Content-Type": "text/html"
       });
-      const html = (0, _server.renderToString)(_react.default.createElement(_react2.App, {
-        data: "please select a record file"
-      }));
-      res.end(html);
+      const manifest = (0, _utils.getManifest)();
+      res.end(_fs.default.readFileSync(_path.default.resolve(__dirname, "../../dist", manifest["index.html"])));
     } else {
-      throw new Error("Page Not Found");
+      throw new Error(`${url.path} Not Found`);
     }
   } catch (error) {
     console.log(error);

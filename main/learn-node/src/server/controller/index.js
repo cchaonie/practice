@@ -1,10 +1,8 @@
 import { parse } from "url";
 import path from "path";
-import React from "react";
-import { renderToString } from "react-dom/server";
+import fs from "fs";
 import { renderFile } from "ejs";
-import { App } from "../view/react";
-import { createRecTask, describeTaskStatus, retry, chunkSlice } from "../utils";
+import { createRecTask, describeTaskStatus, retry, chunkSlice, getManifest } from "../utils";
 
 const isRealResult = res => res.Data.Status === 2;
 const retryDescribeTaskStatus = retry(describeTaskStatus, isRealResult, 30000);
@@ -35,10 +33,10 @@ export default function(req, res) {
       res.writeHead(200, {
         "Content-Type": "text/html"
       });
-      const html = renderToString(<App data={"please select a record file"} />);
-      res.end(html);
+      const manifest = getManifest();
+      res.end(fs.readFileSync(path.resolve(__dirname, "../../dist", manifest["index.html"])));
     } else {
-      throw new Error("Page Not Found");
+      throw new Error(`${url.path} Not Found`);
     }
   } catch (error) {
     console.log(error);
