@@ -1,8 +1,14 @@
 import { parse } from "url";
-import path from "path";
-import fs from "fs";
-import { renderFile } from "ejs";
-import { createRecTask, describeTaskStatus, retry, chunkSlice, getManifest } from "../utils";
+import React from "react";
+import { renderToString } from "react-dom/server";
+import {
+  createRecTask,
+  describeTaskStatus,
+  retry,
+  chunkSlice,
+  getManifest
+} from "../utils";
+import { App } from "../../web/index";
 
 const isRealResult = res => res.Data.Status === 2;
 const retryDescribeTaskStatus = retry(describeTaskStatus, isRealResult, 30000);
@@ -12,29 +18,21 @@ export default function(req, res) {
     const url = parse(req.url, true);
     if (url.path === "/upload") {
       handleUpload(req, res);
-    } else if (url.path === "/ejs") {
-      renderFile(
-        path.resolve(__dirname, "../view/index.ejs"),
-        {
-          title: "learn node",
-          data: "please select a record file"
-        },
-        (error, data) => {
-          if (error) {
-            console.log(error);
-          }
-          res.writeHead(200, {
-            "Content-Type": "text/html"
-          });
-          res.end(data);
-        }
-      );
-    } else if (url.path === "/react") {
+    } else if (url.path === "/home") {
+      return res.render("home", {
+        title: "pure ejs render",
+        data: "hello EJS"
+      });
+    } else if (url.path === "/index") {
       res.writeHead(200, {
         "Content-Type": "text/html"
       });
       const manifest = getManifest();
-      res.end(fs.readFileSync(path.resolve(__dirname, "../../dist", manifest["index.html"])));
+      return res.render("index", {
+        PUBLIC_URL: "/",
+        manifest,
+        appHtml: renderToString(<App />)
+      });
     } else {
       throw new Error(`${url.path} Not Found`);
     }

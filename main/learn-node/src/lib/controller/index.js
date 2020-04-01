@@ -11,9 +11,13 @@ var _path = _interopRequireDefault(require("path"));
 
 var _fs = _interopRequireDefault(require("fs"));
 
-var _ejs = require("ejs");
+var _react = _interopRequireDefault(require("react"));
+
+var _server = require("react-dom/server");
 
 var _utils = require("../utils");
+
+var _index = require("../../web/index.jsx");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27,26 +31,21 @@ function _default(req, res) {
 
     if (url.path === "/upload") {
       handleUpload(req, res);
-    } else if (url.path === "/ejs") {
-      (0, _ejs.renderFile)(_path.default.resolve(__dirname, "../view/index.ejs"), {
-        title: "learn node",
-        data: "please select a record file"
-      }, (error, data) => {
-        if (error) {
-          console.log(error);
-        }
-
-        res.writeHead(200, {
-          "Content-Type": "text/html"
-        });
-        res.end(data);
+    } else if (url.path === "/home") {
+      return res.render("home", {
+        title: "pure ejs render",
+        data: "hello EJS"
       });
-    } else if (url.path === "/react") {
+    } else if (url.path === "/index") {
       res.writeHead(200, {
         "Content-Type": "text/html"
       });
       const manifest = (0, _utils.getManifest)();
-      res.end(_fs.default.readFileSync(_path.default.resolve(__dirname, "../../dist", manifest["index.html"])));
+      return res.render("index", {
+        PUBLIC_URL: "/",
+        manifest,
+        appHtml: (0, _server.renderToString)(_react.default.createElement(_index.App, null))
+      });
     } else {
       throw new Error(`${url.path} Not Found`);
     }

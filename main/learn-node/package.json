@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "a typescript nodejs application",
   "scripts": {
-    "build:s": "babel ./src/server -d ./lib -w",
-    "build:cdev": "cross-env NODE_ENV=dev webpack --config webpack.client.js",
+    "build:s": "tsc -w",
+    "build:cdev": "cross-env NODE_ENV=dev webpack --config webpack.client.js -w",
     "build:cprod": "cross-env NODE_ENV=prod webpack --config webpack.client.js",
-    "dev": "nodemon --inspect ./lib/index.js",
+    "dev": "nodemon --inspect src/lib/index.js",
     "test": "jest"
   },
   "keywords": [],

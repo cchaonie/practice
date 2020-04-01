@@ -3,8 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "es5",
     "baseUrl": ".",
-    "outDir": "./dist",
-    "jsx": "react"
+    "outDir": "./src/lib",
   },
   "exclude": [
     "node_modules"
