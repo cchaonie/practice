@@ -36,6 +36,15 @@ $menuColor: #eef1f6;
         flex-grow: 1;
         height: $headerHeight;
         background: $menuColor;
+
+        a {
+          display: inline-block;
+          height: 100%;
+        }
+      }
+      .topMenu {
+        display: flex;
+        justify-content: flex-end;
       }
     }
   }
