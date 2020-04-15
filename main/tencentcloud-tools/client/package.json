@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "tencentcloud-tools-client",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev webpack-dev-server",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server",
     "test": "jest --watch",
-    "build": "cross-env NODE_ENV=prod webpack"
+    "build": "cross-env NODE_ENV=production webpack"
   },
   "dependencies": {
     "axios": "^0.19.2",
