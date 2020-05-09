@@ -1,0 +1,16 @@
+{
+  "name": "algorithm",
+  "version": "1.0.0",
+  "description": "algorithm pratice",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "data",
+    "structure",
+    "algorithm"
+  ],
+  "author": "",
+  "license": "MIT"
+}
