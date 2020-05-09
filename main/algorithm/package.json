@@ -1,16 +1,28 @@
 {
   "name": "algorithm",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "algorithm pratice",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "keywords": [
-    "data",
-    "structure",
+    "data-structure",
     "algorithm"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/jest": "^25.2.1",
+    "babel-jest": "^26.0.1",
+    "jest": "~24.9.0",
+    "semver": "~7.3.2",
+    "ts-jest": "^25.5.0",
+    "typescript": "~3.8.0"
+  }
 }
