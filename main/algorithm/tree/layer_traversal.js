@@ -1,6 +1,7 @@
 function layerTraversal(root) {
   if (!root) return [];
-  let result = [], queue = [];
+  let result = [],
+    queue = [];
   queue.push(root);
   while (queue.length) {
     let front = queue.shift();

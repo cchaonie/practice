@@ -1,3 +1,5 @@
+const BinarySearchTree = require("./BinarySearchTree");
+
 function BinaryTreeNode(val) {
   this.val = val;
   this.left = this.right = this.next =  null;
@@ -34,7 +36,7 @@ function layerTraversal(root) {
   queue.push(root);
   while (queue.length) {
     let front = queue.shift();
-    result.push(front);
+    result.push(front.val);
     if (front.left) queue.push(front.left);
     if (front.right) queue.push(front.right);
   }
@@ -61,7 +63,23 @@ function TreeNode(val) {
   this.nextSibling = null;
 }
 
+function getBSTFromArray(arr) {
+  if (!Array.isArray(arr)) return null;
+  let t = new BinarySearchTree();
+  for (let a of arr) {
+    t.insert(a);
+  }
+  return t;
+}
+
+function printBSTAsArray(bst) {
+  console.log(layerTraversal(bst));
+}
+
 module.exports = {
   BinaryTreeNode,
-  binaryTreeLayerGenerator
+  binaryTreeLayerGenerator,
+  getBSTFromArray,
+  printBSTAsArray,
+  layerTraversal
 }
