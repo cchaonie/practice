@@ -142,4 +142,42 @@ BinarySearchTree.prototype.removeNode = function (root, val) {
   return root;
 };
 
+BinarySearchTree.prototype.deepFirstTraversal = function(cb) {
+  deepFirstTraversal(this.root, cb);
+}
+
+BinarySearchTree.prototype.breathFirstTraversal = function(cb) {
+  breathFirstTraversal(this.root, cb);
+}
+
+function deepFirstTraversal(root, cb) {
+  if (!root) return;
+  let stack = [];
+  let current = null;
+  stack.push(root);
+  while (stack.length) {
+    current = stack.pop();
+    cb(current);
+    if (current.right) {
+      stack.push(current.right);
+    }
+    if (current.left) {
+      stack.push(current.left);
+    }
+  }
+}
+
+function breathFirstTraversal(root, cb) {
+  if (!root) return;
+  let queue = [];
+  let current = null;
+  queue.push(root);
+  while(queue.length) {
+    current = queue.shift();
+    cb(current);
+    if (current.left) queue.push(current.left);
+    if (current.right) queue.push(current.right);
+  }
+}
+
 module.exports = BinarySearchTree;

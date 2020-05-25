@@ -43,19 +43,22 @@ function insertNode(root, key) {
 
 function removeNode(root, key) {
   if (!root) return null;
+  let retNode = root;
   if (root.key === key) {
     // 要删除的节点为当前节点
     let prev = null;
     let current = null;
     if (!root.left && !root.right) {
       // 没有左子树和右子树
-      return null;
+      retNode = null;
     } else if (!root.left) {
       // 仅仅没有左子树
-      return root.right;
+      retNode = root.right;
+      root.right = null;
     } else if (!root.right) {
       // 仅仅没有右子树
-      return root.left;
+      retNode = root.left;
+      root.left = null;
     } else {
       // 既有左子树，又有右子树，用右子树的最小节点作为新的根节点
       prev = root;
@@ -68,34 +71,44 @@ function removeNode(root, key) {
         // 右子树的左子树的最左边节点被拿走，此时只可能是右子树的右子树比左子树的高度大
         root.key = current.key;
         prev.left = current.right;
-
-        prev = root;
-        current = root.right;
-        while(current) {
-          if (getHeight(current.right) - getHeight(current.left) == 2) {
-            prev.right = rotateRR(current);
-          } else {
-            prev = current;
-            current = current.left;
-          }
-        }
       } else {
         // 根节点的右子树只有一个节点
         root.key = current.key;
         root.right = null;
-        if (getHeight(root.left) - getHeight(root.right) == 2) {
-          root = rotateLL(root);
-        }
       }
+      retNode = root;
     }
   } else if (root.key > key) {
     //当前节点大于要删除的节点，从左子树中删除
-    root.left = this.removeNode(root.left, key);
+    root.left = removeNode(root.left, key);
+    retNode = root;
   } else {
     //当前节点小于要删除的节点，从右子树中删除
-    root.right = this.remove(root.right, key);
+    root.right = removeNode(root.right, key);
+    retNode = root;
   }
-  return root;
+  if (!retNode) return null;
+  if (getHeight(retNode.left) - getHeight(retNode.right) == 2) {
+    // 左子树比右子树高，则需要调整左子树或者根节点
+    if (getHeight(retNode.left.left) === getHeight(retNode.right)) {
+      retNode.left = rotateLR(retNode.left);
+      retNode = rotateLL(retNode);
+    }
+    if (getHeight(retNode.left.right) === getHeight(retNode.right)) {
+      retNode = rotateLL(retNode);
+    }
+  }
+  if (getHeight(retNode.right) - getHeight(retNode.left) == 2) {
+    // 右子树比左子树高，则需要调整右子树或者根节点
+    if (getHeight(retNode.right.right) === getHeight(retNode.left)) {
+      retNode.right = rotateRL(retNode.right);
+      retNode = rotateRR(retNode);
+    }
+    if (getHeight(retNode.right.left) === getHeight(retNode.left)) {
+      retNode = rotateRR(retNode);
+    }
+  }
+  return retNode;
 }
 
 function rotateLL(root) {
@@ -132,5 +145,5 @@ module.exports = {
   AVLTreeNode,
   searchNode,
   insertNode,
-  removeNode
+  removeNode,
 };

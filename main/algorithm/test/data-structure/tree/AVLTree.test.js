@@ -16,13 +16,24 @@ describe("AVLTreeNode", () => {
     expect(layerTraverse(avl)).toEqual([4, 2, 5, 1, 3, 6]);
   });
 
-  it("should insert, then remove correctlly", () => {
-    let avl = new AVLTreeNode(40);
-    [10, 70, 5, 80, 50, 90].forEach((n) => {
-      avl = insertNode(avl, n);
-    });
-    console.log(layerTraverse(avl));
-    avl = removeNode(avl, 40);
-    expect(layerTraverse(avl)).toEqual([50, 10, 80, 5, 70, 90]);
-  });
 });
+
+describe("AVLTreeNode", () => {
+    it("should remove correctlly when remove left child leaf node", () => {
+      let avl = new AVLTreeNode(40);
+      [10, 50, 60].forEach((n) => {
+        avl = insertNode(avl, n);
+      });
+      avl = removeNode(avl, 10);
+      expect(layerTraverse(avl)).toEqual([50, 40, 60]);
+    });
+
+    it("should remove correctlly when remove right child leaf node", () => {
+        let avl = new AVLTreeNode(40);
+        [10, 50, 5].forEach((n) => {
+          avl = insertNode(avl, n);
+        });
+        avl = removeNode(avl, 50);
+        expect(layerTraverse(avl)).toEqual([10, 5, 40]);
+      });
+  });
