@@ -1,4 +1,4 @@
-import "./index.scss";
+import "./index.css";
 
 window.addEventListener('load', function () {
   console.log('onload');
