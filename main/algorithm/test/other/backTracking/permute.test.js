@@ -1,4 +1,7 @@
-const { permute, permuteUnique } = require("../../src/other/permute");
+const {
+  permute,
+  permuteUnique,
+} = require("../../../src/other/backTracking/permute");
 
 describe("permute", () => {
   it("should pass", () => {
@@ -22,5 +25,3 @@ describe("permuteUnique", () => {
     ]);
   });
 });
-
-
