@@ -1,3 +1,7 @@
+/**
+ * 快速排序
+ * @param {*} array 
+ */
 function quick_sort(array) {
   let length = array.length
   if (length == 0) return;
