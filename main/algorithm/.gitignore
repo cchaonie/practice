@@ -1,9 +1,0 @@
-node_modules
-release
-coverage
-dist
-.idea
-.next
-.DS_Store
-.vs
-.vscode
