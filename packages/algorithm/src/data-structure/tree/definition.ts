@@ -29,15 +29,7 @@ function insertFromArray(root, val, index) {
   return root;
 }
 
-function binaryTreeLayerGenerator(array) {
-  if (!array.length) return null;
-  let root = new BinaryTreeNode(array[0]),
-    i = 1;
-  while (i < array.length) {
-    insertFromArray(root, array[i], ++i);
-  }
-  return root;
-}
+
 
 /**
  * 使用儿子兄弟表示法 表示一棵树
@@ -49,14 +41,7 @@ function TreeNode(val) {
   this.nextSibling = null;
 }
 
-function getBSTFromArray(arr) {
-  if (!Array.isArray(arr)) return null;
-  let t = new BinarySearchTree();
-  for (let a of arr) {
-    t.insert(a);
-  }
-  return t;
-}
+
 
 function printBSTAsArray(bst) {
   console.log(layerTraversal(bst));
