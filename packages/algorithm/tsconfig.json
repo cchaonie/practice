@@ -4,8 +4,16 @@
         "module": "commonjs",
         "target": "es2019",
         "strict": true,
+        "baseUrl": ".",
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true
-    }
+        "forceConsistentCasingInFileNames": true,
+        "paths": {
+            "@data-structure/*": ["src/data-structure/*"],
+            "@other/*": ["src/other/*"],
+            "@search/*": ["src/search/*"],
+            "@sort/*": ["src/sort/*"]
+        }
+    },
+    "exclude": ["node_modules"]
 }
