@@ -1,4 +1,6 @@
-import { version } from "../package.json";
+import { helloRollup } from "./foo";
+
 export default function () {
-    console.log("version " + version);
+    // import("./foo.js").then(({ default: foo }) => console.log(foo));
+    console.log(helloRollup)
 }

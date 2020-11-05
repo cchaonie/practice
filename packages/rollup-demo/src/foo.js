@@ -1,1 +1,5 @@
-export default 'hello world!';
+export const helloRollup = 'helloRollup!';
+
+export function get() {
+    
+}
