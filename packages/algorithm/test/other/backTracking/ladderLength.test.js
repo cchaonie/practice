@@ -14,7 +14,7 @@ describe("ladderLength", () => {
         expect(ladderLength("hit", "cog", ["hot", "dot", "tog", "cog"])).toBe(0);
     });
 
-    it("case 3", () => {
+    it.only("case 3", () => {
         expect(
             ladderLength("qa", "sq", [
                 "si",
