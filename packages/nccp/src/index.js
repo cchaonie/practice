@@ -1,66 +1,49 @@
 #!/usr/bin/env node
 
-console.log("*******************HELLO THERE***************");
+const yargs = require("yargs/yargs");
+const { hideBin } = require("yargs/helpers");
 
-const path = require('path');
-const fs = require('fs');
-const program = require('commander');
-
-class FileNode {
-    constructor(type, name, absolutePath) {
-        this.type = type;
-        this.name = name;
-        this.absolutePath = absolutePath;
-        if (type === 'DIR') {
-            this.children = [];
+yargs(hideBin(process.argv))
+    .command(
+        "list [path]",
+        "列出指定目录下文件",
+        yargs =>
+            yargs.option("path", {
+                alias: "p",
+                describe: "待列举的目录",
+                default: ".",
+            }),
+        require("./commands/list")
+    )
+    .command(
+        "mkdir [name]",
+        "在当前目录下创建文件夹",
+        yargs =>
+            yargs.option("name", {
+                alias: "n",
+                describe: "待创建的一个目录",
+            }).option("dirNames", {
+                describe: "包含待创建的目录名称的文件",
+            }),
+        require("./commands/mkdir")
+    )
+    .command(
+        "touch [name]",
+        "在当前目录下创建文件",
+        yargs =>
+            yargs.option("name", {
+                alias: "n",
+                describe: "待创建的一个文件名",
+            }).option("fileNames", {
+                describe: "包含待创建的文件名的文件",
+            }),
+        require("./commands/touch")
+    )
+    .check(argv => {
+        const filePaths = argv._;
+        if (!filePaths.length) {
+            throw new Error("请输入子命令");
+        } else {
+            return true;
         }
-    }
-}
-
-function listDirectoryOrFileRecursive(targetPath) {
-    var absoluteTargetPath = path.resolve(targetPath);
-    var rootDir = path.parse(absoluteTargetPath);
-    var root;
-    var stats = fs.statSync(absoluteTargetPath);
-    if (stats.isDirectory()) {
-        root = new FileNode('DIR', rootDir.base, absoluteTargetPath);
-        root = listDirectory(absoluteTargetPath, root);
-    } else if (stats.isFile()) {
-        root = new FileNode('FILE', rootDir.base, absoluteTargetPath);
-    }
-    return root;
-}
-
-function listDirectory(targetPath, parentNode) {
-    var files = fs.readdirSync(targetPath, {
-        withFileTypes: true
-    });
-    for (var f of files) {
-        var current;
-        if (f.isDirectory()) {
-            var newPath = targetPath + path.sep + f.name;
-            current = new FileNode('DIR', f.name, path.resolve(newPath));
-            listDirectory(targetPath + path.sep + f.name, current);
-        } else if (f.isFile()) {
-            current = new FileNode('FILE', f.name, path.resolve(targetPath, f.name));
-        }
-        parentNode.children.push(current);
-    }
-    return parentNode;
-}
-
-program
-    .version('0.0.2')
-    .usage('<command> [options]');
-
-program
-    .command('list [dir]')
-    .alias('ls')
-    .description('列出当前目录下所有目录及文件')
-    .action(function (dir) {
-        const result = listDirectoryOrFileRecursive(dir);
-        console.log(result);
-    });
-
-program.parse(process.argv);
-console.log("*******************SUCCESS***************");
+    }).argv;
