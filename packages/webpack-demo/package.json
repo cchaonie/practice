@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "webpack-dev-server",
-        "build": "node config/build.js"
+        "build": "node tools/build.js"
     },
     "keywords": [],
     "author": "",
