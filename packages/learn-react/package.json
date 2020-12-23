@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "description": "learn_react",
   "scripts": {
-    "dev": "webpack-dev-server",
+    "dev": "webpack-dev-server --config config/webpack.config.js",
     "test": "jest --watch",
-    "build": "webpack",
-    "cypress:open": "cypress open"
+    "build": "webpack --config config/webpack.config.js"
   },
   "dependencies": {
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "redux": "^4.0.4"
   },
   "devDependencies": {
@@ -22,7 +23,6 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
-    "cypress": "^3.8.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "html-webpack-plugin": "^3.2.0",

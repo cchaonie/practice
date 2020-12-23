@@ -1,10 +1,10 @@
 import React, { Component, useState, useEffect } from 'react';
-import Modal from './Modal.js';
-import store from './store';
+import Modal from './component/Modal.js';
+import store from './models/store';
 import Lazy from './Lazy';
 import Card from './component/card';
 import { Loading } from './component/loading';
-import f from './import-es6';
+import f from './utils/import-es6';
 
 export default function App() {
   const [visible, setVisible] = useState(false);
