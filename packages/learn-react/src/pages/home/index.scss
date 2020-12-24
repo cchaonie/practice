@@ -3,6 +3,19 @@
   box-shadow: 2px 5px 2px #eee;
 }
 
+.handlers {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    padding: 8px;
+    margin-top: 8px;
+  }
+  button:first {
+    margin-top: 0;
+  }
+}
+
 
 .flex {
   display: flex;

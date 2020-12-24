@@ -1,20 +1,23 @@
-import React, { Component } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import "./index.scss";
 
-export default class Home extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div>
-                <div className="flex flex-col">
-                    <div style={{ background: "red" }}>1</div>
-                    <div style={{ background: "green" }}>2</div>
-                </div>
-                <h1>Portal</h1>
+const Home = ({ count, increase, decrease }) => {
+    return (
+        <div>
+            current: {count}
+            <div className="handlers">
+                <button onClick={increase}>increase</button>
+                <button onClick={decrease}>decrease</button>
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
+
+export default connect(
+    state => ({ ...state }),
+    dispatch => ({
+        increase: () => dispatch({ type: "INCREASE" }),
+        decrease: () => dispatch({ type: "DECREASE" }),
+    })
+)(Home);
