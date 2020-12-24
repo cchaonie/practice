@@ -11,6 +11,7 @@ export function reducer(state, action) {
                 count: count - 1,
             };
         default:
+            console.log(action);
             return state;
     }
 }

@@ -1,8 +1,9 @@
 import React, { useCallback, useReducer, useState } from "react";
+import { connect } from "react-redux";
 import generator from "../../models/question";
 import "./index.scss";
 
-export default function Questionare() {
+export function Questionare({ hello }) {
     const questions = generator();
     const [done, setDone] = useState(false);
     const [points, dispatch] = useReducer(
@@ -48,7 +49,15 @@ export default function Questionare() {
                     </li>
                 ))}
             </ul>
-            <button onClick={() => setDone(true)}>done</button>
+            <button
+                className="done"
+                onClick={() => {
+                    hello();
+                    setDone(true);
+                }}
+            >
+                done
+            </button>
             {done && (
                 <div>
                     your class is：
@@ -62,3 +71,7 @@ export default function Questionare() {
         </div>
     );
 }
+
+export default connect(null, dispatch => ({
+    hello: () => dispatch({ type: "HELLO_SAGA" }),
+}))(Questionare);
