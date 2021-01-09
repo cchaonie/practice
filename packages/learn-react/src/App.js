@@ -1,59 +1,42 @@
-import React, { Component } from "react";
-import Modal from "./Modal.js";
-import store from "./store";
-import Lazy from "./Lazy";
-import Card from "./component/card";
-import { Loading } from "./component/loading";
+import React from "react";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
+} from "react-router-dom";
+import { Provider } from "react-redux";
+import { Questionare, Home } from "./pages";
+import configureStore from "./redux/store";
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: false,
-      display: false,
-    };
-  }
+const store = configureStore();
 
-  componentDidMount() {
-    console.log("parent did mount");
-  }
-
-  componentDidUpdate() {
-    console.log("parent did update");
-  }
-
-  render() {
-    const { visible, display } = this.state;
+export default () => {
     return (
-      <div>
-        <div className="flex flex-col">
-          <div style={{background: "red"}}>1</div>
-          <div style={{background: "green"}}>2</div>
-        </div>
-        <h1>Portal</h1>
-        <Modal></Modal>
-        <button onClick={() => this.setState({ visible: !this.state.visible })}>toggle</button>
-        <button onClick={() => this.setState({ display: !this.state.display })}>display toggle</button>
-        <button
-          onClick={() => () => {
-            import("./dynamic")
-              .then((module) => console.log(`successfully load ${module}`))
-              .catch((e) => console.error(`load error: ${e}`));
-          }}
-        >
-          import()
-        </button>
-        {visible ? <Lazy></Lazy> : null}
-        <Card />
-        <div style={{ display: display ? "block" : "none" }}>
-          <Loading loading={"1"} />
-        </div>
-      </div>
+        <Provider store={store}>
+            <Router>
+                <div>
+                    <ul>
+                        <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                        <li>
+                            <Link to="/questionare">Questionare</Link>
+                        </li>
+                    </ul>
+                    <hr />
+                    <Switch>
+                        <Route exact path="/">
+                            <Home />
+                        </Route>
+                        <Route exact path="/questionare">
+                            <Questionare />
+                        </Route>
+                        <Redirect to="/" />
+                    </Switch>
+                </div>
+            </Router>
+        </Provider>
     );
-  }
-}
-
-store.dispatch({
-  type: "A",
-  payload: { count: 100 },
-});
+};

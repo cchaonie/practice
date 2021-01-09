@@ -9,7 +9,7 @@ export function App(props) {
             <h1>TODO</h1>
             <div>totalCount: {props.count}</div>
             <div>
-                <button onClick={() => props.dispatch(addAsync(1))}>add</button>
+                <button onClick={() => props.dispatch(addAsync(1))}>addAsync</button>
             </div>
             <div>
                 <button onClick={() => props.dispatch(remove(1))}>remove</button>
