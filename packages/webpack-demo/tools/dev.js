@@ -1,5 +1,5 @@
 const webpack = require("webpack");
-const devConfig = require("../config/webpack.prod");
+const devConfig = require("../config/webpack.dev");
 
 const compiler = webpack(devConfig);
 compiler.run((err, stats) => {
