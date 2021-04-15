@@ -1,0 +1,21 @@
+/node_modules
+.idea
+yarn.*
+package-lock.json
+/.next
+/libs/logging/node_modules
+/polyfills.js
+/next.webpack.config.js
+/release
+ .DS_Store
+/server/router/orderDetailResult.txt
+/server/mock
+/.vs
+/.vscode
+/coverage
+/.vs
+/.vscode
+/next.config.js
+/coverage
+/dist
+/lib

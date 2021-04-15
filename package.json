@@ -1,8 +1,8 @@
 {
-  "name": "daily_practice",
+  "name": "root",
+  "private": true,
   "version": "1.0.0",
   "description": "",
-  "main": "",
   "scripts": {
     "test": "jest"
   },
@@ -10,6 +10,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "lerna": "^3.22.1"
   }
 }

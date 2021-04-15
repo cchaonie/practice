@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "lib": ["es2019", "es2020.promise", "es2020.bigint", "es2020.string"],
+        "module": "commonjs",
+        "target": "es2019",
+        "strict": true,
+        "baseUrl": ".",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "paths": {
+            "@data-structure/*": ["src/data-structure/*"],
+            "@other/*": ["src/other/*"],
+            "@search/*": ["src/search/*"],
+            "@sort/*": ["src/sort/*"]
+        }
+    },
+    "exclude": ["node_modules"]
+}
