@@ -32,7 +32,7 @@
 15.借用构造继承，几种组合继承方式
 16.看编程代码说出运行结果：
 Process.nextTick，setImmediate 和promise.then 的优先级
-Process.nextTick，pronise, setImmediate的优先级
+Process.nextTick，promise, setImmediate的优先级
 17.实现一个bind函数
 18.千位加逗号
 19.三个继承方式的优缺点
@@ -72,7 +72,7 @@ Process.nextTick，pronise, setImmediate的优先级
 45.csrf/xss 攻击原理
 46.react diff 原理
 47.事件循环
-48.react diff算法，key的作用，setData的机制，事件合成
+48.react diff算法，key的作用，setState的机制，事件合成
 49.vue的v-model原理
 50.实现一个方法，参数是一个generator函数，执行结果是执行完所有generator中的yield
 51.获取页面所有img并且下载
@@ -110,10 +110,6 @@ Process.nextTick，pronise, setImmediate的优先级
 83.元素水平垂直居中
 84.vuex mobox
 85.小程序架构优化 日志系统
-86.写一个eventBus
-87.元素水平垂直居中
-88.vuex mobox
-89.小程序架构优化 日志系统
 90.根据自己简历和做过的项目，问一系列相关问题：
 91.闭包的输出值，考查闭包（看试题给结果）
 91.浏览器缓存的方法有哪些，它们的优先级是怎样的 ？
