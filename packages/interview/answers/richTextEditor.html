@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>rich editor</h1>
+    <div>
+      <h2>iframe with document.designMode = on</h2>
+      <iframe
+        name="richTextEditor"
+        frameborder="1"
+        style="height: 300px; width: 300px"
+      ></iframe>
+      <button id="frameBold">Bold</button>
+    </div>
+    <div>
+      <h2>contentEditable</h2>
+      <div
+        contenteditable
+        style="border: 1px solid black; height: 300px; width: 300px"
+      ></div>
+      <button id="divBold">Bold</button>
+    </div>
+    <script>
+      function bold(doc) {
+        doc.execCommand("bold", false, null);
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        frames["richTextEditor"].document.designMode = "on";
+        document
+          .getElementById("divBold")
+          .addEventListener("click", () => bold(document));
+        document
+          .getElementById("frameBold")
+          .addEventListener("click", () =>
+            bold(frames["richTextEditor"].document)
+          );
+      });
+    </script>
+  </body>
+</html>
