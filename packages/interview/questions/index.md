@@ -79,7 +79,6 @@ function jsonp(url, callback) {
 36. 宏任务微任务
 37. libUV
 38. express ctx 中间键代码实现
-39. vue 发布订阅和虚拟 dom 代码实现
 40. 请实现如下的函数，可以批量请求数据，所有的 URL 地址在 urls 参数中，同时可以通过 max 参数控制请求的并发度，当所有请求结束之后，需要执行 callback 回调函数。发请求的函数可以直接使用 fetch 即可
 41. 二叉树遍历
 42. 并发请求最大值是 10，怎么处理队列
@@ -89,15 +88,12 @@ function jsonp(url, callback) {
 46. react diff 原理
 47. 事件循环
 48. react diff 算法，key 的作用，setState 的机制，事件合成
-49. vue 的 v-model 原理
 50. 实现一个方法，参数是一个 generator 函数，执行结果是执行完所有 generator 中的 yield
 51. 获取页面所有 img 并且下载
 52. 两个同源 tab 之间的交互，数据同步
 53. 怎么将一个异步方法 promise 化，以及实现 promise.all()方法
-54. vue 单页多页的区别，vue 路由实现原理
-55. vue 数据驱动视图原理？更新视图的过程是否是同步的操作？
 56. nodejs 相关的应用（答：开发命令行工具.web 服务，ssr，数据库操作等）
-57. vue 项目开发环境如何配置？wepack-dev-server 热更新功能实现原理
+57. wepack-dev-server 热更新功能实现原理
 58. express.koa.redis 等技术相关应用
 59. [1,2,3].map(parseInt) 执行结果
 60. 手写代码二叉树深度为 n 的遍历，遍历有哪几种方式
@@ -107,11 +103,7 @@ function jsonp(url, callback) {
 64. hybrid 实现 bridge 的方法
 65. 最有挑战的项目
 66. 小程序框架的实现原理
-67. vue-router 路由监听的原理
 68. webpack 打包的原理，webpack 有没有针对打包过程做一些优化提升打包速度
-69. 请实现如下的函数，可以批量请求数据，所有的 URL 地址在 urls 参数中，同时可以通过 max 参数，控制请求的并发度，实现 max 个请求执行完之后再执行下 max 个请求，当所有请求结束之后，需要执行 callback 回调函数。发请求的函数可以直接   使用 fetch 即可
-
-70. vue 双向绑定的原理
 71. 写一个 eventBus
 72. 元素水平垂直居中
 73. vuex mobox
@@ -127,7 +119,6 @@ function jsonp(url, callback) {
 83. 有没有系统学习过 es6 或者看过 es6 的书
 84. js 单线程.宏任务与微任务的执行顺序 （看试题给结果）
 85. 考查箭头函数的 this 与 普通函数的区别，this 的指向 （看试题给结果）
-86. vue 中 computed 与 watch 的内在是如何实现的 ？
 87. 接下来前端要深入的方向 ？
 88. CSS 栅格布局
 89. CSS 伪类和伪元素
@@ -147,6 +138,15 @@ function jsonp(url, callback) {
 8.  solid 原则；
 9.  柯里化；
 10. css 单行和多行截断
+
+```css
+.sigleLine {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+```
+
 11. 给一个由域名组成的字符串进行按子域名分组的反转，比如 news.toutiao.com 反转成 com.toutiao.news 需要 in place 做
 12. 其他技术问题都是穿插在我的业务项目里面的，有点针对实际情景给解决方案
 13. 实现一个 outsideclick 的 Hoc，触发时调用 子组件的 outsideclick 方法
