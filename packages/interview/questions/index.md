@@ -6,9 +6,12 @@
 4. 多个 bind 连接后输出的值
 5. 原码，补码，反码
 6. 事件委托
+利用浏览器事件冒泡的原理（event.bubbles），可以在根元素上监听事件的发生，在监听器内部通过判断事件的原始目标`event.target`，从而实现不同处理
+
 7. 输入一个日期 返回几秒前 几天前或者几月前
 9. 实现一个 Promise.all
 10. 手写代码：给定一个数组，形如 [1, 1, 2 , 3, 3, 3, 3, 4, 6, 6]，给定一个数 n，例如 3，找出给定的数 n 在数组内出现的次数，要求时间复杂度小于 O(n)
+有序数组，要求复杂度低于`O(n)`，因此只能往二分的方向上考虑
 
 ## 一轮
 
@@ -16,13 +19,30 @@
 2. css 布局
 3. js 原型链继承
 4. fetch 取消
+options中`singal`传入`(new AbortController()).singal`, 然后通过`controller.abort()`取消请求
 5. eventloop
 6. instanceof
 7. promise 封装 setstate
+```js
+const setStateP = function (state) {
+	return new Promise(resolve => this.setState(state, resolve))
+}
+```
+
 8. redux 基本组成和设计单向数据流
+store/action/reducer
+store.getState()
+store.dispatch(action)
+store.subscribe(listener)
+
 9. https 协议的过程
 10. https 获取加密密钥的过程
 11. http 的方法有哪几种
+  1. get: 获取资源，幂等，可缓存，参数拼接在URL后面，浏览器对参数大小有限制
+  2. post：向服务器提交数据，参数放在body中
+  3. put： replace服务器上的资源
+  4. delete：删除资源
+  5. options： cors的预检请求
 12. 类式继承的方案
 13. prototype 继承的实现
 14. 借用构造继承，几种组合继承方式
@@ -39,10 +59,36 @@
 25. 什么是闭包
 26. 最长子序列（动态规划）
 27. 二叉树中序遍历
+```js
+function in_order_iterative(root) {
+  if (!root) return [];
+  let stack = [],
+    result = [];
+  while (root || stack.length) {
+    while (root) {
+      stack.push(root);
+      root = root.left;
+    }
+    root = stack.pop();
+    result.push(root.val);
+    root = root.right;
+  }
+  return result;
+}
+```
+
 28. react 新版本的特性
 29. 多空格字符串格式化为数组
+
+```js
+function formatStr(str) {
+  return str.split(/\s+/);
+}
+```
+
 30. bind 函数运行结果
-31. 点击 table 的 td 显示 td 内容 33. 数字千分位处理
+31. 点击 table 的 td 显示 td 内容
+33. 数字千分位处理
 32. 固定日期与当前时间格式化处理
 33. 上中下三栏布局
 34. 实现一个子类实例可以继承父类的所有方法
@@ -85,7 +131,7 @@ function jsonp(url, callback) {
 43. css 画出一个三角形
 44. node 网关
 45. csrf/xss 攻击原理
-46. react diff 原理
+46. **react diff 原理**
 47. 事件循环
 48. react diff 算法，key 的作用，setState 的机制，事件合成
 50. 实现一个方法，参数是一个 generator 函数，执行结果是执行完所有 generator 中的 yield
@@ -108,6 +154,12 @@ var x=new XMLHttpRequest()
 53. 怎么将一个异步方法 promise 化，以及实现 promise.all()方法
 56. nodejs 相关的应用（答：开发命令行工具.web 服务，ssr，数据库操作等）
 57. wepack-dev-server 热更新功能实现原理
+  1. webpack-hot-middleware: 基于EventSource(服务端推送消息), 与客户端建立连接，发送初始hash，以区别后续更新的hash
+  2. webpack监听文件变更，并增量编译
+  3. webpack-hot-middleware：发送变更hash到客户端
+  4. 客户端请求hot-update.json，其中包含更新的文件
+  5. 客户端通过动态script的形式请求新的增量js文件
+webpack-dev-middleware的作用在于承担内存文件系统的作用
 58. express.koa.redis 等技术相关应用
 59. [1,2,3].map(parseInt) 执行结果
 60. 手写代码二叉树深度为 n 的遍历，遍历有哪几种方式
@@ -120,13 +172,19 @@ var x=new XMLHttpRequest()
 68. webpack 打包的原理，webpack 有没有针对打包过程做一些优化提升打包速度
 71. 写一个 eventBus
 72. 元素水平垂直居中
-73. vuex mobox
 74. 小程序架构优化 日志系统
 75. 根据自己简历和做过的项目，问一系列相关问题：
 76. 闭包的输出值，考查闭包（看试题给结果）
 77. 浏览器缓存的方法有哪些，它们的优先级是怎样的 ？
+  1. http缓存
+    大文件，优先缓存至 disk，小文件优先缓存至 memory
+    当内存占用率高的情况下，优先缓存至 disk
+  2. webStorage
+  3. service worker
+  4. indexDB
 78. 状态码 304 是什么意思 ？
 79. 都说要减少 https 的请求，https 为什么慢 ？
+  1. 加密
 80. http2 与 http1 有什么区别
 81. click DOM 节点的 inner 与 outer 的执行机制，考查事件冒泡与事件捕获 （看试题给结果）
 82. for 循环中的 var .let 与 const 区别，for( const i = 0; i< 3; i++ ){ console.log(i); } 会输出什么结果 ？（看试题给结果）
