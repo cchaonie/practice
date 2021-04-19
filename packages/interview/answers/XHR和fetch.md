@@ -75,7 +75,7 @@ Promise<Response> fetch(input[, init]);
 6. `cache`: 请求的`cache`模式: `default`、`no-store`、`reload`、`no-cache`、`force-cache`或者`only-if-cached`。
 7. `redirect`: 可用的`redirect`模式: `follow`(自动重定向),`error`(如果产生重定向将自动终止并且抛出一个错误), 或者`manual`(手动处理重定向)。
 8. `referrer`: 一个`USVString`可以是`no-referrer`、`client`或一个`URL`。默认是 `client`。
-
+9. `singal`: 传入`AbortController`的实例可以取消请求，`(new AbortController()).signal`，执行`controller.abort()`
 #### 返回值
 
 `Promise`,`resolve`时回传`Response`对象。
