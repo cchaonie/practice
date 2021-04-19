@@ -90,6 +90,20 @@ function jsonp(url, callback) {
 48. react diff 算法，key 的作用，setState 的机制，事件合成
 50. 实现一个方法，参数是一个 generator 函数，执行结果是执行完所有 generator 中的 yield
 51. 获取页面所有 img 并且下载
+```js
+
+var x=new XMLHttpRequest()
+    x.open("GET", "http://danml.com/wave2.gif", true);
+    x.responseType = 'blob';
+    x.onload=function(e){
+        var url = window.URL.createObjectURL(x.response)
+        var a = document.createElement('a');
+        a.href = url
+        a.download = ''
+        a.click()
+    }
+
+```
 52. 两个同源 tab 之间的交互，数据同步
 53. 怎么将一个异步方法 promise 化，以及实现 promise.all()方法
 56. nodejs 相关的应用（答：开发命令行工具.web 服务，ssr，数据库操作等）
