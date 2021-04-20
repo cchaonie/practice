@@ -223,6 +223,13 @@ webpack-dev-middleware的作用在于承担内存文件系统的作用
 12. 其他技术问题都是穿插在我的业务项目里面的，有点针对实际情景给解决方案
 13. 实现一个 outsideclick 的 Hoc，触发时调用 子组件的 outsideclick 方法
 14. 手写一个 redux middleware
+```js
+store => next => action => {
+  console.log(action);
+  const returnValue = next(action)
+  return returnValue; // store.dipatch return action by default
+}
+```
 15. 实现一个 outsideclick 的 Hoc，触发时调用 子组件的 outsideclick 方法
 16. 最近在做项目（痛点，难点，怎么解决）
 17. ssr（ssr csr 混合怎么处理）
