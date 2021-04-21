@@ -31,18 +31,19 @@
 
 尽可能使用 ES6 module 导出，在`babel`配置中 presets,设置为`{modules: false}`
 
-## 如何加速webpack打包
+## 如何加速 webpack 打包
+
 1. 处理更少的文件
-  1. exclude/include
-  2. resolve.extensions 合理配置后缀，更快地找到待处理文件
-  3. dllPlugin
-  4. tree shaking
-    1. use es6 module syntax, don't let compiler like babel transpile it.(babel-> @babel/preset-env options.modules = false)
-    2. sideEffects: boolean / string[]
-    3. `/*#__PURE__*/`
-    4. 减少不必要的loader/plugin
+   1. exclude/include
+   2. resolve.extensions 合理配置后缀，更快地找到待处理文件
+   3. dllPlugin
+   4. tree shaking
+      1. use es6 module syntax, don't let compiler like babel transpile it.(babel-> @babel/preset-env options.modules = false)
+      2. sideEffects: boolean / string[]
+      3. `/*#__PURE__*/`
+      4. 减少不必要的 loader/plugin
 2. 更快打包
-  1. 多进程打包
+   1. 多进程打包
 
 ## 自定义 loader
 

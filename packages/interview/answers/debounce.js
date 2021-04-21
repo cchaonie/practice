@@ -3,7 +3,7 @@ function debounce(fn, delay) {
     let lastCall = 0;
     return function (...args) {
         const now = new Date();
-        if (now - lastCall < delay) {
+        if (now - lastCall < delay && timer) {
             clearTimeout(timer);
         }
         lastCall = now;
