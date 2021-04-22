@@ -28,22 +28,21 @@ const ajax3 = () =>
 
 const mergePromise = ajaxArray => {
     // 在这里实现你的代码
-    let controller = Promise.resolve();
     const data = [];
-
-    // return ajaxArray.reduce((controller, ajax) => {
-    //     return controller.then(ajax).then(v => {
-    //         data.push(v);
-    //         return data;
-    //     });
-    // }, controller);
-    ajaxArray.forEach(ajax => {
-        controller = controller.then(ajax).then(v => {
+    return ajaxArray.reduce((controller, ajax) => {
+        return controller.then(ajax).then(v => {
             data.push(v);
             return data;
         });
-    });
-    return controller;
+    }, controller);
+    // let controller = Promise.resolve();
+    // ajaxArray.forEach(ajax => {
+    //     controller = controller.then(ajax).then(v => {
+    //         data.push(v);
+    //         return data;
+    //     });
+    // });
+    // return controller;
 };
 
 mergePromise([ajax1, ajax2, ajax3]).then(data => {

@@ -7,7 +7,7 @@ function allSettle(promises) {
             p.then(
                 v => (data[i] = v),
                 e => (data[i] = e)
-            ).finally(() => {
+            ).then(() => {
                 settledCount++;
                 if (settledCount === promises.length) {
                     resolve(data);
