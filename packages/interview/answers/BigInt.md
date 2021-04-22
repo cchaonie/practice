@@ -26,7 +26,7 @@
 // 	1. 两数相乘最大位数为两数位数之和
 // 	2. 使用竖式乘法。需要注意连续进位问题
 var multiply = function (num1, num2) {
-  if (num1 === '0' || num2 === '0') return '0';
+  if (num1 === "0" || num2 === "0") return "0";
   const op1 = num1.split("");
   const op2 = num2.split("");
   const result = new Array(op1.length + op2.length).fill(0);
@@ -59,6 +59,4 @@ var multiply = function (num1, num2) {
   }
   return result.slice(firstNonZero).join("");
 };
-
-
 ```

@@ -10,7 +10,7 @@ Symbol() === Symbol(); // false
 可以使用 Object 返回 symbol 的包装对象，类似`Number(1)`
 
 ```js
-typeof symbol;// "symbol"
+typeof symbol; // "symbol"
 s = Symbol("foo");
 // +s => TypeError
 String(s) === "Symbol(foo)"; // true

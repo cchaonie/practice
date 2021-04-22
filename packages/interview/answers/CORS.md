@@ -89,6 +89,14 @@ Cross-Origin Resource Sharing，即跨域资源共享。从安全的角度考虑
 5. Access-Control-Allow-Methods
 6. Access-Control-Allow-Headers
 
+## 跨域会限制什么行为
+
+1. cookie不会自动带在跨域请求上
+2. localStorage 和 sessionStorage也不能跨域操作
+3. IndexDB不能跨域操作
+3. DOM对象、JS对象不能跨域操作
+4. ajax、fetch跨域请求都会受到限制
+
 ## 当跨域发生时，如何解决
 
 1. proxy：通过配置代理服务器，使得请求与服务器同源，规避跨域问题

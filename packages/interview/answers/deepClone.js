@@ -39,7 +39,7 @@ const foo = {
 
 const zoo = {
   f: foo,
-}
+};
 
 foo.z = zoo;
 
