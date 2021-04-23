@@ -17,6 +17,6 @@
     "gulp-typescript": "^6.0.0-alpha.1",
     "pdf-parse": "^1.1.1",
     "rxjs": "^6.6.0",
-    "typescript": "^3.7.5"
+    "typescript": "^4.2.4"
   }
 }

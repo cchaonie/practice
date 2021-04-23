@@ -21,12 +21,12 @@
         "@babel/preset-typescript": "^7.10.4",
         "@types/jest": "^25.2.1",
         "babel-jest": "^26.1.0",
-        "jest": "~24.9.0",
-        "semver": "~7.3.2",
-        "typescript": "^3.9.6",
         "husky": "^4.2.5",
+        "jest": "~24.9.0",
         "lint-staged": "^10.2.11",
-        "prettier": "^2.0.5"
+        "prettier": "^2.0.5",
+        "semver": "~7.3.2",
+        "typescript": "^3.9.6"
     },
     "lint-staged": {
         "(src|test)/**/*.[tj]s?(x)": "prettier --write"
@@ -35,5 +35,8 @@
         "hooks": {
             "pre-commit": "lint-staged"
         }
+    },
+    "dependencies": {
+        "typescript": "^4.2.4"
     }
 }

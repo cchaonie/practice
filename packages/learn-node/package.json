@@ -49,6 +49,7 @@
     "react-dom": "^16.13.0",
     "react-router": "^5.1.2",
     "tencentcloud-sdk-nodejs": "^3.0.125",
+    "typescript": "^4.2.4",
     "webpack-manifest-plugin": "^2.2.0"
   }
 }
