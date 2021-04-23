@@ -171,7 +171,7 @@ x.onload = function (e) {
 54. nodejs 相关的应用（答：开发命令行工具.web 服务，ssr，数据库操作等）
 55. wepack-dev-server 热更新功能实现原理
 
-    1. webpack-hot-middleware: 基于 EventSource(服务端推送消息), 与客户端建立连接，发送初始 hash，以区别后续更新的 hash
+    1. webpack-hot-middleware: 基于 **EventSource**(服务端推送消息), 与客户端建立连接，发送初始 hash，以区别后续更新的 hash
     2. webpack 监听文件变更，并增量编译
     3. webpack-hot-middleware：发送变更 hash 到客户端
     4. 客户端请求 hot-update.json，其中包含更新的文件

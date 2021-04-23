@@ -84,10 +84,12 @@ new RegExp(/ab+c/, 'i');
 ### 正则表达式的实例方法
 
 1. exec(str: string): null | Array. 返回的数组中有以下属性：
-1. index: 匹配起始位置
-1. input: 匹配的字符串
-1. 数组第一个元素是匹配的内容，剩余元素则是捕获项
-1. test(str:string): boolean
+    1. index: 匹配起始位置
+    2. input: 匹配的字符串
+    3. 数组第一个元素是匹配的内容，剩余元素则是捕获项
+    4. test(str:string): boolean
+
+2. test(str: string): boolean
 
 ### 字符串中可以使用正则的方法
 
