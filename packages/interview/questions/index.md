@@ -16,6 +16,8 @@
 ## 一轮
 
 1. dom react 原理
+   react 基于虚拟 DOM，实现了一套书写 UI 的方式，从而高效操作底层 DOM
+
 2. css 布局
 3. js 原型链继承
 4. fetch 取消
@@ -26,7 +28,7 @@
 
 ```js
 const setStateP = function (state) {
-  return new Promise((resolve) => this.setState(state, resolve));
+    return new Promise(resolve => this.setState(state, resolve));
 };
 ```
 
@@ -63,19 +65,19 @@ const setStateP = function (state) {
 
 ```js
 function in_order_iterative(root) {
-  if (!root) return [];
-  let stack = [],
-    result = [];
-  while (root || stack.length) {
-    while (root) {
-      stack.push(root);
-      root = root.left;
+    if (!root) return [];
+    let stack = [],
+        result = [];
+    while (root || stack.length) {
+        while (root) {
+            stack.push(root);
+            root = root.left;
+        }
+        root = stack.pop();
+        result.push(root.val);
+        root = root.right;
     }
-    root = stack.pop();
-    result.push(root.val);
-    root = root.right;
-  }
-  return result;
+    return result;
 }
 ```
 
@@ -84,7 +86,7 @@ function in_order_iterative(root) {
 
 ```js
 function formatStr(str) {
-  return str.split(/\s+/);
+    return str.split(/\s+/);
 }
 ```
 
@@ -98,13 +100,13 @@ function formatStr(str) {
 
 ```js
 function sum(...args) {
-  let params = [...args];
-  const fn = (...args1) => {
-    params = [...params, ...args1];
+    let params = [...args];
+    const fn = (...args1) => {
+        params = [...params, ...args1];
+        return fn;
+    };
+    fn.valueOf = () => params.reduce((acc, c) => acc + c, 0);
     return fn;
-  };
-  fn.valueOf = () => params.reduce((acc, c) => acc + c, 0);
-  return fn;
 }
 ```
 
@@ -113,10 +115,10 @@ function sum(...args) {
 
 ```js
 function jsonp(url, callback) {
-  const src = `${url}?callback=${callback}`;
-  const script = document.createElement("script");
-  script.src = src;
-  document.body.appendChild(script);
+    const src = `${url}?callback=${callback}`;
+    const script = document.createElement("script");
+    script.src = src;
+    document.body.appendChild(script);
 }
 ```
 
@@ -156,11 +158,11 @@ var x = new XMLHttpRequest();
 x.open("GET", "http://danml.com/wave2.gif", true);
 x.responseType = "blob";
 x.onload = function (e) {
-  var url = window.URL.createObjectURL(x.response);
-  var a = document.createElement("a");
-  a.href = url;
-  a.download = "";
-  a.click();
+    var url = window.URL.createObjectURL(x.response);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "";
+    a.click();
 };
 ```
 
@@ -231,9 +233,9 @@ x.onload = function (e) {
 
 ```css
 .sigleLine {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 ```
 
@@ -243,10 +245,10 @@ x.onload = function (e) {
 14. 手写一个 redux middleware
 
 ```js
-(store) => (next) => (action) => {
-  console.log(action);
-  const returnValue = next(action);
-  return returnValue; // store.dipatch return action by default
+store => next => action => {
+    console.log(action);
+    const returnValue = next(action);
+    return returnValue; // store.dipatch return action by default
 };
 ```
 
@@ -262,47 +264,47 @@ x.onload = function (e) {
     1. form 表单通过`multipart/form-data`直接上传
     2. ajax/fetch 上传 formData
     3. 大文件上传需要注意会超时，导致断开链接，因此大文件上传需要注意以下几点
-       1. 文件分片上传
-       2. 每一片需要做标记，让服务端可以识别，从而拼接完整文件
-       3. 断点续传：保存每一份切片上传记录，既可以存在服务端也可以在客户端，上传之前先检查是否已经上传
+        1. 文件分片上传
+        2. 每一片需要做标记，让服务端可以识别，从而拼接完整文件
+        3. 断点续传：保存每一份切片上传记录，既可以存在服务端也可以在客户端，上传之前先检查是否已经上传
 24. 网络安全：CSRF & XSS 是什么及防范措施
 25. 同源策略；跨域的实现方式
 26. 带超时，带防重名的 JSONP 的实现
 
 ```js
 function jsonp(url, params, callback, time) {
-  //构造一个函数到window上
-  var body = document.body;
-  var fnName = "_jsonpFn" + Math.random().toString().replace(".", "");
-  window[fnName] = function (data) {
-    //发回数据回调的内容
-    callback(data); //用户写的函数
-    //执行完毕之后,删除该函数
-    delete window[fnName];
-    body.removeChild(script);
-  };
+    //构造一个函数到window上
+    var body = document.body;
+    var fnName = "_jsonpFn" + Math.random().toString().replace(".", "");
+    window[fnName] = function (data) {
+        //发回数据回调的内容
+        callback(data); //用户写的函数
+        //执行完毕之后,删除该函数
+        delete window[fnName];
+        body.removeChild(script);
+    };
 
-  //创建动态标签
-  var script = document.createElement("script");
-  //这里的script和img一样，都有能力不受限制的从其他域加载资源,在加载的时候，就会向服务器发起请求
-  let str = "";
-  for (let key in params) {
-    str += key + "=" + params[key] + "&";
-  }
-  // console.log(str);
-  str += "callback=" + fnName;
-  script.src = url + "?" + str;
-  //先绑定函数再请求
+    //创建动态标签
+    var script = document.createElement("script");
+    //这里的script和img一样，都有能力不受限制的从其他域加载资源,在加载的时候，就会向服务器发起请求
+    let str = "";
+    for (let key in params) {
+        str += key + "=" + params[key] + "&";
+    }
+    // console.log(str);
+    str += "callback=" + fnName;
+    script.src = url + "?" + str;
+    //先绑定函数再请求
 
-  body.insertBefore(script, document.body.firstChild);
-  //设置超时处理
-  if (time) {
-    var timer = window.setTimeout(function () {
-      //jsonp的超时处理，移除回调函数
-      body.removeChild(script);
-      clearTimeout(timer);
-    }, time);
-  }
+    body.insertBefore(script, document.body.firstChild);
+    //设置超时处理
+    if (time) {
+        var timer = window.setTimeout(function () {
+            //jsonp的超时处理，移除回调函数
+            body.removeChild(script);
+            clearTimeout(timer);
+        }, time);
+    }
 }
 ```
 
@@ -336,20 +338,20 @@ function jsonp(url, params, callback, time) {
 
 ```js
 function combination(...args) {
-  const result = [];
-  const backtrack = (ops, selection) => {
-    if (selection.length === args.length) {
-      result.push(selection);
-      return;
-    }
-    for (let op of ops) {
-      const newStr = selection + op;
-      const newOps = args[newStr.length];
-      backtrack(newOps, newStr);
-    }
-  };
-  backtrack(args[0], "");
-  return result;
+    const result = [];
+    const backtrack = (ops, selection) => {
+        if (selection.length === args.length) {
+            result.push(selection);
+            return;
+        }
+        for (let op of ops) {
+            const newStr = selection + op;
+            const newOps = args[newStr.length];
+            backtrack(newOps, newStr);
+        }
+    };
+    backtrack(args[0], "");
+    return result;
 }
 ```
 
@@ -358,29 +360,29 @@ function combination(...args) {
 
 ```js
 function sortedLinkedListIntersection(l1, l2) {
-  let p1 = l1;
-  let p2 = l2;
-  let head = null;
-  let nextNode = null;
-  while (p1 != null && p2 != null) {
-    if (p1.val === p2.val) {
-      if (!head) {
-        head = p1;
-        nextNode = head;
-      } else {
-        nextNode.next = p1;
-        nextNode = nextNode.next;
-      }
-      p1 = p1.next;
-      p2 = p2.next;
-    } else {
-      if (p1.val > p2.val) {
-        p2 = p2.next;
-      } else {
-        p1 = p1.next;
-      }
+    let p1 = l1;
+    let p2 = l2;
+    let head = null;
+    let nextNode = null;
+    while (p1 != null && p2 != null) {
+        if (p1.val === p2.val) {
+            if (!head) {
+                head = p1;
+                nextNode = head;
+            } else {
+                nextNode.next = p1;
+                nextNode = nextNode.next;
+            }
+            p1 = p1.next;
+            p2 = p2.next;
+        } else {
+            if (p1.val > p2.val) {
+                p2 = p2.next;
+            } else {
+                p1 = p1.next;
+            }
+        }
     }
-  }
-  return head;
+    return head;
 }
 ```
