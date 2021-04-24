@@ -9,4 +9,6 @@
 5. 响应
 6. parse html --> DOM
 7. parse css --> CSSOM
-8. layout paint
+8. layout
+9. paint
+10. composite 将绘制在不同层的UI按照正确的方式绘制到屏幕上

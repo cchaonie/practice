@@ -3,48 +3,48 @@
 #### react 生命周期函数
 
 1. mount
-   1. `constructor(props)`
-      1. 初始化`this.state`和`function.bind(this)`
-      2. 为什么必须首先调用`super(props)`?
-         实例化`this.props`
-   2. `static getDrivedStateFromProps(props, state): Object | null`
-      1. 这个生命周期的作用是使用变化的 props 去更新 state，减少一次 render
-      2. render 之前调用
-      3. 返回值会合并到 state 中
-   3. `render(): ReactNode`
-      1. `ReactComponent`、`ReactElement`和`ReactNode`有什么区别？
-         1. `ReactComponent`是 UI 及其行为的抽象，包括`class component`和`function component`
-         2. `ReactElement`特指`React.createElement(type, props, ...children)` 的返回结果，是一个纯 JS 对象，有`$$typeof: ReactElement`属性
-         3. `ReactNode` 包括`ReactElement`以及`ReactFragment`/`ReactPortal`/`number`/`string`/`boolean`和以上这几种类型的数组
-   4. `componentDidMount()`
-      1. DOM 节点已经可用还是已经显示在页面上？（DOMContentLoaded 还是 onload）
-         didMount => DOMContentLoaded => onload
+    1. `constructor(props)`
+        1. 初始化`this.state`和`function.bind(this)`
+        2. 为什么必须首先调用`super(props)`?
+           实例化`this.props`
+    2. `static getDrivedStateFromProps(props, state): Object | null`
+        1. 这个生命周期的作用是使用变化的 props 去更新 state，减少一次 render
+        2. render 之前调用
+        3. 返回值会合并到 state 中
+    3. `render(): ReactNode`
+        1. `ReactComponent`、`ReactElement`和`ReactNode`有什么区别？
+            1. `ReactComponent`是 UI 及其行为的抽象，包括`class component`和`function component`
+            2. `ReactElement`特指`React.createElement(type, props, ...children)` 的返回结果，是一个纯 JS 对象，有`$$typeof: ReactElement`属性
+            3. `ReactNode` 包括`ReactElement`以及`ReactFragment`/`ReactPortal`/`number`/`string`/`boolean`和以上这几种类型的数组
+    4. `componentDidMount()`
+        1. DOM 节点已经可用还是已经显示在页面上？（DOMContentLoaded 还是 onload）
+           didMount => DOMContentLoaded => onload
 2. update
-   1. `static getDrivedStateFromProps(props, state): Object | null`
-   2. `shouldComponentUpdate(nextProps, nextState): boolean`
-      1. 预先查看下一次渲染使用的 props 和 state，决定是否需要渲染
-      2. 最好使用`PureComponent`, 这个函数会自动对所有 props 和 state 作浅比较
-   3. `render(): ReactNode`
-   4. `getSnapshotBeforeUpdate(prevProps, prevState): any`
-      1. 返回值将会作为 componentDidUpdate 的第三个参数
-   5. `componentDidUpdate(prevProps, prevState, snapshot)`
+    1. `static getDrivedStateFromProps(props, state): Object | null`
+    2. `shouldComponentUpdate(nextProps, nextState): boolean`
+        1. 预先查看下一次渲染使用的 props 和 state，决定是否需要渲染
+        2. 最好使用`PureComponent`, 这个函数会自动对所有 props 和 state 作浅比较
+    3. `render(): ReactNode`
+    4. `getSnapshotBeforeUpdate(prevProps, prevState): any`
+        1. 返回值将会作为 componentDidUpdate 的第三个参数
+    5. `componentDidUpdate(prevProps, prevState, snapshot)`
 3. unmount
-   1. `componentWillUnmount()`
+    1. `componentWillUnmount()`
 4. error
 
-   1. `static getDerivedStateFromError(error)`
+    1. `static getDerivedStateFromError(error)`
 
-      1. 目的在于从异常中恢复 UI
-      2. 仅捕捉各生命周期函数内异常
-      3. 不能捕捉以下异常
-         1. 事件监听器？
-            不影响 UI 渲染，不需要捕获。**如果需要捕获呢?**
-         2. 异步代码，setTimeout raf
-         3. **ssr，为什么？**
-         4. Error Boundary 自身异常
+        1. 目的在于从异常中恢复 UI
+        2. 仅捕捉各生命周期函数内异常
+        3. 不能捕捉以下异常
+            1. 事件监听器？
+               不影响 UI 渲染，不需要捕获。**如果需要捕获呢?**
+            2. 异步代码，setTimeout raf
+            3. **ssr，为什么？**
+            4. Error Boundary 自身异常
 
-   2. `componentDidCatch(error, info: {componentStack})`
-      1. 生产环境 error 不会冒泡，开发环境会
+    2. `componentDidCatch(error, info: {componentStack})`
+        1. 生产环境 error 不会冒泡，开发环境会
 
 #### context
 
@@ -86,12 +86,22 @@ ref 提供了一种父组件控制子组件行为的方式，这在某些特定�
 ```javascript
 // Hook 的底层数据结构
 {
-  memoizedState: any;
-  baseState: any;
-  queue: any;
-  baseUpdate: any;
-  next: any;
+    memoizedState: any;
+    baseState: any;
+    queue: any;
+    baseUpdate: any;
+    next: any;
 }
+
+// effect 的底层数据结构
+effect = {
+    tag: tag,
+    create: create,
+    destroy: destroy,
+    deps: deps,
+    // Circular
+    next: null,
+};
 ```
 
 1. 为什么不能使用 Hook 捕捉异常

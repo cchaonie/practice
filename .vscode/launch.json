@@ -5,7 +5,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/main/algorithm/tree/containsNearbyAlmostDuplicate.js",
+      "program": "${workspaceFolder}/packages/isomorphic/build/server",
       "skipFiles": [
         "<node_internals>/**"
       ]

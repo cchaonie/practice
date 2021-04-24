@@ -1,8 +1,17 @@
 # web 通信
 
-1. postMessage
-   contentWindow.postMessage()
+1. `targetWindow.postMessage(message, targetOrigin, [transfer])`
+    1. `targetWindow` 可以有以下来源：
+        1. `window.open` (to spawn a new window and then reference it),
+        2. `window.opener` (to reference the window that spawned this one),
+        3. `HTMLIFrameElement.contentWindow` (to reference an embedded <iframe> from its parent window),
+        4. `window.parent` (to reference the parent window from within an embedded <iframe>), or
+        5. `window.frames + an index value` (named or numeric).
+   2. `message` 即传递给`targetWindow`的消息，可以是任何对象，即不需要手动序列化
+   3. `targetOrigin` 应该在的origin，如果不在的化消息不会发送成功
+   4. 一个`Transferable`对象，一旦传递过去之后，在当前页面即不可用，在这里一般是 `MessageChannel` 实例
 2. MessageChannel
+   1. channel.port1.postMessage(message, transferableList)
 3. service worker
 4. web worker
 

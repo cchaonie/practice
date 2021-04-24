@@ -1,5 +1,5 @@
 {
-  "name": "learn_react",
+  "name": "learn_ts",
   "version": "1.0.0",
   "description": "learn_react",
   "scripts": {
@@ -11,7 +11,8 @@
     "@types/react-transition-group": "^4.2.4",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-transition-group": "^4.3.0"
+    "react-transition-group": "^4.3.0",
+    "typescript": "^4.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",

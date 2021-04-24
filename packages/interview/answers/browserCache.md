@@ -21,11 +21,20 @@
 ### 缓存分类
 
 1. 强制缓存
-   1. Expires
-   2. Pragma 和 Cache-Control
+    1. Expires
+    2. Pragma 和 Cache-Control
 2. 协商缓存
-   1. Last-Modified 和 If-Modified-Since
-   2. Etag 和 If-None-Match
+    1. Last-Modified 和 If-Modified-Since
+    2. Etag 和 If-None-Match
+
+### 如何有效设置缓存
+
+1. 尽可能使用强缓存
+   在更新版本的时候，顺便把静态资源的路径改了，这样，就相当于第一次访问这些资源，就不会存在缓存的问题了
+   webpack 给我们提供了三种哈希值计算方式，分别是 hash、chunkhash 和 contenthash。那么这三者有什么区别呢？
+    1. hash：跟整个项目的构建相关，构建生成的文件 hash 值都是一样的，只要项目里有文件更改，整个项目构建的 hash 值都会更改。
+    2. chunkhash：根据不同的入口文件(Entry)进行依赖文件解析、构建对应的 chunk，生成对应的 hash 值。
+    3. contenthash：由文件内容产生的 hash 值，内容不同产生的 contenthash 值也不一样。
 
 ### 与缓存相关的 HTTP headers
 
@@ -77,28 +86,28 @@ Cache-control: s-maxage=<seconds>
 Cache-Control 取值可以分为三类：
 
 1. 指示可缓存性的指令：
-   - public
-     响应可以被任何对象（包括：发送请求的客户端，代理服务器，等等）缓存
-   - private
-     响应只能被单个用户缓存，不能作为共享缓存（即代理服务器不能缓存它）
-   - no-cache
-     在释放缓存副本之前，强制高速缓存将请求提交给原始服务器进行验证
-   - no-store
-     缓存不应存储有关客户端请求或服务器响应的任何内容
+    - public
+      响应可以被任何对象（包括：发送请求的客户端，代理服务器，等等）缓存
+    - private
+      响应只能被单个用户缓存，不能作为共享缓存（即代理服务器不能缓存它）
+    - no-cache
+      在释放缓存副本之前，强制高速缓存将请求提交给原始服务器进行验证
+    - no-store
+      缓存不应存储有关客户端请求或服务器响应的任何内容
 2. 指示到期时间的指令：
-   - max-age
-     缓存可以存活的时间，相对于请求而言
-   - s-maxage
-     类似于 max-age，仅用于共享缓存
-   - max-stale
-     表明客户端愿意接收一个已经过期的资源。 可选的设置一个时间(单位秒)，表示响应不能超过的过时时间
-   - min-fresh
-     表示客户端希望在指定的时间内获取最新的响应
+    - max-age
+      缓存可以存活的时间，相对于请求而言
+    - s-maxage
+      类似于 max-age，仅用于共享缓存
+    - max-stale
+      表明客户端愿意接收一个已经过期的资源。 可选的设置一个时间(单位秒)，表示响应不能超过的过时时间
+    - min-fresh
+      表示客户端希望在指定的时间内获取最新的响应
 3. 指示验证相关的指令：
-   - must-revalidate
-     缓存必须在使用之前验证旧资源的状态，并且不可使用过期资源
-   - proxy-revalidate
-     与 must-revalidate 作用相同，但它仅适用于共享缓存（例如代理），并被私有缓存忽略
+    - must-revalidate
+      缓存必须在使用之前验证旧资源的状态，并且不可使用过期资源
+    - proxy-revalidate
+      与 must-revalidate 作用相同，但它仅适用于共享缓存（例如代理），并被私有缓存忽略
 
 ### If-Modified-Since 和 Last-Modified
 
