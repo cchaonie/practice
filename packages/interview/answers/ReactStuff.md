@@ -105,6 +105,10 @@ effect = {
 ```
 
 1. 为什么不能使用 Hook 捕捉异常
+2. hooks 不能做什么？
+    1. componentDidCatch
+    2. getDerivedStateFromError
+    3. getSnapshotBeforeUpdate
 
 #### 事件合成
 

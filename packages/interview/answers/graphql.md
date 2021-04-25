@@ -1,5 +1,6 @@
 # GraphQL
-API查询语言和运行时
+
+API 查询语言和运行时
 
 包括`schema`和`resolver`
 
@@ -18,6 +19,8 @@ API查询语言和运行时
 // graphql ast structure
 
 // graphql server (schema and resolver)
+const easyGraphqlModule = require('easy-graphql');
+const graphqlHTTP = require('express-graphql');
 const easyGraphqlObj = new easyGraphqlModule(path.join(__dirname, "graphql"));
 const allSchema = easyGraphqlObj.getSchema();
 server.use(
