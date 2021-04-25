@@ -8,7 +8,7 @@ JS 单线程模型，为了防止某个任务执行时间过长，导致其他�
 
 ## browser side
 
-宏任务
+### 宏任务
 
 1. script
 2. setTimeout
@@ -16,9 +16,11 @@ JS 单线程模型，为了防止某个任务执行时间过长，导致其他�
 4. I/O
 5. postMessage
 6. messageChannel
-   微任务
+
+### 微任务
+
 7. Promise.then/catch/finally
-   1. 需要注意 then 的回调如果不是 function，则会直接执行
+    1. 需要注意 then 的回调如果不是 function，则会直接执行
 8. await 之后的代码
 9. MutationObserver 的回调
 
@@ -27,17 +29,17 @@ JS 单线程模型，为了防止某个任务执行时间过长，导致其他�
 事件循环分为多个阶段，每个阶段都有一个队列。当一个阶段的**所有任务都执行完毕**或者**达到最大执行限制**之后，才会进入下个阶段
 
 1. timers
-   1. setTimeout/setInterval
+    1. setTimeout/setInterval
 2. pending callbacks
-   1. system related callbacks
+    1. system related callbacks such as types of TCP errors
 3. idle, prepare
-   1. 仅供内部使用
+    1. 仅供内部使用
 4. **poll(轮询)**
-   1. 执行 IO 回调
-   2. 检查 setTimeout 的回调是否要加入到 timers 阶段
+    1. 执行 IO 回调
+    2. 检查 setTimeout 的回调是否要加入到 timers 阶段
 5. check
-   1. setImmediate。当 poll 阶段空闲时，会检查是否有 setImmediate 的任务，如果有会马上执行
+    1. setImmediate。当 poll 阶段空闲时，会检查是否有 setImmediate 的任务，如果有会马上执行
 6. close callback
-   1. 关闭连接的回调，如：socket.on('close', callback)
+    1. 关闭连接的回调，如：socket.on('close', callback)
 
 **process.nextTick()会在进入任何一个阶段执行**
