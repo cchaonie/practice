@@ -1,3 +1,8 @@
+/**
+ * only ths last call will emit the result
+ * @param {*} promiseFn 
+ * @returns 
+ */
 function lastPromise(promiseFn) {
     let count = 0;
     return () => {
@@ -20,6 +25,6 @@ const pfn = () =>
 
 const lastFn = lastPromise(pfn);
 
-lastFn().then(console.log);
-lastFn().then(console.log);
-lastFn().then(console.log);
+lastFn().then(console.log); // nothing
+lastFn().then(console.log); // nothing
+lastFn().then(console.log); // 3
