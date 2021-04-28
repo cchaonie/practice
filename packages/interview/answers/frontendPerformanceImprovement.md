@@ -69,7 +69,7 @@ for (const img of imgs) {
 1. 使用方式：
     1. 放在其他 css 中，使用`@media`
     2. 使用 link 标签 `<link href="mobile.css" rel="stylesheet" media="screen and (max-width: 600px)">`
-       当浏览器发现当前页面符合媒体查询，会再去下载相应的 css，因此可以确保下载对应的文件，而不会发生移动设备下载 PC 文件
+       当浏览器发现当前页面符合媒体查询，会再去下载相应的 css，因此可以确保下载对应的文件。需要注意的是，其他设备的css也会下载，但是不会阻塞浏览器的首屏渲染，而是会在后续空闲时进行下载
 
 #### dns-prefetch
 
