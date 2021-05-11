@@ -1,5 +1,4 @@
 const path = require("path");
-// const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -8,10 +7,10 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 const isProd = process.env.NODE_ENV == "prod";
 
 module.exports = {
-  entry: path.join(__dirname, "./src/web/index.tsx"),
+  entry: path.join(__dirname, "./src/client/index.ts"),
   output: {
     filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "dist")
+    path: path.resolve(__dirname, "dist/client")
   },
   mode: isProd ? "production" : "development",
   resolve: {
@@ -36,7 +35,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(tsx|ts)$/,
+        test: /\.tsx?$/,
         exclude: /(node_modules)/,
         use: {
           loader: "babel-loader",

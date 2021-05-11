@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "a typescript nodejs application",
   "scripts": {
-    "build:s": "tsc -w",
-    "build:cdev": "cross-env NODE_ENV=dev webpack --config webpack.client.js -w",
-    "build:cprod": "cross-env NODE_ENV=prod webpack --config webpack.client.js",
-    "dev": "nodemon --inspect src/lib/index.js",
+    "build:server": "cross-env NODE_ENV=dev webpack --config config/webpack.server.js",
+    "build:cdev": "cross-env NODE_ENV=dev webpack --config config/webpack.client.js",
+    "build:cprod": "cross-env NODE_ENV=prod webpack --config config/webpack.client.js",
+    "dev": "npm run build:server && nodemon --inspect dist/server/index.js",
     "test": "jest"
   },
   "keywords": [],
@@ -25,7 +25,6 @@
     "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^7.0.2",
     "css-loader": "^3.4.2",
-    "html-webpack-plugin": "^3.2.0",
     "jest": "^24.9.0",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.13.1",
@@ -41,14 +40,10 @@
     "@types/crypto-js": "^3.1.43",
     "@types/ejs": "^3.0.1",
     "clean-webpack-plugin": "^3.0.0",
-    "crypto-js": "^4.0.0",
-    "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "moment": "^2.24.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router": "^5.1.2",
-    "tencentcloud-sdk-nodejs": "^3.0.125",
     "typescript": "^4.2.4",
     "webpack-manifest-plugin": "^2.2.0"
   }
