@@ -13,7 +13,9 @@
 2. 解析 html，碰到 css 则去下载，解析
 3. 生成 DOM 和 CSSOM
 4. 结合 DOM 和 CSSOM 生成 render tree
-5. layout paint
+5. layout
+6. paint
+7. composite
 
 其中，JS 的执行过程是会阻塞 DOM 解析的，即 UI 线程和 JS 线程是互斥的；而解析 DOM 和解析 CSS 是可以同步进行的，但是没有解析完 css 是不会去执行 JS 脚本的，因为有可能脚本会去修改样式
 
