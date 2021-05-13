@@ -12,5 +12,8 @@
   "devDependencies": {
     "jest": "^24.9.0",
     "lerna": "^3.22.1"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.11"
   }
 }

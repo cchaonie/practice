@@ -29,13 +29,13 @@ const ajax3 = () =>
 const mergePromise = ajaxArray => {
     // 在这里实现你的代码
     const data = [];
+    let controller = Promise.resolve();
     return ajaxArray.reduce((controller, ajax) => {
         return controller.then(ajax).then(v => {
             data.push(v);
             return data;
         });
     }, controller);
-    // let controller = Promise.resolve();
     // ajaxArray.forEach(ajax => {
     //     controller = controller.then(ajax).then(v => {
     //         data.push(v);

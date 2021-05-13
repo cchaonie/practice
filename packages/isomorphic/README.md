@@ -1,7 +1,9 @@
-## 介绍
-一个同构的JavaScript web应用。
+# isomorphic
+This is a react/nodejs isomorhpic project
 
-## 工具
-- react, react-dom, react-router, react-router-dom, axios
-- ejs, nodejs
-- babel, webpack
+## todo list
+- [x] use typescript to start a server
+- [] use webpack to compile server side
+    - [] pure js
+    - [] handle css
+- [] integrate code split

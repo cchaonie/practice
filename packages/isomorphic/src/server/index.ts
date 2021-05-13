@@ -1,11 +1,8 @@
-import Koa from "koa";
+import controller from "./controller";
+import express from "express";
 
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 8181;
+const app = express();
 
-const app = new Koa();
-
-app.use(async ctx => {
-    ctx.body = "hello Koa";
-});
-
-app.listen(port, () => console.log(`server is listening at ${port}`));
+app.use(controller);
+app.listen(port, () => console.log(`listening port: ${port}`));

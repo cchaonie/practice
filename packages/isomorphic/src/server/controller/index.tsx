@@ -1,12 +1,13 @@
+import { Request, Response } from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import App from "../../client/components/App";
+import App from "../../components/App";
 
-export default function (req, res) {
+export default function (req: Request, res: Response) {
     try {
         const html = ReactDOMServer.renderToString(<App />);
         res.status(200);
-        res.type("html")
+        res.type("html");
         res.send(html);
         res.end();
     } catch (error) {

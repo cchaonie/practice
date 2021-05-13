@@ -1,20 +1,17 @@
 {
-    "compilerOptions": {
-        "sourceMap": true,
-        "declaration": true,
-        "jsx": "react",
-        "target": "es5",
-        "module": "es6",
-        "allowSyntheticDefaultImports": true,
-        "experimentalDecorators": true,
-        "preserveConstEnums": true,
-        "esModuleInterop": true
-    },
-    "include": [
-        "src/**/*",
-    ],
-    "exclude": [
-        "node_modules",
-        "**/*.spec.ts"
-    ]
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "target": "es5",
+    "baseUrl": ".",
+    "outDir": "./src/lib",
+    "jsx": "react",
+    "paths": {
+      "~app/*": [
+        "src/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
