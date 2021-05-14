@@ -9,3 +9,4 @@
  * for client side, use webpack-dev-middle and a express server, we can supply the compiled bundles;
  * for server side, after webpack compile process finished, we start a node server using the compiled bundles;
  * */ 
+import "./hotServer";

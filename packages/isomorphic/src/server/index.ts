@@ -1,5 +1,6 @@
-import controller from "./controller";
 import express from "express";
+
+import controller from "./controller";
 
 const port = process.env.PORT || 8181;
 const app = express();
