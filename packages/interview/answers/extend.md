@@ -114,5 +114,6 @@ function Sub(name, age) {
   this.age = age;
 }
 Sub.prototype = Object.create(Super.prototype);
+Sub.prototype.constructor = Sub;
 // 相对而言目前是最完美的方式
 ```
