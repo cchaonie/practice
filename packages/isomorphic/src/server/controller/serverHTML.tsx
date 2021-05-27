@@ -1,6 +1,6 @@
 import React from "react";
 
-export function ServerHTML({ title, srcs, children }) {
+export function ServerHTML({ title, content, scripts }) {
     return (
         <html lang="en">
             <head>
@@ -13,10 +13,11 @@ export function ServerHTML({ title, srcs, children }) {
                 <title>{title}</title>
             </head>
             <body>
-                <div id="root">{children}</div>
-                {srcs.map(src => (
-                    <script key="src" src={src} />
-                ))}
+                <div
+                    id="root"
+                    dangerouslySetInnerHTML={{ __html: content }}
+                ></div>
+                {scripts}
             </body>
         </html>
     );

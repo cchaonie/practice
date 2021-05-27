@@ -2,7 +2,7 @@ import React, { Suspense, useState } from "react";
 import loadable from "@loadable/component";
 
 const OtherComponent = loadable(() => import("./asyncContent/Content"), {
-    ssr: false,
+    // ssr: false,
 });
 
 export default function App() {

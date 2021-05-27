@@ -10,27 +10,22 @@ import { getManifest } from "../utils";
 
 export default function (req: Request, res: Response) {
     try {
-        const disableSSR = process.env.DISABLE_SSR;
-
-        const clientManifest = getManifest("client", "manifest");
-
         const extractor = new ChunkExtractor({
-            statsFile: path.resolve(
-                process.cwd(),
-                "./dist/server/loadable-stats.json"
-            ),
+            stats: getManifest("client", "loadable-stats"),
+            publicPath: "http://localhost:9000",
         });
 
-        const jsx = extractor.collectChunks(
+        const jsx = extractor.collectChunks(<App />);
+
+        const content = ReactDOMServer.renderToString(jsx);
+
+        const html = ReactDOMServer.renderToString(
             <ServerHTML
                 title="This is a isomorphic javascript application"
-                srcs={[`${clientManifest["main.js"]}`]}
-            >
-                {disableSSR === "1" ? null : <App />}
-            </ServerHTML>
+                content={content}
+                scripts={extractor.getScriptElements()}
+            />
         );
-
-        const html = ReactDOMServer.renderToString(jsx);
 
         res.status(200);
         res.type("html");
