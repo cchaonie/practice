@@ -13,6 +13,7 @@ export default function (req: Request, res: Response) {
         const disableSSR = process.env.DISABLE_SSR;
 
         const clientManifest = getManifest("client", "manifest");
+
         const extractor = new ChunkExtractor({
             statsFile: path.resolve(
                 process.cwd(),
@@ -30,12 +31,17 @@ export default function (req: Request, res: Response) {
         );
 
         const html = ReactDOMServer.renderToString(jsx);
+
         res.status(200);
         res.type("html");
         res.end(html);
     } catch (error) {
-        console.log(error);
+        console.error(error);
+
         res.type("html");
-        res.end("<h1>500 Server Internal Error</h1>");
+        res.end(`<div>
+            <h1>500 Server Internal Error</h1>
+            <p>${JSON.stringify(error)}</p>
+        </div>`);
     }
 }
