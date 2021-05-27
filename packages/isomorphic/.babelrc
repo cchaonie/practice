@@ -3,5 +3,8 @@
         "@babel/preset-react",
         "@babel/preset-typescript",
         "@babel/preset-env"
+    ],
+    "plugins": [
+        "@loadable/babel-plugin"
     ]
 }

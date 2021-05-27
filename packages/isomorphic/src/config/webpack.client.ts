@@ -2,7 +2,7 @@ import path from "path";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import ManifestPlugin from "webpack-manifest-plugin";
-// import CopyWebpackPlugin from "copy-webpack-plugin";
+import LoadablePlugin from "@loadable/webpack-plugin";
 
 const isProd = process.env.NODE_ENV == "prod";
 const ROOT_DIR = process.cwd();
@@ -12,6 +12,7 @@ export default {
     output: {
         filename: "[name].js",
         path: path.resolve(ROOT_DIR, "dist/client"),
+        publicPath: "http://localhost:9000/"
     },
     mode: isProd ? "production" : "development",
     resolve: {
@@ -46,6 +47,7 @@ export default {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new LoadablePlugin(),
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css",

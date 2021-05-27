@@ -3,10 +3,8 @@
     "version": "0.0.1",
     "description": "a typescript nodejs application",
     "scripts": {
-        "build": "babel-node -x '.ts' src/scripts/build",
-        "build:cdev": "cross-env NODE_ENV=dev webpack --config config/webpack.client.js",
-        "build:cprod": "cross-env NODE_ENV=prod webpack --config config/webpack.client.js",
-        "dev": "babel-node -x '.ts' src/scripts/dev",
+        "build": "babel-node -x '.ts' src/scripts/production",
+        "dev": "cross-env DISABLE_SSR=0 babel-node -x '.ts' src/scripts/development",
         "test": "jest"
     },
     "keywords": [],
@@ -19,6 +17,10 @@
         "@babel/preset-env": "^7.8.7",
         "@babel/preset-react": "^7.8.3",
         "@babel/preset-typescript": "^7.8.3",
+        "@loadable/babel-plugin": "^5.13.2",
+        "@loadable/component": "^5.15.0",
+        "@loadable/server": "^5.15.0",
+        "@loadable/webpack-plugin": "^5.15.0",
         "@types/node": "^13.1.7",
         "@types/react": "^16.9.23",
         "@types/react-dom": "^16.9.5",
