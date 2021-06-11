@@ -1,14 +1,21 @@
-function debounce(fn, delay) {
+function debounce(fn, delay = 300) {
     let timer = null;
-    let lastCall = 0;
     return function (...args) {
-        const now = new Date();
-        if (now - lastCall < delay && timer) {
+        if (timer) {
             clearTimeout(timer);
         }
-        lastCall = now;
         timer = setTimeout(() => {
             fn.apply(null, args);
         }, delay);
+        return () => {
+            clearTimeout(timer);
+        }
     };
 }
+
+const myFn = () => console.log("hello debounce");
+
+const debounced = debounce(myFn);
+const cancel = debounced();
+
+// cancel();
