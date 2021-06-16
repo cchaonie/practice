@@ -9,7 +9,7 @@ function throttle(fn, delay) {
   let restTime = delay;
   return function (...args) {
     const now = new Date();
-    if (restTime <= 0) {
+    if (restTime <= now - lastCall) {
       fn.call(null, args);
       restTime = delay;
     } else {

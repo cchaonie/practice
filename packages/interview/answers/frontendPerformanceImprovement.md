@@ -7,6 +7,13 @@
 1. 减少关键资源数量、大小
 2. 缩短关键路径的长度
 
+### 首屏指标
+
+1. First contentful paint (FCP): measures the time from when the page starts loading to when any part of the page's content is rendered on the screen.
+2. Largest contentful paint (LCP): measures the time from when the page starts loading to when the largest text block or image element is rendered on the screen.
+
+![performance](https://developer.mozilla.org/en-US/docs/Web/Performance/Navigation_and_resource_timings/screen_shot_2019-05-03_at_1.06.27_pm.png)
+
 ### 首屏渲染流程
 
 1. 下载 html
@@ -71,7 +78,7 @@ for (const img of imgs) {
 1. 使用方式：
     1. 放在其他 css 中，使用`@media`
     2. 使用 link 标签 `<link href="mobile.css" rel="stylesheet" media="screen and (max-width: 600px)">`
-       当浏览器发现当前页面符合媒体查询，会再去下载相应的 css，因此可以确保下载对应的文件。需要注意的是，其他设备的css也会下载，但是不会阻塞浏览器的首屏渲染，而是会在后续空闲时进行下载
+       当浏览器发现当前页面符合媒体查询，会再去下载相应的 css，因此可以确保下载对应的文件。需要注意的是，其他设备的 css 也会下载，但是不会阻塞浏览器的首屏渲染，而是会在后续空闲时进行下载
 
 #### dns-prefetch
 
