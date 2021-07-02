@@ -8,7 +8,6 @@ package-lock.json
 /next.webpack.config.js
 /release
  .DS_Store
-/server/router/orderDetailResult.txt
 /server/mock
 /.vs
 /.vscode
@@ -16,6 +15,5 @@ package-lock.json
 /.vs
 /.vscode
 /next.config.js
-/coverage
 /dist
 /lib
