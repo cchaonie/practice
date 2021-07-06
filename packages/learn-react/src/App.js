@@ -7,7 +7,7 @@ import {
     Redirect,
 } from "react-router-dom";
 import { Provider } from "react-redux";
-import { Questionare, Home } from "./pages";
+import { Questionnaire, Home, Lab } from "./pages";
 import configureStore from "./redux/store";
 
 const store = configureStore();
@@ -24,14 +24,20 @@ export default () => {
                         <li>
                             <Link to="/questionare">Questionare</Link>
                         </li>
+                        <li>
+                            <Link to="/lab">Lab</Link>
+                        </li>
                     </ul>
                     <hr />
                     <Switch>
-                        <Route exact path="/">
-                            <Home />
+                        <Route exact path="/lab">
+                            <Lab />
                         </Route>
                         <Route exact path="/questionare">
-                            <Questionare />
+                            <Questionnaire />
+                        </Route>
+                        <Route exact path="/">
+                            <Home />
                         </Route>
                         <Redirect to="/" />
                     </Switch>
