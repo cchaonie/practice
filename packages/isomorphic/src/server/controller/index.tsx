@@ -1,8 +1,9 @@
-import path from "path";
+import { HelmetProvider, FilledContext } from "react-helmet-async";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { Request, Response } from "express";
 import { ChunkExtractor } from "@loadable/server";
+import { ServerStyleSheet } from "styled-components";
 
 import App from "../../components/App";
 import { ServerHTML } from "./serverHTML";
@@ -14,22 +15,29 @@ export default function (req: Request, res: Response) {
             stats: getManifest("client", "loadable-stats"),
             publicPath: "http://localhost:9000",
         });
+        const sheet = new ServerStyleSheet();
+        const helmetContext = {};
+        const jsx = sheet.collectStyles(
+            extractor.collectChunks(
+                <HelmetProvider context={helmetContext}>
+                    <App />
+                </HelmetProvider>
+            )
+        );
 
-        const jsx = extractor.collectChunks(<App />);
-
-        const content = ReactDOMServer.renderToString(jsx);
-
-        const html = ReactDOMServer.renderToString(
+        const html = ReactDOMServer.renderToStaticNodeStream(
             <ServerHTML
+                helmet={(helmetContext as FilledContext).helmet}
                 title="This is a isomorphic javascript application"
-                content={content}
+                content={jsx}
                 scripts={extractor.getScriptElements()}
+                styles={sheet.getStyleElement()}
             />
         );
 
         res.status(200);
         res.type("html");
-        res.end(html);
+        html.pipe(res);
     } catch (error) {
         console.error(error);
 
