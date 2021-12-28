@@ -1,0 +1,15 @@
+/node_modules
+.idea
+/.next
+/libs/logging/node_modules
+/polyfills.js
+/next.webpack.config.js
+/release
+ .DS_Store
+/server/mock
+/coverage
+/.vs
+/.vscode
+/next.config.js
+/dist
+/lib

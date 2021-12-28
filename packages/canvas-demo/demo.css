@@ -1,0 +1,24 @@
+.demo {
+  border: 3px solid red;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  background: red;
+}
+
+.flex-item {
+  height: 100px;
+  background: blue;
+  /* flex-shrink: 0; */
+}
+
+.mid-item {
+  font-size: 10px;
+  /* flex: 1 2 0; */
+  height: 150px;
+  flex-basis: 0;
+  background-color: aquamarine;
+}

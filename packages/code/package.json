@@ -1,0 +1,19 @@
+{
+  "name": "daily_practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  },
+  "dependencies": {
+    "promise-polyfill": "8.2.0",
+    "typescript": "^4.2.4"
+  }
+}

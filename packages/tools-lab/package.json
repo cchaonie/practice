@@ -1,0 +1,24 @@
+{
+  "name": "tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pdfParse.js",
+  "scripts": {
+    "parse": "node pdfParse.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "esprima": "^4.0.1",
+    "glob": "^7.1.6",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "node-fetch": "^2.6.1",
+    "pdf-parse": "^1.1.1",
+    "rxjs": "^6.6.0",
+    "source-map": "^0.7.3",
+    "typescript": "^4.2.4"
+  }
+}
