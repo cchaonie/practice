@@ -1,2 +1,1 @@
-# name creator
-A tool to create chinese names
+A tool to create Chinese names
