@@ -38,5 +38,6 @@ ccn resultCount surnameLength(optional) fullNameLength(optional)
 
 1. Full name length must be bigger than the surname length
 2. The max surname length is 5
+3. The max first name length is 3
 
 ## This repo is based on [chinese-random-name](https://github.com/XadillaX/chinese-random-name), thanks to [XadillaX](https://github.com/XadillaX)

@@ -10,6 +10,10 @@ exports.create = (surnameLength = 1, fullLength = 2) => {
         throw new Error("Max surname length is 5");
     }
 
+    if (fullLength - surnameLength > 3) {
+        throw new Error("Max first name length is 3");
+    }
+
     let surname, name;
 
     const nameCreatorMap = {
