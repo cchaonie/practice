@@ -1,59 +1,42 @@
-# Chinese Random Name
+# create Chinese name
 
-Generate Chinese name by using Node.js with ❤️.
+A cli tool to create Chinese name.
 
-## Installation
+## Install
 
-```sh
-$ npm --save install chinese-random-name
+`npm i -g ccn`
+
+## Example
+
+The format of parameter is like:
+ccn resultCount surnameLength(optional) fullNameLength(optional)
+
+1. `ccn 2` (create 2 names, surname will be 1 word and the full name will be 2 words by default)
+
+```
+封珊
+1. 金：秀气伶俐，多才巧智，中年成功隆昌，出国之字。
+冷合
+1. 水：环境良好，一生清雅温和，中年励业，晚年成功隆昌。
 ```
 
-## Usage
+2. `ccn 3 1 3` (create 3 names, surname will be 1 word and the full name will be 3 words)
 
-### Generate a Full Name Automatically
-
-Using `generate()` function:
-
-```javascript
-var randomName = require("chinese-random-name");
-
-console.log(randomName.generate());
+```
+柯认籍
+1. 金：忧心劳神，病弱短寿，一生多灾，有爱情厄，晚年吉祥。
+2. 木：晚婚迟得子吉，白手成家，自力更生，中年勤俭，晚年隆昌。
+蔡谕黯
+1. 金：胆识丰富，精明公正，官运旺，中年成功隆昌，出国之字。
+2. 水：不祥之字，暗淡无光，身弱短寿，中年多灾，晚年劳神。
+袁作殊
+1. 金：忧心劳神，刑偶欠子，中年隆昌，晚年劳神，一生劳苦。
+2. 金：有爱情厄，忧心劳神，中年有灾，晚年吉祥，不幸之字。
 ```
 
-### Only Surname
+## Notes
 
-Using `getOne` function in `surnames`.
+1. Full name length must be bigger than the surname length
+2. The max surname length is 5
 
-```javascript
-console.log(randomName.surnames.getOne());
-```
-
-### Name
-
-Using `get` / `get1` / `get2` / `get3` function in `names`.
-
-+ `get`: returns a random name and its length between 1 and 3.
-+ `get1`: returns a random name with length 1. (you can pass a parameter which may be `"金"` / `"木"` / `"水"` / `"火"` / `"土"` or leave it blank)
-+ `get2`: returns a random name with length 2. (you can pass `"金金"` / `"金木"` / ... or leave it blank)
-+ `get3`: returns a random name with length 3. (you can pass `"金金金"` / `"水火土"` / ... or leave it blank)
-+ `dict`: the dictionary object.
-
-Examples:
-
-```javascript
-randomName.names.get();
-randomName.names.get1();
-randomName.names.get2();
-randomName.names.get3();
-randomName.names.get1("金");
-randomName.names.get2("木水");
-randomName.names.get3("火火火");
-```
-
-## Related Article
-
-http://xcoder.in/2014/09/01/how-i-made-chinese-random-x/
-
-## Contribute
-
-You're welcome to fork and make pull requests!
+## This repo is based on [chinese-random-name](https://github.com/XadillaX/chinese-random-name), thanks to [XadillaX](https://github.com/XadillaX)
