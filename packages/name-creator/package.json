@@ -1,21 +1,22 @@
 {
-    "name": "name-creator",
+    "name": "ccn",
     "version": "1.0.0",
-    "description": "",
-    "main": "src/index.js",
+    "description": "create Chinese name using Node.js.",
     "bin": {
-        "cnc": "bin/cnc.js"
+        "ccn": "./bin/ccn.js"
     },
-    "scripts": {
-        "test": "jest"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "jest": "^27.4.7"
-    },
+    "keywords": [
+        "chinese",
+        "name",
+        "name generator",
+        "chinese name",
+        "random",
+        "random name"
+    ],
+    "author": "fightant1w1ll",
+    "license": "MIT",
     "dependencies": {
-        "commander": "^8.3.0"
+        "flatten": "^1.0.2",
+        "random-to": "0.0.2"
     }
 }
