@@ -1,5 +1,5 @@
 {
-    "name": "ccn",
+    "name": "@fightant1w1ll/ccn",
     "version": "0.0.1",
     "description": "create Chinese name using Node.js.",
     "bin": {
