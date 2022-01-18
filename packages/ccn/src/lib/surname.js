@@ -1,6 +1,6 @@
 const flatten = require("flatten");
 const random = require("random-to");
-const surnameDict = require("../dict/f");
+const surnameDict = require("../dict/surnameDict");
 
 const dict = surnameDict.split("\n\n");
 

@@ -1,5 +1,5 @@
 const random = require("random-to");
-let nameDict = require("../dict/n");
+let nameDict = require("../dict/words");
 
 const dict = nameDict.split("\n").map(d => d.split(" "));
 
