@@ -1,8 +1,6 @@
 build
 .DS_Store
-package-lock.json
 .idea
-.vscode
 # Logs
 logs
 *.log
@@ -60,7 +58,6 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
 
 # next.js build output
 .next
