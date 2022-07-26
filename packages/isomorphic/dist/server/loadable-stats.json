@@ -1,0 +1,52 @@
+{
+  "errors": [],
+  "warnings": [
+    "./node_modules/express/lib/view.js 81:13-25\nCritical dependency: the request of a dependency is an expression"
+  ],
+  "hash": "f54ad44cd28c083faee6",
+  "publicPath": "",
+  "outputPath": "/Users/chris/projects/daily-practice/packages/isomorphic/dist/server",
+  "assetsByChunkName": {
+    "asyncContent-Content": "asyncContent-Content.index.js",
+    "main": "index.js"
+  },
+  "assets": [],
+  "filteredAssets": 2,
+  "namedChunkGroups": {
+    "main": {
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        "index.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "asyncContent-Content": {
+      "chunks": [
+        "asyncContent-Content"
+      ],
+      "assets": [
+        "asyncContent-Content.index.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "generator": "loadable-components",
+  "chunks": [
+    {
+      "id": "asyncContent-Content",
+      "files": [
+        "asyncContent-Content.index.js"
+      ]
+    },
+    {
+      "id": "main",
+      "files": [
+        "index.js"
+      ]
+    }
+  ]
+}
