@@ -1,7 +1,6 @@
 import path from 'path';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import ManifestPlugin from 'webpack-manifest-plugin';
+import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 
 const isProd = process.env.NODE_ENV == 'prod';
 const ROOT_DIR = process.cwd();
@@ -30,21 +29,6 @@ export default {
   module: {
     rules: [
       {
-        test: /\.(sa|sc|c)ss$/,
-        use: [
-          isProd
-            ? {
-                loader: MiniCssExtractPlugin.loader,
-                options: {
-                  publicPath: path.resolve(__dirname, 'dist'),
-                },
-              }
-            : 'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
-      },
-      {
         test: /\.tsx?$/,
         exclude: path.resolve(ROOT_DIR, './node_modules'),
         use: {
@@ -53,12 +37,5 @@ export default {
       },
     ],
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-    }),
-    new ManifestPlugin(),
-  ],
+  plugins: [new CleanWebpackPlugin(), new WebpackManifestPlugin({})],
 };

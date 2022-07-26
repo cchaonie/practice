@@ -1,5 +1,3 @@
 {
-  "asyncContent-Content.js": "http://localhost:9000/asyncContent-Content.js",
-  "main.js": "http://localhost:9000/main.js",
-  "loadable-stats.json": "http://localhost:9000/loadable-stats.json"
+  "main.js": "http://localhost:9000/main.js"
 }

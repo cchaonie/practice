@@ -1,5 +1,3 @@
 {
-  "asyncContent-Content.js": "asyncContent-Content.index.js",
-  "main.js": "index.js",
-  "loadable-stats.json": "loadable-stats.json"
+  "main.js": "index.js"
 }
