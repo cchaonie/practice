@@ -13,36 +13,36 @@ const serverCompiler = webpack(serverConfig as webpack.Configuration);
 
 const ROOT_DIR = process.cwd();
 
-console.log(ROOT_DIR);
-
 let currentNodeServer = null;
 
 serverCompiler.watch({}, (err, stats) => {
-  console.log('[server] compiled');
+  console.log('[server] detecting changes', stats.toJson("summary"));
 });
 
 serverCompiler.hooks.done.tap('server compiled finished', stats => {
-  console.log('server compiled done, starting node server');
+  console.log('[server] compiled done, starting node server');
 
-  if (!currentNodeServer) {
-    const nodeServer = spawn('node', [
-      path.resolve(ROOT_DIR, 'dist/server/index.js'),
-    ]);
-
-    console.log('[server] started');
-
-    nodeServer.stdout.on('data', data => console.log(data.toString().trim()));
-
-    nodeServer.stderr.on('data', data => {
-      console.error(data.toString().trim());
-    });
-
-    nodeServer.on('error', err => {
-      console.error(err, 'Failed to start subprocess.');
-    });
-
-    currentNodeServer = nodeServer;
+  if (currentNodeServer) {
+    currentNodeServer.kill();
   }
+
+  const nodeServer = spawn('node', [
+    path.resolve(ROOT_DIR, 'dist/server/index.js'),
+  ]);
+
+  console.log('[server] started');
+
+  nodeServer.stdout.on('data', data => console.log(data.toString().trim()));
+
+  nodeServer.stderr.on('data', data => {
+    console.error(data.toString().trim());
+  });
+
+  nodeServer.on('error', err => {
+    console.error(err, 'Failed to start subprocess.');
+  });
+
+  currentNodeServer = nodeServer;
 });
 
 const clientServer = express();

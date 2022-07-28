@@ -1,5 +1,5 @@
 {
-  "name": "daily_practice",
+  "name": "code",
   "version": "1.0.0",
   "description": "",
   "main": "",
@@ -13,7 +13,6 @@
     "jest": "^28.1.3"
   },
   "dependencies": {
-    "promise-polyfill": "8.2.0",
-    "typescript": "^4.2.4"
+    "promise-polyfill": "8.2.0"
   }
 }

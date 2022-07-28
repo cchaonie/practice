@@ -6,4 +6,5 @@ const port = process.env.PORT || 8181;
 const app = express();
 
 app.use(controller);
-app.listen(port, () => console.log(`listening port: ${port}`));
+
+app.listen(port, () => console.log(`[server] listening port: ${port}`));
