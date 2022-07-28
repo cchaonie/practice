@@ -28,5 +28,8 @@ export default {
       },
     ],
   },
-  plugins: [new CleanWebpackPlugin(), new WebpackManifestPlugin({})],
+  plugins: [
+    new CleanWebpackPlugin(),
+    new WebpackManifestPlugin({ writeToFileEmit: true }),
+  ],
 };
