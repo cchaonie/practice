@@ -2,7 +2,7 @@
 
 包含块的作用是用来作为计算某些属性的百分比值的基数
 
-1. `magin` `padding` `width` `height`
+1. `margin` `padding` `width` `height`
 2. absolute fixed 的 offset
 
 ## 识别包含块

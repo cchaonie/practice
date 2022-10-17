@@ -28,21 +28,21 @@ Cross-Origin Resource Sharing，即跨域资源共享。从安全的角度考虑
 
 1. 请求方法只能是：GET HEAD POST
 2. Fetch 规范定义了对 CORS 安全的首部字段集合，不得人为设置该集合之外的其他首部字段。该集合为：
-3. Accept
-4. Accept-Language
-5. Content-Language
-6. Content-Type （需要注意额外的限制）
-7. DPR
-8. Downlink
-9. Save-Data
-10. Viewport-Width
-11. Width
-12. Content-Type 的值仅限于下列三者之一：
-13. text/plain
-14. multipart/form-data
-15. application/x-www-form-urlencoded
-16. 请求中的任意 XMLHttpRequestUpload 对象均没有注册任何事件监听器。XMLHttpRequestUpload 对象可以使用 XMLHttpRequest.upload 属性访问。
-17. 请求中没有使用 ReadableStream 对象。
+   1. Accept
+   2. Accept-Language
+   3. Content-Language
+   4. Content-Type （需要注意额外的限制）
+   5. DPR
+   6. Downlink
+   7. Save-Data
+   8. Viewport-Width
+   9. Width
+3. Content-Type 的值仅限于下列三者之一：
+   1. text/plain
+   2. multipart/form-data
+   3. application/x-www-form-urlencoded
+4. 请求中的任意 XMLHttpRequestUpload 对象均没有注册任何事件监听器。XMLHttpRequestUpload 对象可以使用 XMLHttpRequest.upload 属性访问。
+5. 请求中没有使用 ReadableStream 对象。
 
 ### 预检请求
 
@@ -51,19 +51,19 @@ Cross-Origin Resource Sharing，即跨域资源共享。从安全的角度考虑
 需预检的请求(Preflighted requests)要求必须首先使用 OPTIONS 方法发起一个预检请求到服务器，以获知服务器是否允许该实际请求。当请求满足下述任一条件时，即应首先发送预检请求：
 
 1. 使用了下面任一 HTTP 方法：
-1. PUT
-1. DELETE
-1. CONNECT
-1. OPTIONS
-1. TRACE
-1. PATCH
-1. 人为设置了对 CORS 安全的首部字段集合之外的其他首部字段。
-1. Content-Type 的值不属于下列之一:
-1. application/x-www-form-urlencoded
-1. multipart/form-data
-1. text/plain
-1. 请求中的 XMLHttpRequestUpload 对象注册了任意多个事件监听器。
-1. 请求中使用了 ReadableStream 对象。
+   1. PUT
+   2. DELETE
+   3. CONNECT
+   4. OPTIONS
+   5. TRACE
+   6. PATCH
+2. 人为设置了对 CORS 安全的首部字段集合之外的其他首部字段。
+3. Content-Type 的值不属于下列之一:
+   1. application/x-www-form-urlencoded
+   2. multipart/form-data
+   3. text/plain
+4. 请求中的 XMLHttpRequestUpload 对象注册了任意多个事件监听器。
+5. 请求中使用了 ReadableStream 对象。
 
 ### 带权限的请求(Requests with credentials)
 
@@ -91,11 +91,11 @@ Cross-Origin Resource Sharing，即跨域资源共享。从安全的角度考虑
 
 ## 跨域会限制什么行为
 
-1. cookie不会自动带在跨域请求上
-2. localStorage 和 sessionStorage也不能跨域操作
-3. IndexDB不能跨域操作
-3. DOM对象、JS对象不能跨域操作
-4. ajax、fetch跨域请求都会受到限制
+1. cookie 不会自动带在跨域请求上
+2. localStorage 和 sessionStorage 也不能跨域操作
+3. IndexDB 不能跨域操作
+4. DOM 对象、JS 对象不能跨域操作
+5. ajax、fetch 跨域请求都会受到限制
 
 ## 当跨域发生时，如何解决
 
@@ -107,7 +107,7 @@ Cross-Origin Resource Sharing，即跨域资源共享。从安全的角度考虑
 ```js
 function jsonp(url, callback) {
   const src = `${url}?callback=${callback}`;
-  const script = document.createElement("script");
+  const script = document.createElement('script');
   script.src = src;
   document.body.appendChild(script);
 }

@@ -19,16 +19,17 @@
 1. 符号
 2. 有效数字数组，有效数字可以拆分整数部分和小数部分
 3. 指数
-   按照这样划分之后，可以使用整数的运算规则处理完毕后，再将结果转换回小数即可。而且，如果数字过大无法进行数值运算，可以拆解成字符串进行计算
+
+按照这样划分之后，可以使用整数的运算规则处理完毕后，再将结果转换回小数即可。而且，如果数字过大无法进行数值运算，可以拆解成字符串进行计算
 
 ```js
 // 注意点
 // 	1. 两数相乘最大位数为两数位数之和
 // 	2. 使用竖式乘法。需要注意连续进位问题
 var multiply = function (num1, num2) {
-  if (num1 === "0" || num2 === "0") return "0";
-  const op1 = num1.split("");
-  const op2 = num2.split("");
+  if (num1 === '0' || num2 === '0') return '0';
+  const op1 = num1.split('');
+  const op2 = num2.split('');
   const result = new Array(op1.length + op2.length).fill(0);
   for (let i = op1.length - 1; i > -1; i--) {
     for (let j = op2.length - 1; j > -1; j--) {
@@ -57,6 +58,6 @@ var multiply = function (num1, num2) {
       break;
     }
   }
-  return result.slice(firstNonZero).join("");
+  return result.slice(firstNonZero).join('');
 };
 ```

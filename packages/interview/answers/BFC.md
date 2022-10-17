@@ -7,7 +7,7 @@
 块格式化上下文是页面中的一块独立的渲染区域，这个区域内部的元素有一套渲染规则
 可以形成块格式化上下文的属性有：
 
-1. display: inline-block/table-cell/inline-flex/flex
+1. display: inline-block/table-cell/inline-flex/flex-items/flex-root
 2. overflow: auto/hidden/scroll
 3. float: left/right
 4. position: absolute/fixed/sticky
