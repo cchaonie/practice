@@ -1,51 +1,26 @@
 // 请实现一个mergePromise函数，把传进去的数组按顺序先后执行，并且把返回的数据先后放到数组data中。
-const Promise = require("promise-polyfill");
+const { getPromise } = require('./utils');
 
-const timeout = ms =>
-    new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve();
-        }, ms);
-    });
+const async1 = () => getPromise(1, 1000);
+const async2 = () => getPromise(2, 4000);
+const async3 = () => getPromise(3, 2000);
 
-const ajax1 = () =>
-    timeout(2000).then(() => {
-        console.log("1");
-        return 1;
-    });
-
-const ajax2 = () =>
-    timeout(1000).then(() => {
-        console.log("2");
-        return 2;
-    });
-
-const ajax3 = () =>
-    timeout(2000).then(() => {
-        console.log("3");
-        return 3;
-    });
-
-const mergePromise = ajaxArray => {
-    // 在这里实现你的代码
-    const data = [];
-    let controller = Promise.resolve();
-    return ajaxArray.reduce((controller, ajax) => {
-        return controller.then(ajax).then(v => {
-            data.push(v);
-            return data;
-        });
-    }, controller);
-    // ajaxArray.forEach(ajax => {
-    //     controller = controller.then(ajax).then(v => {
-    //         data.push(v);
-    //         return data;
-    //     });
-    // });
-    // return controller;
+const mergePromise = promises => {
+  const result = [];
+  return promises.reduce(
+    (a, c, i) =>
+      a.then(c).then(r => {
+        result[i] = r;
+        console.log(r);
+        return result;
+      }),
+    Promise.resolve()
+  );
 };
 
-mergePromise([ajax1, ajax2, ajax3]).then(data => {
-    console.log("done");
-    console.log(data); // data 为 [1, 2, 3]
+const ps = [async1, async2, async3];
+
+mergePromise(ps).then(r => {
+  console.log('done');
+  console.log(r);
 });

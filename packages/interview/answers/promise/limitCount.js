@@ -5,12 +5,12 @@
  * @return {Promise} - 返回一个 Promise 值来确认所有数据是否迭代完成
  */
 function limitCount(list, limit, asyncHandle) {
-  let recursion = (arr) => {
+  let recursion = arr => {
     return asyncHandle(arr.shift()).then(() => {
       if (arr.length !== 0) {
         return recursion(arr);
       } else {
-        return "finish";
+        return 'finish';
       }
     });
   };
