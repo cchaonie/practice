@@ -1,22 +1,22 @@
 {
-    "name": "@fightant1w1ll/ccn",
-    "version": "0.0.2",
-    "description": "create Chinese name using Node.js.",
-    "bin": {
-        "ccn": "./bin/ccn.js"
-    },
-    "keywords": [
-        "chinese",
-        "name",
-        "name generator",
-        "chinese name",
-        "random",
-        "random name"
-    ],
-    "author": "fightant1w1ll",
-    "license": "MIT",
-    "dependencies": {
-        "flatten": "^1.0.3",
-        "random-to": "0.0.2"
-    }
+  "name": "@cchaonie/ccn",
+  "version": "0.0.2",
+  "description": "create Chinese name using Node.js",
+  "bin": {
+    "ccn": "./bin/ccn.js"
+  },
+  "keywords": [
+    "chinese",
+    "name",
+    "name generator",
+    "chinese name",
+    "random",
+    "random name"
+  ],
+  "author": "cchaonie",
+  "license": "MIT",
+  "dependencies": {
+    "flatten": "^1.0.3",
+    "random-to": "0.0.2"
+  }
 }
