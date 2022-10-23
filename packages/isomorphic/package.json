@@ -8,7 +8,7 @@
     "test": "jest"
   },
   "keywords": [],
-  "author": "",
+  "author": "cchaonie",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.18.9",
