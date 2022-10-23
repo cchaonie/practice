@@ -1,44 +1,28 @@
-import { Handler, Request } from './types';
+import { HandlerA, HandlerB, HandlerC, Handler, Request } from './types';
 
 class Application {
-  handlers: Handler[] = [];
+  handlerChain: Handler | null = null;
 
-  addHandler(handler: Handler) {
-    this.handlers.push(handler);
+  setHandlerChain(handler: Handler) {
+    this.handlerChain = handler;
   }
 
   run() {
     const req = new Request('foo');
-    for (let handler of this.handlers) {
-      const continueHandling = handler(req);
-      if (!continueHandling) {
-        break;
-      }
-    }
+    this.handlerChain?.handle(req);
+    console.log(req.tags);
   }
 }
 
 const app = new Application();
 
-const handler1: Handler = (req: Request) => {
-  console.log(`I am H1 and I am handling req: ${req.name}`);
-  return true;
-};
+const handler1 = new HandlerA();
+const handler2 = new HandlerB();
+const handler3 = new HandlerC();
 
-const handler2: Handler = (req: Request) => {
-  console.log(`I am H2 and I am handling req: ${req.name}`);
-  return true;
-};
+handler1.successor = handler2;
+handler2.successor = handler3;
 
-const handler3: Handler = (req: Request) => {
-  console.log(
-    `I am H3 and I am handling request: ${req.name}, none can handle this request after me`
-  );
-  return false;
-};
-
-app.addHandler(handler1);
-app.addHandler(handler3);
-app.addHandler(handler2);
+app.setHandlerChain(handler1);
 
 app.run();
