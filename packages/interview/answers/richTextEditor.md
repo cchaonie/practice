@@ -8,4 +8,4 @@
 2. 使用div元素，并设置`contenteditable="true"`
 
 通过`document.execCommand()`可以实时通过执行命令的方式改变页面内容
-通过`contentWindwo.getSelection()`可以获取用户在iframe中选中的文本内容
+通过`contentWindow.getSelection()`可以获取用户在iframe中选中的文本内容
