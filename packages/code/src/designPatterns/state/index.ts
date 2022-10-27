@@ -1,29 +1,29 @@
 import { State, Init, Running, Paused, Stopped } from './types';
 
 class Game {
-  #state: State;
+  #currentState: State;
   constructor() {
-    this.#state = new Init();
+    this.#currentState = new Init();
   }
 
   run() {
-    this.#state = new Running();
+    this.#currentState = new Running();
   }
 
   resume() {
-    this.#state = new Running();
+    this.#currentState = new Running();
   }
 
   pause() {
-    this.#state = new Paused();
+    this.#currentState = new Paused();
   }
 
   stop() {
-    this.#state = new Stopped();
+    this.#currentState = new Stopped();
   }
 
   report() {
-    this.#state.handle();
+    this.#currentState.handle();
   }
 }
 
