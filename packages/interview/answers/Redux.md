@@ -95,7 +95,7 @@ Redux 本身是作为一个状态管理工具，并不是和 React 绑定的。�
 
 ```javascript
 // store.js 这里为了方便，将整个Store及reducer、action都放在了一个文件
-import { createStore } from "redux";
+import { createStore } from 'redux';
 const initialState = {
   index: 0,
   todoList: [],
@@ -103,42 +103,42 @@ const initialState = {
 export default createStore((state = initialState, { type, payload = {} }) => {
   const { index, status } = payload;
   switch (type) {
-    case "NEW": {
+    case 'NEW': {
       payload.key = state.index;
-      payload.status = "UNDONE";
+      payload.status = 'UNDONE';
       return {
         todoList: [...state.todoList, payload],
         index: state.index + 1,
       };
     }
-    case "DONE":
+    case 'DONE':
       return {
         todoList: state.todoList.map((todo, i) => {
-          i === index ? (todo.status = "DONE") : todo;
+          i === index ? (todo.status = 'DONE') : todo;
           return todo;
         }),
         index: state.index,
       };
-    case "UNDONE":
+    case 'UNDONE':
       return {
         todoList: state.todoList.map((todo, i) => {
-          i === index ? (todo.status = "UNDONE") : todo;
+          i === index ? (todo.status = 'UNDONE') : todo;
           return todo;
         }),
         index: state.index,
       };
-    case "TRASH":
+    case 'TRASH':
       return {
         todoList: state.todoList.map((todo, i) => {
-          i === index ? (todo.status = "TRASH") : todo;
+          i === index ? (todo.status = 'TRASH') : todo;
           return todo;
         }),
         index: state.index,
       };
-    case "RETRIVE":
+    case 'RETRIVE':
       return {
         todoList: state.todoList.map((todo, i) => {
-          i === index ? (todo.status = "UNDONE") : todo;
+          i === index ? (todo.status = 'UNDONE') : todo;
           return todo;
         }),
         index: state.index,
@@ -149,7 +149,7 @@ export default createStore((state = initialState, { type, payload = {} }) => {
 });
 
 // app.js
-import store from "./store";
+import store from './store';
 
 function listener() {
   console.log(store.getState());
@@ -157,7 +157,7 @@ function listener() {
 
 store.subscribe(listener);
 store.dispatch({
-  type: "NEW",
+  type: 'NEW',
   payload: {
     key: 0,
   },
@@ -168,35 +168,40 @@ store.dispatch({
 
 #### enchancer
 
-    1. applyMiddleware函数返回enhaner
+    1. applyMiddleware函数返回enhancer
     2. enhancer的关键在于增强了store的dispatch方法
     3. middleware的调用过程决定其结构
 
 ```js
 function applyMiddleware(...middlewares) {
-  return (createStore) => (...args) => {
-    const store = createStore(...args);
-    const middlewareAPI = {
-      getState,
-      dispatch,
+  return createStore =>
+    (...args) => {
+      const store = createStore(...args);
+      const middlewareAPI = {
+        getState,
+        dispatch,
+      };
+      // 第一次：用 middlewareAPI 依次调用middleware，返回接受dispatch函数的函数
+      const chain = middlewares.map(middleware => middleware(middlewareAPI));
+      // 第二次：用compose构造middleware调用链，用store.dispatch调用middleware调用链，返回
+      const dispatch = compose(...chain)(store.dispatch);
+      return {
+        ...store,
+        dispatch,
+      };
     };
-    // 第一次：用 middlewareAPI 依次调用middleware，返回接受dispatch函数的函数
-    const chain = middlewares.map((middleware) => middleware(middlewareAPI));
-    // 第二次：用compose构造middleware调用链，用store.dispatch调用middleware调用链，返回
-    const dispatch = compose(...chain)(store.dispatch);
-    return {
-      ...store,
-      dispatch,
-    };
-  };
 }
 
 function compose(...fns) {
-  return fns.reduce((a, b) => (...args) => a(b(...args)));
+  return fns.reduce(
+    (a, b) =>
+      (...args) =>
+        a(b(...args))
+  );
 }
 
 function middleware({ getState, dispatch }) {
-  return (next) => (action) => {
+  return next => action => {
     // 实际处理逻辑，调用next(action)让下一个 middleware 处理
     next(action);
   };
@@ -269,10 +274,12 @@ redux 中使用了 funcs.reduce((a, b) => (…args) => a(b(…args)));
 
 redux 首先为每个 middleware 注入 store——仅包含{getState, dispatch}两个函数的对象，此时的 dispatch 仅仅是一个占位符，这样 middle 执行了第一次。然后调用 compose，对结果传入 store.dispatch，此时外层的中间件 f1, 其结构已经是
 
+```javascript
 action => {
-…
-next();
-…
+  //…
+  next();
+  //…
 }
+```
 
 这是一个标准的 redux dispatcher，接受一个 action，然后执行 reducer。redux 的这种设计，使用闭包记住了依次传入的参数 store.getState、store.dispatch，以及后续的中间件的引用——next。因此，在中间件中必须要调用 next(action)，让后续的中间件乃至 action 能够被 store.dispatch 消费掉，进而被 reducer 处理。

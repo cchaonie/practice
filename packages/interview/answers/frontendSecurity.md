@@ -23,7 +23,7 @@
    2. react 的`dangerouslySetInnerHTML`
    3. 内联事件监听器
    4. a 标签的 href、location
-   5. setTimout setInterval 等函数
+   5. setTimeout setInterval 等函数
 
 4. Content Security Policy
 5. cookie 的 http-only
