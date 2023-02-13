@@ -5,6 +5,7 @@
   "bin": {
     "ccn": "./bin/ccn.js"
   },
+  "main": "./src/index.js",
   "keywords": [
     "chinese",
     "name",
