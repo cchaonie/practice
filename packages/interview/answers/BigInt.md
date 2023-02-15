@@ -61,3 +61,26 @@ var multiply = function (num1, num2) {
   return result.slice(firstNonZero).join('');
 };
 ```
+
+## 大数相加
+
+```javascript
+function add(num1, num2) {
+  let arr1 = num1.split('').reverse();
+  let arr2 = num2.split('').reverse();
+  let res = [];
+  let carry = 0;
+  let len = Math.max(arr1.length, arr2.length);
+  for (let i = 0; i < len; i++) {
+    let a = parseInt(arr1[i]) || 0;
+    let b = parseInt(arr2[i]) || 0;
+    let sum = a + b + carry;
+    res.push(sum % 10);
+    carry = Math.floor(sum / 10);
+  }
+  if (carry > 0) {
+    res.push(carry);
+  }
+  return res.reverse().join('');
+}
+```
