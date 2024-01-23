@@ -1,10 +1,4 @@
 {
   "name": "practice",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "dependencies": {
-    "typescript": "^4.7.4"
-  }
+  "private": true
 }
