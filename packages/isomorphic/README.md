@@ -9,7 +9,7 @@
 | 1    | react                          | UI                   |
 | 2    | react-router, react-router-dom | 路由                 |
 | 3    | redux, redux-observable, rxjs  | 数据流管理           |
-| 4    | babel, babel-node, webpack     | 打包编译             |
+| 4    | babel, babel-node, webpack     | 编译打包             |
 | 5    | nodemon, express               | （热更新）开发服务器 |
 | 6    | loadable-component             | 懒加载，code-split   |
 | 7    | styled-component[tangram]      | css in js，组件库    |
