@@ -79,6 +79,8 @@ function draw(timestamp) {
     previousDirection,
   } = snake;
 
+  snake.move(timestamp);
+
   snake.mainLength = Math.min(
     snake.mainLength + snake.distancePerFrame,
     snake.totalLength
