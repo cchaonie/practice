@@ -34,7 +34,9 @@ function startGame() {
 
   createStage(gameState);
 
-  gameState.addStateListener(GameState.IN_PROGRESS, draw);
+  gameState.addStateListener(GameState.IN_PROGRESS, () =>
+    window.requestAnimationFrame(draw)
+  );
   gameState.addStateListener(GameState.PAUSE, pauseGame);
   gameState.addStateListener(GameState.TERMINATED, stopGame);
 
@@ -50,9 +52,7 @@ function pauseGame() {
 
 function stopGame() {
   pauseGame();
-  game.removeStateListener(1, draw);
-  game.removeStateListener(2, pauseGame);
-  game.removeStateListener(3, stopGame);
+  game.removeAll();
 
   game = null;
 }

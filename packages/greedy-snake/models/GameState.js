@@ -35,6 +35,17 @@ export default class GameState {
     }
   }
 
+  removeAll() {
+    [
+      GameState.NOT_STARTED,
+      GameState.IN_PROGRESS,
+      GameState.PAUSE,
+      GameState.TERMINATED,
+    ].forEach(state => {
+      this.stateListeners[state] = [];
+    });
+  }
+
   changeTo(state) {
     const allowState = [
       [GameState.IN_PROGRESS],
