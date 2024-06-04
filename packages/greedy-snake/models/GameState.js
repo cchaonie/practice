@@ -10,17 +10,21 @@ export default class GameState {
 
     this.stageWidth = Math.min(600, pageWidth);
     this.stageHeight = Math.min(800, pageHeight);
+
     this.isHit = false;
+
     this.state = GameState.NOT_STARTED;
-    this.animationId = null;
     this.stateListeners = [[], [], [], []];
+
+    this.animationId = null;
+    this.lastPaintTimestamp = null;
 
     this.snake = null;
     this.apple = null;
   }
 
   addStateListener(state, listener) {
-    this.stateListeners[state].push(listener);
+    this.stateListeners[state].push(listener.bind(this));
   }
 
   removeStateListener(state, listener) {
@@ -43,7 +47,7 @@ export default class GameState {
       this.state = state;
 
       for (const fn of this.stateListeners[this.state]) {
-        fn(this);
+        fn();
       }
     }
   }

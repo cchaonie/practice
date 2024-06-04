@@ -2,6 +2,8 @@ import GameState from './models/GameState.js';
 import Snake from './models/Snake.js';
 import Apple from './models/Apple.js';
 
+let game = null;
+
 window.addEventListener('DOMContentLoaded', prepareMenu);
 
 function prepareMenu() {
@@ -25,6 +27,8 @@ function createStage(gameState) {
 
 function startGame() {
   const gameState = new GameState();
+  game = gameState;
+
   const snake = new Snake(gameState);
   const apple = new Apple(gameState);
 
@@ -38,20 +42,23 @@ function startGame() {
   gameState.changeTo(GameState.IN_PROGRESS);
 }
 
-function pauseGame(gameState) {
-  if (gameState.animationId) {
-    cancelAnimationFrame(gameState.animationId);
+function pauseGame() {
+  if (game.animationId) {
+    cancelAnimationFrame(game.animationId);
   }
 }
 
-function stopGame(gameState) {
+function stopGame() {
   pauseGame();
-  gameState.removeStateListener(1, draw);
-  gameState.removeStateListener(2, pauseGame);
-  gameState.removeStateListener(3, stopGame);
+  game.removeStateListener(1, draw);
+  game.removeStateListener(2, pauseGame);
+  game.removeStateListener(3, stopGame);
+
+  game = null;
 }
 
-function draw(gameState) {
+function draw(timestamp) {
+  const gameState = game;
   if (gameState.state !== GameState.IN_PROGRESS) return;
 
   const canvas = document.getElementById('gameStage');
@@ -76,6 +83,7 @@ function draw(gameState) {
     snake.mainLength + snake.distancePerFrame,
     snake.totalLength
   );
+
   snake.crossLength = Math.max(snake.crossLength - snake.distancePerFrame, 0);
 
   let isTurning = true;
