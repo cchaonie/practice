@@ -66,7 +66,7 @@ function draw(timestamp) {
 
   ctx.clearRect(0, 0, gameState.stageWidth, gameState.stageHeight);
 
-  const { snake } = gameState;
+  const { snake, apple } = gameState;
 
   const {
     left,

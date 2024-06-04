@@ -9,7 +9,7 @@ export default class GameState {
     const pageHeight = window.innerHeight;
 
     this.stageWidth = Math.min(600, pageWidth);
-    this.stageHeight = Math.min(800, pageHeight);
+    this.stageHeight = Math.min(600, pageHeight);
 
     this.isHit = false;
 
