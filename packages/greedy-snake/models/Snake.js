@@ -1,3 +1,5 @@
+import { getRandom } from '../utils.js';
+
 export default class Snake {
   static UP = 0;
   static RIGHT = 1;
@@ -7,46 +9,102 @@ export default class Snake {
   constructor(gameState) {
     this.direction = Snake.UP;
     this.previousDirection = null;
+
     this.speed = 50;
+
     this.left = 0;
     this.top = 0;
+
     this.totalLength = 80;
     this.mainLength = 80;
     this.crossLength = 0;
+
     this.width = 10;
 
     gameState.snake = this;
 
     this.gameState = gameState;
+    this.setInitialCoordinates();
   }
 
-  get distancePerFrame() {
-    return (16.6 * this.speed) / 1000;
+  setInitialCoordinates() {
+    this.left = getRandom(this.gameState.stageWidth);
+    this.top = getRandom(this.gameState.stageHeight - this.totalLength);
   }
 
-  init() {
-    this.left =
-      Math.floor(
-        Math.random() * (this.gameState.stageWidth - this.totalLength)
-      ) + this.totalLength;
+  move(timestamp) {
+    const { lastPaintTimestamp } = this.gameState;
+    if (!lastPaintTimestamp) return;
 
-    this.top = Math.floor(Math.random() * this.gameState.stageHeight);
+    const distance = (this.speed * (timestamp - lastPaintTimestamp)) / 1000;
+    return this.moveByDistance(distance);
   }
 
-  turn(direction) {
-    const allowTurns = [
-      [Snake.LEFT, Snake.RIGHT],
-      [Snake.UP, Snake.DOWN],
-      [Snake.LEFT, Snake.RIGHT],
-      [Snake.UP, Snake.DOWN],
-    ];
+  moveByDistance(distance) {
+    const { direction } = this;
 
-    const turns = allowTurns[this.direction];
-    if (turns.includes(direction)) {
-      this.previousDirection = this.direction;
-      this.direction = direction;
-      this.mainLength = 0;
-      this.crossLength = this.totalLength;
+    switch (direction) {
+      case Snake.UP:
+        this.moveUp(distance);
+        break;
+      case Snake.RIGHT:
+        this.moveRight(distance);
+        break;
+      case Snake.DOWN:
+        this.moveDown(distance);
+        break;
+      case Snake.LEFT:
+      default:
+        this.moveLeft(distance);
+        break;
+    }
+  }
+
+  moveUp(distance) {
+    if (
+      this.previousDirection === Snake.LEFT ||
+      this.previousDirection === Snake.RIGHT
+    ) {
+      this.top -= distance;
+      if (this.top < 0) {
+        this.gameState.changeTo(GameState.TERMINATED);
+      }
+    }
+  }
+
+  moveRight(distance) {
+    if (
+      this.previousDirection === Snake.UP ||
+      this.previousDirection === Snake.DOWN
+    ) {
+      this.left += distance;
+      if (this.left > this.gameState.stageWidth) {
+        this.gameState.changeTo(GameState.TERMINATED);
+      }
+    }
+  }
+
+  moveDown(distance) {
+    if (
+      this.previousDirection === Snake.LEFT ||
+      this.previousDirection === Snake.RIGHT
+    ) {
+      this.top += distance;
+      if (this.top > this.gameState.stageHeight) {
+        this.gameState.changeTo(GameState.TERMINATED);
+      }
+    }
+  }
+
+  moveLeft(distance) {
+    if (
+      this.previousDirection === Snake.UP ||
+      this.previousDirection === Snake.DOWN
+    ) {
+      this.left -= distance;
+      if (this.left < 0) {
+        this.gameState.changeTo(GameState.TERMINATED);
+      }
     }
   }
 }
