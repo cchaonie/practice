@@ -7,13 +7,12 @@ export default class Snake {
   static LEFT = 3;
 
   constructor(gameState) {
-    this.direction = Snake.UP;
+    this.direction = Snake.RIGHT;
     this.previousDirection = null;
 
     this.speed = 50;
 
-    this.left = 0;
-    this.top = 0;
+    this.coordinates = [];
 
     this.totalLength = 80;
     this.mainLength = 80;
@@ -28,8 +27,15 @@ export default class Snake {
   }
 
   setInitialCoordinates() {
-    this.left = getRandom(this.gameState.stageWidth);
-    this.top = getRandom(this.gameState.stageHeight - this.totalLength);
+    const x = getRandom(this.gameState.stageWidth - this.totalLength);
+    const y = getRandom(this.gameState.stageHeight);
+
+    this.coordinates = [
+      [x + this.totalLength, y],
+      [x + this.totalLength, y + this.width],
+      [x, y + this.width],
+      [x, y],
+    ];
   }
 
   move(timestamp) {

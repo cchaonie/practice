@@ -35,7 +35,7 @@ export default class GameState {
     }
   }
 
-  removeAll() {
+  removeAllListeners() {
     [
       GameState.NOT_STARTED,
       GameState.IN_PROGRESS,
@@ -61,6 +61,14 @@ export default class GameState {
         fn();
       }
     }
+  }
+
+  startWatchingPlayer(listener) {
+    window.addEventListener('keyup', listener);
+  }
+
+  stopWatchingPlayer(listener) {
+    window.removeEventListener('keyup', listener);
   }
 
   /**

@@ -7,9 +7,10 @@ export default class Apple {
 
     gameState.apple = this;
     this.gameState = gameState;
+    this.setPosition();
   }
 
-  init() {
+  setPosition() {
     this.left = Math.floor(Math.random() * this.gameState.stageWidth);
     this.top = Math.floor(Math.random() * this.gameState.stageHeight);
   }
