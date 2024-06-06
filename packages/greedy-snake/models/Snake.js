@@ -11,7 +11,14 @@ export default class Snake {
     this.previousDirection = null;
 
     this.speed = 50;
-
+    /**
+     * How to describe the snake.
+     * Store the coordinates of each point from the head to the tail.
+     * Originally, it is a rectangle, so there are four points. And its head is pointing to the
+     * right. The order of the coordinates is anti-clockwise, so the coordinates
+     * are: [right-top], [right-bottom], [left-bottom], [left-top].
+     * Once the snake moves, it could go the the same direction, or take a turn.
+     **/
     this.coordinates = [];
 
     this.totalLength = 80;
@@ -40,7 +47,11 @@ export default class Snake {
 
   move(timestamp) {
     const { lastPaintTimestamp } = this.gameState;
-    if (!lastPaintTimestamp) return;
+    if (!lastPaintTimestamp) {
+      // first paint, use the initial coordinates
+      this.gameState.lastPaintTimestamp = timestamp;
+      return;
+    }
 
     const distance = (this.speed * (timestamp - lastPaintTimestamp)) / 1000;
     return this.moveByDistance(distance);
