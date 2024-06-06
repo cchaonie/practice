@@ -77,6 +77,12 @@ function draw(timestamp) {
 
   ctx.clearRect(0, 0, game.stageWidth, game.stageHeight);
 
+  snake.move(timestamp);
+
+  if (game.isAppleEaten()) {
+    new Apple(game);
+  }
+
   drawSnake(ctx, game.snake);
   drawApple(ctx, game.apple);
 

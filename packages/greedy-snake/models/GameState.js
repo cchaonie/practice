@@ -47,14 +47,7 @@ export default class GameState {
   }
 
   changeTo(state) {
-    const allowState = [
-      [GameState.IN_PROGRESS],
-      [GameState.PAUSE, GameState.TERMINATED],
-      [GameState.TERMINATED, GameState.IN_PROGRESS],
-      [],
-    ];
-
-    if (allowState[this.state].includes(state)) {
+    if (this.state !== state) {
       this.state = state;
 
       for (const fn of this.stateListeners[this.state]) {
@@ -78,4 +71,9 @@ export default class GameState {
   isGameOver() {
     return false;
   }
+
+  /**
+   * TODO implement this method
+   */
+  isAppleEaten() {}
 }
