@@ -1,6 +1,7 @@
 import GameState from './models/GameState.js';
 import Snake from './models/Snake.js';
 import Apple from './models/Apple.js';
+import LinkedNode from './models/LinkedNode.js';
 
 let game = null;
 
@@ -77,10 +78,11 @@ function draw(timestamp) {
 
   ctx.clearRect(0, 0, game.stageWidth, game.stageHeight);
 
-  snake.move(timestamp);
+  game.snake.update(timestamp);
 
   if (game.isAppleEaten()) {
     new Apple(game);
+    game.snake.grow();
   }
 
   drawSnake(ctx, game.snake);

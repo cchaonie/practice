@@ -1,4 +1,5 @@
 import { getRandom } from '../utils.js';
+import LinkedNode from './LinkedNode.js';
 
 export default class Snake {
   static UP = 0;
@@ -8,7 +9,6 @@ export default class Snake {
 
   constructor(gameState) {
     this.direction = Snake.RIGHT;
-    this.previousDirection = null;
 
     this.speed = 50;
     /**
@@ -17,9 +17,15 @@ export default class Snake {
      * Originally, it is a rectangle, so there are four points. And its head is pointing to the
      * right. The order of the coordinates is anti-clockwise, so the coordinates
      * are: [right-top], [right-bottom], [left-bottom], [left-top].
-     * Once the snake moves, it could go the the same direction, or take a turn.
+     * Once the snake moves, it can go the same direction, or take a turn.
+     * If it continues with the same direction, the head will move ahead with a fixed distance.
+     * ......
+     * ......
+     * The challenge is how to describe the movement of the snake.
      **/
     this.coordinates = [];
+
+    this.paintStates = null;
 
     this.totalLength = 80;
     this.mainLength = 80;
@@ -45,17 +51,43 @@ export default class Snake {
     ];
   }
 
-  move(timestamp) {
-    const { lastPaintTimestamp } = this.gameState;
-    if (!lastPaintTimestamp) {
-      // first paint, use the initial coordinates
-      this.gameState.lastPaintTimestamp = timestamp;
-      return;
-    }
+  /**
+   * Record all of the states of the snake when repaints, so there will be 60 nodes per
+   * second. We need to think of a way to improve it, we should only record the states
+   * that can cover the whole length of the snake.
+   * @param {*} timestamp
+   * @returns
+   */
+  update(timestamp) {
+    const currentState = new LinkedNode({
+      timestamp,
+      direction: this.direction,
+    });
+    currentState.next = this.paintStates;
+    this.paintStates = currentState;
 
-    const distance = (this.speed * (timestamp - lastPaintTimestamp)) / 1000;
-    return this.moveByDistance(distance);
+    this.updateCoordinates();
   }
+
+  updateCoordinates() {
+    let currentState = this.paintStates;
+    while (currentState.next) {
+      let nextTurningPoint = currentState.next;
+      while (
+        nextTurningPoint.next &&
+        nextTurningPoint.direction === currentState.direction
+      ) {
+        nextTurningPoint = nextTurningPoint.next;
+      }
+
+      // TODO
+
+      currentState = nextTurningPoint;
+    }
+  }
+
+  // TODO: Implement the grow method
+  grow() {}
 
   moveByDistance(distance) {
     const { direction } = this;
