@@ -24,30 +24,25 @@ export default class Snake {
      * The challenge is how to describe the movement of the snake.
      **/
     this.coordinates = [];
-
     this.paintStates = null;
+    this.bodyLengthInDirections = null;
 
     this.totalLength = 80;
-    this.mainLength = 80;
-    this.crossLength = 0;
-
     this.width = 10;
 
     gameState.snake = this;
 
     this.gameState = gameState;
-    this.setInitialCoordinates();
+    this.setInitialHeadCoordinates();
   }
 
-  setInitialCoordinates() {
+  setInitialHeadCoordinates() {
     const x = getRandom(this.gameState.stageWidth - this.totalLength);
     const y = getRandom(this.gameState.stageHeight);
 
     this.coordinates = [
       [x + this.totalLength, y],
       [x + this.totalLength, y + this.width],
-      [x, y + this.width],
-      [x, y],
     ];
   }
 
@@ -66,7 +61,11 @@ export default class Snake {
     currentState.next = this.paintStates;
     this.paintStates = currentState;
 
-    this.updateCoordinates();
+    if (!this.gameState.lastPaintTime) {
+      this.gameState.lastPaintTime = timestamp;
+    } else {
+      this.updateCoordinates();
+    }
   }
 
   updateCoordinates() {
@@ -80,14 +79,29 @@ export default class Snake {
         nextTurningPoint = nextTurningPoint.next;
       }
 
-      // TODO
+      const deltaTime = nextTurningPoint.timestamp - currentState.timestamp;
+      const distance = (deltaTime / 1000) * this.speed;
+
+      const bodyLengthInCurrentDirection = new LinkedNode({
+        distance,
+        direction: currentState.direction,
+      });
+      bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
+      this.bodyLengthInDirections = bodyLengthInCurrentDirection;
 
       currentState = nextTurningPoint;
     }
   }
 
-  // TODO: Implement the grow method
-  grow() {}
+  grow() {
+    this.totalLength += 10;
+  }
+
+  /**
+   * how to show it on the screen
+   * TODO implement this method
+   */
+  display() {}
 
   moveByDistance(distance) {
     const { direction } = this;
