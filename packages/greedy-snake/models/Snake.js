@@ -63,6 +63,8 @@ export default class Snake {
    * {timestamp: 1, direction: Right}
    */
   updateBodyLengthInDirections() {
+    this.bodyLengthInDirections = null;
+
     let currentState = this.paintStates;
     // The first paint
     if (!currentState.next) {
@@ -87,22 +89,67 @@ export default class Snake {
       const deltaTime = nextTurningPoint.timestamp - currentState.timestamp;
       const distance = (deltaTime / 1000) * this.speed;
 
-      if (nextTurningPoint.direction === currentState.direction) {
+      if (!this.bodyLengthInDirections) {
+        const bodyLengthInCurrentDirection = new LinkedNode({
+          length: Math.min(this.totalLength, distance),
+          direction: currentState.direction,
+        });
+        this.bodyLengthInDirections = bodyLengthInCurrentDirection;
+        this.updateHeadCoordinates(distance, currentState.direction);
+      } else {
         const lastBodyLengthInDirection = this.bodyLengthInDirections;
         lastBodyLengthInDirection.data.length =
           distance + lastBodyLengthInDirection.data.length > this.totalLength
             ? this.totalLength
             : lastBodyLengthInDirection.data.length + distance;
-      } else {
-        const bodyLengthInCurrentDirection = new LinkedNode({
-          length: distance,
-          direction: currentState.direction,
-        });
-        bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
-        this.bodyLengthInDirections = bodyLengthInCurrentDirection;
+        this.updateHeadCoordinates(distance, currentState.direction);
+
+        if (nextTurningPoint.direction !== currentState.direction) {
+          const bodyLengthInCurrentDirection = new LinkedNode({
+            length: 0,
+            direction: nextTurningPoint.direction,
+          });
+          bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
+          this.bodyLengthInDirections = bodyLengthInCurrentDirection;
+        }
       }
 
       currentState = nextTurningPoint;
+    }
+  }
+
+  /**
+   * Fix the logic to include the previous and the width of the snake
+   * @param {*} distance
+   * @param {*} direction
+   */
+  updateHeadCoordinates(distance, direction) {
+    const head = this.head;
+    switch (direction) {
+      case Snake.UP:
+        this.head = {
+          left: [head.left[0], head.left[1] - distance],
+          right: [head.right[0], head.right[1] - distance],
+        };
+        break;
+      case Snake.RIGHT:
+        this.head = {
+          left: [head.left[0] + distance, head.left[1]],
+          right: [head.right[0] + distance, head.right[1]],
+        };
+        break;
+      case Snake.DOWN:
+        this.head = {
+          left: [head.left[0], head.left[1] + distance],
+          right: [head.right[0], head.right[1] + distance],
+        };
+        break;
+      case Snake.LEFT:
+        this.head = {
+          left: [head.left[0] - distance, head.left[1]],
+          right: [head.right[0] - distance, head.right[1]],
+        };
+        break;
     }
   }
 
