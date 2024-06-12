@@ -11,21 +11,11 @@ export default class Snake {
     this.direction = Snake.RIGHT;
 
     this.speed = 50;
-    /**
-     * How to describe the snake.
-     * Store the coordinates of each point from the head to the tail.
-     * Originally, it is a rectangle, so there are four points. And its head is pointing to the
-     * right. The order of the coordinates is anti-clockwise, so the coordinates
-     * are: [right-top], [right-bottom], [left-bottom], [left-top].
-     * Once the snake moves, it can go the same direction, or take a turn.
-     * If it continues with the same direction, the head will move ahead with a fixed distance.
-     * ......
-     * ......
-     * The challenge is how to describe the movement of the snake.
-     **/
-    this.coordinates = [];
+
+    this.head = null;
     this.paintStates = null;
     this.bodyLengthInDirections = null;
+    this.coordinates = [];
 
     this.totalLength = 80;
     this.width = 10;
@@ -40,10 +30,10 @@ export default class Snake {
     const x = getRandom(this.gameState.stageWidth - this.totalLength);
     const y = getRandom(this.gameState.stageHeight);
 
-    this.coordinates = [
-      [x + this.totalLength, y],
-      [x + this.totalLength, y + this.width],
-    ];
+    this.head = {
+      left: [x + this.totalLength, y],
+      right: [x + this.totalLength, y + this.width],
+    };
   }
 
   /**
@@ -61,15 +51,30 @@ export default class Snake {
     currentState.next = this.paintStates;
     this.paintStates = currentState;
 
-    if (!this.gameState.lastPaintTime) {
-      this.gameState.lastPaintTime = timestamp;
-    } else {
-      this.updateCoordinates();
-    }
+    this.updateBodyLengthInDirections();
   }
 
-  updateCoordinates() {
+  /**
+   * {timestamp: 6, direction: TOP} ->
+   * {timestamp: 5, direction: TOP} ->
+   * {timestamp: 4, direction: TOP} ->
+   * {timestamp: 3, direction: Right} ->
+   * {timestamp: 2, direction: Right} ->
+   * {timestamp: 1, direction: Right}
+   */
+  updateBodyLengthInDirections() {
     let currentState = this.paintStates;
+    // The first paint
+    if (!currentState.next) {
+      const bodyLengthInCurrentDirection = new LinkedNode({
+        length: this.totalLength,
+        direction: currentState.direction,
+      });
+
+      this.bodyLengthInDirections = bodyLengthInCurrentDirection;
+      return;
+    }
+
     while (currentState.next) {
       let nextTurningPoint = currentState.next;
       while (
@@ -82,12 +87,20 @@ export default class Snake {
       const deltaTime = nextTurningPoint.timestamp - currentState.timestamp;
       const distance = (deltaTime / 1000) * this.speed;
 
-      const bodyLengthInCurrentDirection = new LinkedNode({
-        distance,
-        direction: currentState.direction,
-      });
-      bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
-      this.bodyLengthInDirections = bodyLengthInCurrentDirection;
+      if (nextTurningPoint.direction === currentState.direction) {
+        const lastBodyLengthInDirection = this.bodyLengthInDirections;
+        lastBodyLengthInDirection.data.length =
+          distance + lastBodyLengthInDirection.data.length > this.totalLength
+            ? this.totalLength
+            : lastBodyLengthInDirection.data.length + distance;
+      } else {
+        const bodyLengthInCurrentDirection = new LinkedNode({
+          length: distance,
+          direction: currentState.direction,
+        });
+        bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
+        this.bodyLengthInDirections = bodyLengthInCurrentDirection;
+      }
 
       currentState = nextTurningPoint;
     }
@@ -101,73 +114,47 @@ export default class Snake {
    * how to show it on the screen
    * TODO implement this method
    */
-  display() {}
-
-  moveByDistance(distance) {
-    const { direction } = this;
-
-    switch (direction) {
-      case Snake.UP:
-        this.moveUp(distance);
-        break;
-      case Snake.RIGHT:
-        this.moveRight(distance);
-        break;
-      case Snake.DOWN:
-        this.moveDown(distance);
-        break;
-      case Snake.LEFT:
-      default:
-        this.moveLeft(distance);
-        break;
-    }
-  }
-
-  moveUp(distance) {
-    if (
-      this.previousDirection === Snake.LEFT ||
-      this.previousDirection === Snake.RIGHT
-    ) {
-      this.top -= distance;
-      if (this.top < 0) {
-        this.gameState.changeTo(GameState.TERMINATED);
+  display() {
+    const currentLengthInDirection = this.bodyLengthInDirections;
+    const head = this.head;
+    if (!currentLengthInDirection.next) {
+      const length = currentLengthInDirection.data.length;
+      switch (currentLengthInDirection.data.direction) {
+        case Snake.UP:
+          this.coordinates = [
+            this.head.left,
+            this.head.right,
+            [head.right[0], head.right[1] + length],
+            [head.left[0], head.left[1] + length],
+          ];
+          break;
+        case Snake.RIGHT:
+          this.coordinates = [
+            this.head.left,
+            this.head.right,
+            [head.right[0] - length, head.right[1]],
+            [head.left[0] - length, head.left[1]],
+          ];
+          break;
+        case Snake.DOWN:
+          this.coordinates = [
+            this.head.left,
+            this.head.right,
+            [head.right[0], head.right[1] - length],
+            [head.left[0], head.left[1] - length],
+          ];
+          break;
+        case Snake.LEFT:
+          this.coordinates = [
+            this.head.left,
+            this.head.right,
+            [head.right[0] + length, head.right[1]],
+            [head.left[0] + length, head.left[1]],
+          ];
+          break;
       }
-    }
-  }
-
-  moveRight(distance) {
-    if (
-      this.previousDirection === Snake.UP ||
-      this.previousDirection === Snake.DOWN
-    ) {
-      this.left += distance;
-      if (this.left > this.gameState.stageWidth) {
-        this.gameState.changeTo(GameState.TERMINATED);
-      }
-    }
-  }
-
-  moveDown(distance) {
-    if (
-      this.previousDirection === Snake.LEFT ||
-      this.previousDirection === Snake.RIGHT
-    ) {
-      this.top += distance;
-      if (this.top > this.gameState.stageHeight) {
-        this.gameState.changeTo(GameState.TERMINATED);
-      }
-    }
-  }
-
-  moveLeft(distance) {
-    if (
-      this.previousDirection === Snake.UP ||
-      this.previousDirection === Snake.DOWN
-    ) {
-      this.left -= distance;
-      if (this.left < 0) {
-        this.gameState.changeTo(GameState.TERMINATED);
-      }
+    } else {
+      // TODO
     }
   }
 }
