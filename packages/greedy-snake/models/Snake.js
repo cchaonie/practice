@@ -51,7 +51,7 @@ export default class Snake {
     currentState.next = this.paintStates;
     this.paintStates = currentState;
 
-    this.updateBodyLengthInDirections();
+    this.calculateBodyLengthInDirections();
   }
 
   /**
@@ -62,7 +62,7 @@ export default class Snake {
    * {timestamp: 2, direction: Right} ->
    * {timestamp: 1, direction: Right}
    */
-  updateBodyLengthInDirections() {
+  calculateBodyLengthInDirections() {
     this.bodyLengthInDirections = null;
 
     let currentState = this.paintStates;
@@ -76,55 +76,131 @@ export default class Snake {
       this.bodyLengthInDirections = bodyLengthInCurrentDirection;
     }
 
+    let restLength = this.totalLength;
+
     while (currentState.next) {
       let nextTurningPoint = currentState.next;
       while (
         nextTurningPoint.next &&
-        nextTurningPoint.direction === currentState.direction
+        nextTurningPoint.next.direction === currentState.direction
       ) {
         nextTurningPoint = nextTurningPoint.next;
       }
 
-      const deltaTime = nextTurningPoint.timestamp - currentState.timestamp;
+      const deltaTime = currentState.timestamp - nextTurningPoint.timestamp;
       const distance = (deltaTime / 1000) * this.speed;
 
-      if (!this.bodyLengthInDirections) {
-        const bodyLengthInCurrentDirection = new LinkedNode({
-          length: Math.min(this.totalLength, distance),
-          direction: currentState.direction,
-        });
-        this.bodyLengthInDirections = bodyLengthInCurrentDirection;
-        this.updateHeadCoordinates(distance, currentState.direction);
-      } else {
-        const lastBodyLengthInDirection = this.bodyLengthInDirections;
-        lastBodyLengthInDirection.data.length =
-          distance + lastBodyLengthInDirection.data.length > this.totalLength
-            ? this.totalLength
-            : lastBodyLengthInDirection.data.length + distance;
-        this.updateHeadCoordinates(distance, currentState.direction);
+      const bodyLengthInCurrentDirection = new LinkedNode({
+        length: Math.min(this.restLength, distance),
+        direction: nextTurningPoint.data.direction,
+      });
+      bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
+      this.bodyLengthInDirections = bodyLengthInCurrentDirection;
 
-        if (nextTurningPoint.direction !== currentState.direction) {
-          const bodyLengthInCurrentDirection = new LinkedNode({
-            length: 0,
-            direction: nextTurningPoint.direction,
-          });
-          bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
-          this.bodyLengthInDirections = bodyLengthInCurrentDirection;
-        }
+      restLength = Math.max(0, restLength - distance);
+
+      if (restLength === 0) {
+        break;
       }
 
       currentState = nextTurningPoint;
     }
+
+    this.updateHeadCoordinates();
+
     this.display();
   }
 
-  /**
-   * Fix the logic to include the previous and the width of the snake
-   * @param {*} distance
-   * @param {*} direction
-   */
-  updateHeadCoordinates(distance, direction) {
+  updateHeadCoordinates() {
     const head = this.head;
+    const { data, next } = this.paintStates;
+    if (!next) {
+      return;
+    }
+    const { data: preData, next: preNext } = next;
+    const distance = ((data.timestamp - preData.timestamp) / 1000) * this.speed;
+
+    if (!preNext) {
+      this.forward(data.direction, distance);
+    }
+
+    const isChangingDirection = preNext.data.direction !== preData.direction;
+
+    if (isChangingDirection) {
+      this.turnTo(preNext.data.direction, preData.direction, distance);
+    }
+  }
+
+  turnTo(preDirection, newDirection, distance) {
+    switch (preDirection) {
+      case Snake.UP:
+        switch (newDirection) {
+          case Snake.RIGHT:
+            this.head = {
+              left: [head.left[0] + distance + this.width, head.left[1]],
+              right: [head.right[0] + distance, head.right[1] - this.width],
+            };
+            break;
+          case Snake.LEFT:
+            this.head = {
+              left: [head.left[0] - distance, head.left[1] + this.width],
+              right: [head.right[0] - distance - this.width, head.right[1]],
+            };
+            break;
+        }
+        break;
+      case Snake.RIGHT:
+        switch (newDirection) {
+          case Snake.UP:
+            this.head = {
+              left: [head.left[0] - this.width, head.left[1] - distance],
+              right: [head.right[0], head.right[1] - distance - this.width],
+            };
+            break;
+          case Snake.DOWN:
+            this.head = {
+              left: [head.left[0], head.left[1] + distance + this.width],
+              right: [head.right[0] - this.width, head.right[1] + distance],
+            };
+            break;
+        }
+        break;
+      case Snake.DOWN:
+        switch (newDirection) {
+          case Snake.RIGHT:
+            this.head = {
+              left: [head.left[0] + distance, head.left[1] - this.width],
+              right: [head.right[0] + distance + this.width, head.right[1]],
+            };
+            break;
+          case Snake.LEFT:
+            this.head = {
+              left: [head.left[0] - distance - this.width, head.left[1]],
+              right: [head.right[0] - distance, head.right[1] - this.width],
+            };
+            break;
+        }
+        break;
+      case Snake.LEFT:
+        switch (newDirection) {
+          case Snake.UP:
+            this.head = {
+              left: [head.left[0], head.left[1] - distance - this.width],
+              right: [head.right[0] + this.width, head.right[1] - distance],
+            };
+            break;
+          case Snake.DOWN:
+            this.head = {
+              left: [head.left[0] + this.width, head.left[1] + distance],
+              right: [head.right[0], head.right[1] + distance + this.width],
+            };
+            break;
+        }
+        break;
+    }
+  }
+
+  forward(direction, distance) {
     switch (direction) {
       case Snake.UP:
         this.head = {
