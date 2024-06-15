@@ -3,4 +3,12 @@ export default class LinkedNode {
     this.data = data;
     this.next = null;
   }
+
+  toString(key) {
+    let head = this;
+    while (head) {
+      console.log(head.data[key], '->');
+      head = head.next;
+    }
+  }
 }
