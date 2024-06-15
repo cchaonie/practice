@@ -35,7 +35,7 @@ export default class GameState {
     }
   }
 
-  removeAll() {
+  removeAllListeners() {
     [
       GameState.NOT_STARTED,
       GameState.IN_PROGRESS,
@@ -47,20 +47,21 @@ export default class GameState {
   }
 
   changeTo(state) {
-    const allowState = [
-      [GameState.IN_PROGRESS],
-      [GameState.PAUSE, GameState.TERMINATED],
-      [GameState.TERMINATED, GameState.IN_PROGRESS],
-      [],
-    ];
-
-    if (allowState[this.state].includes(state)) {
+    if (this.state !== state) {
       this.state = state;
 
       for (const fn of this.stateListeners[this.state]) {
         fn();
       }
     }
+  }
+
+  startWatchingPlayer(listener) {
+    window.addEventListener('keyup', listener);
+  }
+
+  stopWatchingPlayer(listener) {
+    window.removeEventListener('keyup', listener);
   }
 
   /**
@@ -70,4 +71,9 @@ export default class GameState {
   isGameOver() {
     return false;
   }
+
+  /**
+   * TODO implement this method
+   */
+  isAppleEaten() {}
 }
