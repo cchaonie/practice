@@ -97,8 +97,6 @@ function drawSnake(ctx, snake) {
   // start drawing
   ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
 
-  console.log(snake.coordinates);
-
   snake.coordinates.forEach(([x, y, width, height]) => {
     ctx.fillRect(x, y, width, height);
   });
@@ -122,7 +120,7 @@ function handleKeyUp(e) {
   const { snake } = game;
   const code = e.code;
 
-  let newDirection = snake.previousDirection;
+  let newDirection = snake.direction;
 
   switch (code) {
     case 'KeyQ':
@@ -154,7 +152,20 @@ function handleKeyUp(e) {
       break;
   }
 
-  if (newDirection !== snake.previousDirection) {
+  if (
+    (snake.direction === Snake.UP &&
+      newDirection !== Snake.DOWN &&
+      newDirection !== Snake.UP) ||
+    (snake.direction === Snake.RIGHT &&
+      newDirection !== Snake.RIGHT &&
+      newDirection !== Snake.LEFT) ||
+    (snake.direction === Snake.DOWN &&
+      newDirection !== Snake.DOWN &&
+      newDirection !== Snake.UP) ||
+    (snake.direction === Snake.LEFT &&
+      newDirection !== Snake.LEFT &&
+      newDirection !== Snake.RIGHT)
+  ) {
     snake.direction = newDirection;
   }
 }
