@@ -81,7 +81,7 @@ export default class Snake {
       let nextTurningPoint = currentState.next;
       while (
         nextTurningPoint.next &&
-        nextTurningPoint.next.direction === nextTurningPoint.direction
+        nextTurningPoint.next.data.direction === nextTurningPoint.direction
       ) {
         nextTurningPoint = nextTurningPoint.next;
       }
@@ -105,7 +105,6 @@ export default class Snake {
 
       currentState = nextTurningPoint;
     }
-
     this.updateHeadCoordinates();
 
     this.display();
@@ -312,7 +311,7 @@ export default class Snake {
                     currentHead.left[0] -
                       currentLengthInDirection.data.length -
                       this.width,
-                    head.left[1],
+                    currentHead.left[1],
                   ],
                 };
                 break;
@@ -380,7 +379,7 @@ export default class Snake {
                 this.head = {
                   left: [
                     currentHead.left[0] + currentLengthInDirection.data.length,
-                    currentHead.left[1] - distance,
+                    currentHead.left[1] - preBodyLengthInDirection.data.length,
                   ],
                 };
                 break;
