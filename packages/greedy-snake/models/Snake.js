@@ -122,6 +122,7 @@ export default class Snake {
 
     if (!preNext) {
       this.forward(data.direction, distance);
+      return;
     }
 
     const isChangingDirection = preNext.data.direction !== preData.direction;
@@ -201,6 +202,7 @@ export default class Snake {
   }
 
   forward(direction, distance) {
+    const head = this.head;
     switch (direction) {
       case Snake.UP:
         this.head = {
@@ -239,40 +241,38 @@ export default class Snake {
    */
   display() {
     const currentLengthInDirection = this.bodyLengthInDirections;
-    const head = this.head;
     if (!currentLengthInDirection.next) {
       const length = currentLengthInDirection.data.length;
       switch (currentLengthInDirection.data.direction) {
         case Snake.UP:
           this.coordinates = [
-            this.head.left,
-            this.head.right,
-            [head.right[0], head.right[1] + length],
-            [head.left[0], head.left[1] + length],
+            [this.head.left[0], this.head.left[1], this.width, this.totalLength],
           ];
           break;
         case Snake.RIGHT:
           this.coordinates = [
-            this.head.left,
-            this.head.right,
-            [head.right[0] - length, head.right[1]],
-            [head.left[0] - length, head.left[1]],
+            [
+              this.head.left[0] - this.totalLength,
+              this.head.left[1],
+              this.totalLength,
+              this.width,
+            ],
           ];
           break;
         case Snake.DOWN:
           this.coordinates = [
-            this.head.left,
-            this.head.right,
-            [head.right[0], head.right[1] - length],
-            [head.left[0], head.left[1] - length],
+            this.head.left[0] - this.width,
+            this.head.left[1] - this.totalLength,
+            this.width,
+            this.totalLength,
           ];
           break;
         case Snake.LEFT:
           this.coordinates = [
-            this.head.left,
-            this.head.right,
-            [head.right[0] + length, head.right[1]],
-            [head.left[0] + length, head.left[1]],
+            this.head.left[0],
+            this.head.left[1] - this.width,
+            this.totalLength,
+            this.width,
           ];
           break;
       }

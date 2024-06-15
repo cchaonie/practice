@@ -97,18 +97,11 @@ function drawSnake(ctx, snake) {
   // start drawing
   ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
 
-  ctx.beginPath();
+  console.log(snake.coordinates);
 
-  snake.coordinates.forEach(([x, y], index) => {
-    if (index === 0) {
-      ctx.moveTo(x, y);
-    } else {
-      ctx.lineTo(x, y);
-    }
+  snake.coordinates.forEach(([x, y, width, height]) => {
+    ctx.fillRect(x, y, width, height);
   });
-
-  ctx.closePath();
-  ctx.fill();
 
   // end drawing
   ctx.restore();
