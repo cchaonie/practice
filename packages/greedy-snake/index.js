@@ -95,6 +95,20 @@ function draw(timestamp) {
 function drawSnake(ctx, snake) {
   ctx.save();
   // start drawing
+  ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
+
+  ctx.beginPath();
+
+  snake.coordinates.forEach(([x, y], index) => {
+    if (index === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  });
+
+  ctx.closePath();
+  ctx.fill();
 
   // end drawing
   ctx.restore();
@@ -103,8 +117,9 @@ function drawSnake(ctx, snake) {
 function drawApple(ctx, apple) {
   ctx.save();
   // start drawing
-  const { left, top, size } = apple;
   ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+
+  const { left, top, size } = apple;
   ctx.fillRect(left, top, size, size);
   // end drawing
   ctx.restore();

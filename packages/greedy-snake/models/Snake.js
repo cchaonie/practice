@@ -70,11 +70,10 @@ export default class Snake {
     if (!currentState.next) {
       const bodyLengthInCurrentDirection = new LinkedNode({
         length: this.totalLength,
-        direction: currentState.direction,
+        direction: currentState.data.direction,
       });
 
       this.bodyLengthInDirections = bodyLengthInCurrentDirection;
-      return;
     }
 
     while (currentState.next) {
@@ -116,6 +115,7 @@ export default class Snake {
 
       currentState = nextTurningPoint;
     }
+    this.display();
   }
 
   /**
