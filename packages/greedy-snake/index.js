@@ -97,8 +97,6 @@ function drawSnake(ctx, snake) {
   // start drawing
   ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
 
-  console.log(snake.coordinates);
-
   snake.coordinates.forEach(([x, y, width, height]) => {
     ctx.fillRect(x, y, width, height);
   });
