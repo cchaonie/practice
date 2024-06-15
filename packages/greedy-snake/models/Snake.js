@@ -1,4 +1,4 @@
-import { getRandom } from '../utils.js';
+import { getRandom } from '../utils/index.js';
 import LinkedNode from './LinkedNode.js';
 
 export default class Snake {
