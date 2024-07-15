@@ -6,9 +6,11 @@ export default class LinkedNode {
 
   toString(key) {
     let head = this;
+    let str = '';
     while (head) {
-      console.log(head.data[key], '->');
+      str += head.data[key] + '->';
       head = head.next;
     }
+    console.log(str.substring(0, str.length - 2));
   }
 }
