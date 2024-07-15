@@ -42,6 +42,7 @@ function startGame() {
   createStage(game);
 
   game.addStateListener(GameState.IN_PROGRESS, () => {
+    game.lastPaintTimestamp = window.performance.now();
     game.animationId = window.requestAnimationFrame(draw);
   });
   game.addStateListener(GameState.PAUSE, pauseGame);
@@ -76,17 +77,21 @@ function draw(timestamp) {
   const canvas = document.getElementById('stage');
   const ctx = canvas.getContext('2d');
 
-  ctx.clearRect(0, 0, game.stageWidth, game.stageHeight);
+  if (timestamp - game.lastPaintTimestamp > 1000) {
+    ctx.clearRect(0, 0, game.stageWidth, game.stageHeight);
 
-  game.snake.update(timestamp);
+    game.snake.update(timestamp);
 
-  if (game.isAppleEaten()) {
-    new Apple(game);
-    game.snake.grow();
+    if (game.isAppleEaten()) {
+      new Apple(game);
+      game.snake.grow();
+    }
+
+    drawSnake(ctx, game.snake);
+    drawApple(ctx, game.apple);
+
+    game.lastPaintTimestamp = timestamp;
   }
-
-  drawSnake(ctx, game.snake);
-  drawApple(ctx, game.apple);
 
   game.animationId = requestAnimationFrame(draw);
 }

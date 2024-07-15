@@ -106,6 +106,10 @@ export default class Snake {
       currentState = nextTurningPoint;
     }
     this.updateHeadCoordinates();
+    console.log(this.bodyLengthInDirections);
+    // console.log(this.bodyLengthInDirections.toString('direction'));
+    // console.log(this.bodyLengthInDirections.toString('length'));
+    // console.log(this.head.left);
 
     this.display();
   }
@@ -113,17 +117,20 @@ export default class Snake {
   updateHeadCoordinates() {
     const head = this.head;
     const { data, next } = this.paintStates;
+
+    // first render
     if (!next) {
       return;
     }
-    const { data: preData, next: preNext } = next;
-    const distance = ((data.timestamp - preData.timestamp) / 1000) * this.speed;
+    const { data: preData } = next;
 
-    if (preNext && preNext.data.direction !== preData.direction) {
-      this.turnTo(preNext.data.direction, preData.direction, distance);
-      return;
+    if (preData.direction !== data.direction) {
+      this.turnTo(preData.direction, data.direction, 0);
+    } else {
+      const distance =
+        ((data.timestamp - preData.timestamp) / 1000) * this.speed;
+      this.forward(data.direction, distance);
     }
-    this.forward(data.direction, distance);
   }
 
   turnTo(preDirection, newDirection, distance) {
@@ -256,14 +263,14 @@ export default class Snake {
             this.head.left[0],
             this.head.left[1],
             this.width,
-            this.totalLength,
+            length,
           ]);
           break;
         case Snake.RIGHT:
           this.coordinates.push([
             this.head.left[0] - this.totalLength,
             this.head.left[1],
-            this.totalLength,
+            length,
             this.width,
           ]);
           break;
@@ -272,14 +279,14 @@ export default class Snake {
             this.head.left[0] - this.width,
             this.head.left[1] - this.totalLength,
             this.width,
-            this.totalLength,
+            length,
           ]);
           break;
         case Snake.LEFT:
           this.coordinates.push([
             this.head.left[0],
             this.head.left[1] - this.width,
-            this.totalLength,
+            length,
             this.width,
           ]);
           break;
