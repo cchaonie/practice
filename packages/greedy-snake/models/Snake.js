@@ -77,39 +77,51 @@ export default class Snake {
 
     let restLength = this.totalLength;
 
-    while (currentState.next) {
-      let nextTurningPoint = currentState.next;
+    while (currentState.next && restLength >= 0) {
+      let nextState = currentState.next;
+      let last = null;
+
       while (
-        nextTurningPoint.next &&
-        nextTurningPoint.next.data.direction === nextTurningPoint.data.direction
+        nextState &&
+        nextState.data.direction === currentState.data.direction
       ) {
-        nextTurningPoint = nextTurningPoint.next;
+        if (!nextState.next) {
+          last = nextState;
+        }
+        nextState = nextState.next;
       }
 
-      const deltaTime =
-        currentState.data.timestamp - nextTurningPoint.data.timestamp;
-      const distance = (deltaTime / 1000) * this.speed;
+      // reach the end in the same direction
+      if (last) {
+        const deltaTime = currentState.data.timestamp - last.data.timestamp;
+        const distance = (deltaTime / 1000) * this.speed;
+        const bodyLengthInCurrentDirection = new LinkedNode({
+          length: restLength,
+          direction: last.data.direction,
+        });
+        bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
+        this.bodyLengthInDirections = bodyLengthInCurrentDirection;
 
-      const bodyLengthInCurrentDirection = new LinkedNode({
-        length: Math.min(restLength, distance),
-        direction: nextTurningPoint.data.direction,
-      });
-      bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
-      this.bodyLengthInDirections = bodyLengthInCurrentDirection;
+        restLength = 0;
+        currentState = last;
+      } else {
+        const deltaTime = currentState.data.timestamp - nextState.data.timestamp;
+        const distance = (deltaTime / 1000) * this.speed;
 
-      restLength = Math.max(0, restLength - distance);
+        const bodyLengthInCurrentDirection = new LinkedNode({
+          length: Math.min(this.totalLength, distance),
+          direction: nextState.data.direction,
+        });
+        bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
+        this.bodyLengthInDirections = bodyLengthInCurrentDirection;
 
-      if (restLength === 0) {
-        break;
+        restLength = Math.max(0, restLength - distance);
+
+        currentState = nextState;
       }
-
-      currentState = nextTurningPoint;
     }
+
     this.updateHeadCoordinates();
-    console.log(this.bodyLengthInDirections);
-    // console.log(this.bodyLengthInDirections.toString('direction'));
-    // console.log(this.bodyLengthInDirections.toString('length'));
-    // console.log(this.head.left);
 
     this.display();
   }
