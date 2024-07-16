@@ -63,6 +63,7 @@ export default class Snake {
    */
   calculateBodyLengthInDirections() {
     this.bodyLengthInDirections = null;
+    let lastBodyLengthInDirection = this.bodyLengthInDirections;
 
     let currentState = this.paintStates;
     // The first paint
@@ -73,57 +74,43 @@ export default class Snake {
       });
 
       this.bodyLengthInDirections = bodyLengthInCurrentDirection;
-    }
+    } else {
+      let restLength = this.totalLength;
 
-    let restLength = this.totalLength;
-
-    while (currentState.next && restLength >= 0) {
-      let nextState = currentState.next;
-      let last = null;
-
-      while (
-        nextState &&
-        nextState.data.direction === currentState.data.direction
-      ) {
-        if (!nextState.next) {
-          last = nextState;
+      while (currentState && restLength >= 0) {
+        let nextState = currentState.next;
+        while (
+          nextState &&
+          nextState.next &&
+          nextState.data.direction === nextState.next.data.direction
+        ) {
+          nextState = nextState.next;
         }
-        nextState = nextState.next;
-      }
 
-      // reach the end in the same direction
-      if (last) {
-        const deltaTime = currentState.data.timestamp - last.data.timestamp;
-        const distance = (deltaTime / 1000) * this.speed;
-        const bodyLengthInCurrentDirection = new LinkedNode({
-          length: restLength,
-          direction: last.data.direction,
-        });
-        bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
-        this.bodyLengthInDirections = bodyLengthInCurrentDirection;
-
-        restLength = 0;
-        currentState = last;
-      } else {
         const deltaTime = currentState.data.timestamp - nextState.data.timestamp;
         const distance = (deltaTime / 1000) * this.speed;
-
         const bodyLengthInCurrentDirection = new LinkedNode({
-          length: Math.min(this.totalLength, distance),
+          length: Math.min(restLength, distance),
           direction: nextState.data.direction,
         });
-        bodyLengthInCurrentDirection.next = this.bodyLengthInDirections;
-        this.bodyLengthInDirections = bodyLengthInCurrentDirection;
+        if (!lastBodyLengthInDirection) {
+          this.bodyLengthInDirections = bodyLengthInCurrentDirection;
+          lastBodyLengthInDirection = bodyLengthInCurrentDirection;
+        } else {
+          lastBodyLengthInDirection.next = bodyLengthInCurrentDirection;
+          lastBodyLengthInDirection = bodyLengthInCurrentDirection;
+        }
 
-        restLength = Math.max(0, restLength - distance);
+        restLength -= distance;
 
-        currentState = nextState;
+        if (nextState.next) {
+          currentState = nextState;
+        }
       }
     }
 
-    this.updateHeadCoordinates();
-
     this.display();
+    this.updateHeadCoordinates();
   }
 
   updateHeadCoordinates() {
@@ -135,12 +122,11 @@ export default class Snake {
       return;
     }
     const { data: preData } = next;
+    const distance = ((data.timestamp - preData.timestamp) / 1000) * this.speed;
 
     if (preData.direction !== data.direction) {
-      this.turnTo(preData.direction, data.direction, 0);
+      this.turnTo(preData.direction, data.direction, distance);
     } else {
-      const distance =
-        ((data.timestamp - preData.timestamp) / 1000) * this.speed;
       this.forward(data.direction, distance);
     }
   }
@@ -153,16 +139,16 @@ export default class Snake {
           case Snake.RIGHT:
             this.head = {
               left: [
-                currentHead.left[0] + distance + this.width,
-                currentHead.left[1],
+                currentHead.left[0] + this.width,
+                currentHead.left[1] - distance,
               ],
             };
             break;
           case Snake.LEFT:
             this.head = {
               left: [
-                currentHead.left[0] - distance,
-                currentHead.left[1] + this.width,
+                currentHead.left[0] - distance + this.width,
+                currentHead.left[1],
               ],
             };
             break;
@@ -173,16 +159,16 @@ export default class Snake {
           case Snake.UP:
             this.head = {
               left: [
-                currentHead.left[0] - this.width,
-                currentHead.left[1] - distance,
+                currentHead.left[0] + distance,
+                currentHead.left[1] - this.width,
               ],
             };
             break;
           case Snake.DOWN:
             this.head = {
               left: [
-                currentHead.left[0],
-                currentHead.left[1] + distance + this.width,
+                currentHead.left[0] + distance,
+                currentHead.left[1] + this.width,
               ],
             };
             break;
@@ -193,16 +179,16 @@ export default class Snake {
           case Snake.RIGHT:
             this.head = {
               left: [
-                currentHead.left[0] + distance,
-                currentHead.left[1] - this.width,
+                currentHead.left[0],
+                currentHead.left[1] + distance - this.width,
               ],
             };
             break;
           case Snake.LEFT:
             this.head = {
               left: [
-                currentHead.left[0] - distance - this.width,
-                currentHead.left[1],
+                currentHead.left[0] - this.width,
+                currentHead.left[1] + distance,
               ],
             };
             break;
@@ -213,16 +199,16 @@ export default class Snake {
           case Snake.UP:
             this.head = {
               left: [
-                currentHead.left[0],
-                currentHead.left[1] - distance - this.width,
+                currentHead.left[0] - distance,
+                currentHead.left[1] - this.width,
               ],
             };
             break;
           case Snake.DOWN:
             this.head = {
               left: [
-                currentHead.left[0] + this.width,
-                currentHead.left[1] + distance,
+                currentHead.left[0] - distance - this.width,
+                currentHead.left[1],
               ],
             };
             break;
