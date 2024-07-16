@@ -34,7 +34,10 @@ function createStage(gameState) {
 }
 
 function startGame() {
-  game = new GameState();
+  const pageWidth = window.innerWidth;
+  const pageHeight = window.innerHeight;
+
+  game = new GameState(pageWidth, pageHeight);
 
   const snake = new Snake(game);
   const apple = new Apple(game);
@@ -42,7 +45,6 @@ function startGame() {
   createStage(game);
 
   game.addStateListener(GameState.IN_PROGRESS, () => {
-    game.lastPaintTimestamp = window.performance.now();
     game.animationId = window.requestAnimationFrame(draw);
   });
   game.addStateListener(GameState.PAUSE, pauseGame);
@@ -77,7 +79,7 @@ function draw(timestamp) {
   const canvas = document.getElementById('stage');
   const ctx = canvas.getContext('2d');
 
-  if (timestamp - game.lastPaintTimestamp > 1000) {
+  if (!game.lastPaintTimestamp || timestamp - game.lastPaintTimestamp > 100) {
     ctx.clearRect(0, 0, game.stageWidth, game.stageHeight);
 
     game.snake.update(timestamp);

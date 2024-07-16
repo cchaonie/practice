@@ -1,0 +1,16 @@
+{
+  "name": "greedy-snake",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm dlx ruyibang-serve --dir .",
+    "test": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vitest": "^2.0.3"
+  }
+}

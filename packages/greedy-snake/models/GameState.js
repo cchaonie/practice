@@ -4,10 +4,7 @@ export default class GameState {
   static PAUSE = 2;
   static TERMINATED = 3;
 
-  constructor() {
-    const pageWidth = window.innerWidth;
-    const pageHeight = window.innerHeight;
-
+  constructor(pageWidth, pageHeight) {
     this.stageWidth = Math.min(600, pageWidth);
     this.stageHeight = Math.min(600, pageHeight);
 
