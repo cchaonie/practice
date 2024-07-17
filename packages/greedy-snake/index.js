@@ -79,7 +79,7 @@ function draw(timestamp) {
   const canvas = document.getElementById('stage');
   const ctx = canvas.getContext('2d');
 
-  if (!game.lastPaintTimestamp || timestamp - game.lastPaintTimestamp > 100) {
+  if (!game.lastPaintTimestamp || timestamp - game.lastPaintTimestamp > 16) {
     ctx.clearRect(0, 0, game.stageWidth, game.stageHeight);
 
     game.snake.update(timestamp);
@@ -89,6 +89,7 @@ function draw(timestamp) {
       game.snake.grow();
     }
 
+    drawLines(ctx);
     drawSnake(ctx, game.snake);
     drawApple(ctx, game.apple);
 
@@ -96,6 +97,28 @@ function draw(timestamp) {
   }
 
   game.animationId = requestAnimationFrame(draw);
+}
+
+function drawLines(ctx) {
+  ctx.save();
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+  ctx.lineWidth = 1;
+
+  for (let x = 10; x < game.stageWidth; x += 10) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, game.stageHeight);
+    ctx.stroke();
+  }
+
+  for (let y = 10; y < game.stageHeight; y += 10) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(game.stageWidth, y);
+    ctx.stroke();
+  }
+
+  ctx.restore();
 }
 
 // TODO: Implement the drawSnake function
