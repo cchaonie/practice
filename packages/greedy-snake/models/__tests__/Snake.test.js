@@ -30,6 +30,7 @@ describe('Snake', () => {
     expect(snake.paintStates).toEqual(state0);
     expect(snake.bodyLengthInDirections).toEqual(bodyLengthInDirections0);
     expect(snake.head).toEqual({ left: [100, 100] });
+    expect(snake.coordinates).toEqual([[20, 100, 80, 10]]);
   });
 
   it('should render correctly when update twice', () => {
@@ -51,20 +52,14 @@ describe('Snake', () => {
     state1.next = state0;
 
     const bodyLengthInDirections0 = new LinkedNode({
-      length: 50,
+      length: 80,
       direction: Snake.RIGHT,
     });
-
-    const bodyLengthInDirections1 = new LinkedNode({
-      length: 30,
-      direction: Snake.RIGHT,
-    });
-
-    bodyLengthInDirections0.next = bodyLengthInDirections1;
 
     expect(snake.paintStates).toEqual(state1);
     expect(snake.bodyLengthInDirections).toEqual(bodyLengthInDirections0);
     expect(snake.head).toEqual({ left: [150, 100] });
+    expect(snake.coordinates).toEqual([[70, 100, 80, 10]]);
   });
 
   it('should render correctly when update three times', () => {

@@ -107,10 +107,23 @@ export default class Snake {
           currentState = nextState;
         }
       }
+
+      // merge the same direction
+      let current = this.bodyLengthInDirections;
+      while (current) {
+        if (
+          current.next &&
+          current.data.direction === current.next.data.direction
+        ) {
+          current.data.length += current.next.data.length;
+          current.next = current.next.next;
+        }
+        current = current.next;
+      }
     }
 
-    this.display();
     this.updateHeadCoordinates();
+    this.display();
   }
 
   updateHeadCoordinates() {
@@ -253,6 +266,7 @@ export default class Snake {
   display() {
     this.coordinates = [];
     let currentLengthInDirection = this.bodyLengthInDirections;
+    // first render
     if (!currentLengthInDirection.next) {
       const length = currentLengthInDirection.data.length;
       switch (currentLengthInDirection.data.direction) {
