@@ -1,3 +1,3 @@
 # practice
 
-- [] Create a threejs demo project
+- [ ] Create a threejs demo project
