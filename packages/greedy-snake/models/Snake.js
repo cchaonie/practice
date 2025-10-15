@@ -122,8 +122,13 @@ export default class Snake {
       }
     }
 
-    this.updateHeadCoordinates();
+    const { shouldTurn, from, to } = this.updateHeadCoordinates();
+
     this.display();
+
+    if (shouldTurn) {
+      this.turnTo(from, to);
+    }
   }
 
   updateHeadCoordinates() {
@@ -132,37 +137,33 @@ export default class Snake {
 
     // first render
     if (!next) {
-      return;
+      return { shouldTurn: false };
     }
     const { data: preData } = next;
     const distance = ((data.timestamp - preData.timestamp) / 1000) * this.speed;
 
     if (preData.direction !== data.direction) {
-      this.turnTo(preData.direction, data.direction, distance);
+      this.forward(preData.direction, distance);
+      return { shouldTurn: true, from: preData.direction, to: data.direction };
     } else {
       this.forward(data.direction, distance);
+      return { shouldTurn: false };
     }
   }
 
-  turnTo(preDirection, newDirection, distance) {
+  turnTo(preDirection, newDirection) {
     const currentHead = this.head;
     switch (preDirection) {
       case Snake.UP:
         switch (newDirection) {
           case Snake.RIGHT:
             this.head = {
-              left: [
-                currentHead.left[0] + this.width,
-                currentHead.left[1] - distance,
-              ],
+              left: [currentHead.left[0] + this.width, currentHead.left[1]],
             };
             break;
           case Snake.LEFT:
             this.head = {
-              left: [
-                currentHead.left[0] - distance + this.width,
-                currentHead.left[1],
-              ],
+              left: [currentHead.left[0] + this.width, currentHead.left[1]],
             };
             break;
         }
@@ -171,18 +172,12 @@ export default class Snake {
         switch (newDirection) {
           case Snake.UP:
             this.head = {
-              left: [
-                currentHead.left[0] + distance,
-                currentHead.left[1] - this.width,
-              ],
+              left: [currentHead.left[0], currentHead.left[1] - this.width],
             };
             break;
           case Snake.DOWN:
             this.head = {
-              left: [
-                currentHead.left[0] + distance,
-                currentHead.left[1] + this.width,
-              ],
+              left: [currentHead.left[0], currentHead.left[1] + this.width],
             };
             break;
         }
@@ -191,18 +186,12 @@ export default class Snake {
         switch (newDirection) {
           case Snake.RIGHT:
             this.head = {
-              left: [
-                currentHead.left[0],
-                currentHead.left[1] + distance - this.width,
-              ],
+              left: [currentHead.left[0], currentHead.left[1] - this.width],
             };
             break;
           case Snake.LEFT:
             this.head = {
-              left: [
-                currentHead.left[0] - this.width,
-                currentHead.left[1] + distance,
-              ],
+              left: [currentHead.left[0] - this.width, currentHead.left[1]],
             };
             break;
         }
@@ -211,18 +200,12 @@ export default class Snake {
         switch (newDirection) {
           case Snake.UP:
             this.head = {
-              left: [
-                currentHead.left[0] - distance,
-                currentHead.left[1] - this.width,
-              ],
+              left: [currentHead.left[0], currentHead.left[1] - this.width],
             };
             break;
           case Snake.DOWN:
             this.head = {
-              left: [
-                currentHead.left[0] - distance - this.width,
-                currentHead.left[1],
-              ],
+              left: [currentHead.left[0] - this.width, currentHead.left[1]],
             };
             break;
         }
